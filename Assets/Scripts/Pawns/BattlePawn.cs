@@ -17,10 +17,16 @@ public class BattlePawn : MonoBehaviour
     {
         _currHP = _data.HP;
         _currSP = _data.SP;
+        gameObject.SetActive(false);
     }
     public void Damage(int amount)
     {
         _currHP -= amount;
         if (_currHP < 0) _currHP = 0;
+    }
+    public void EnterBattle()
+    {
+        gameObject.SetActive(true);
+        _spriteAnimator.Play("EnterBattle");
     }
 }

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IStateMachineContext
+public class Enemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EnemyData _enemyData;
     [SerializeField] private Animator _animator;
 
-    private StateMachine _stateMachine;
     private int _currHP;
     private int _currSP;
     private int tick;

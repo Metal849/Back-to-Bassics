@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
             playerDirection = Direction.West;
         }
 
-        stage.playerResponse(playerDirection);
+        //stage.playerResponse(playerDirection);
     }
 
     private void OnAttack(InputValue input) {
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
             playerDirection = Direction.West;
         }
 
-        stage.playerResponse(playerDirection);
+        //stage.playerResponse(playerDirection);
     }
 
     public void takeDamage() {
