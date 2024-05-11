@@ -7,6 +7,7 @@ public class DrawSpace : MonoBehaviour
     [SerializeField] private GameObject _brush;
     [SerializeField] private PlayerBattlePawn _player;
     [SerializeField] private float _slashDuration = 0.4f;
+    [SerializeField] private float _effectiveSlashLength = 1f;
     private LineRenderer _lineRenderer;
     private Vector3 lastPos;
     const float inbetween = 22.5f;
@@ -34,10 +35,13 @@ public class DrawSpace : MonoBehaviour
         }
         else if (_lineRenderer != null)
         {
-            Direction dir = SlashDirectionFromLine(_lineRenderer);
+            Vector2 line = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1) - _lineRenderer.GetPosition(0);
             Destroy(_lineRenderer.gameObject);
             _lineRenderer = null;
-            _player.Slash(dir);
+
+            if (line.magnitude < _effectiveSlashLength) return;
+            Direction dir = SlashDirectionFromLine(line);
+            _player.Slash(line.magnitude, dir);
         }
     }
 
@@ -58,10 +62,9 @@ public class DrawSpace : MonoBehaviour
         int positionIndex = _lineRenderer.positionCount - 1;
         _lineRenderer.SetPosition(positionIndex, pointPos);
     }
-    private Direction SlashDirectionFromLine(LineRenderer lineRenderer)
+    private Direction SlashDirectionFromLine(Vector2 line)
     {
-        Vector2 normalizedDisplacement = (_lineRenderer.GetPosition(_lineRenderer.positionCount - 1) - _lineRenderer.GetPosition(0)).normalized;
-        float angle = Vector2.SignedAngle(normalizedDisplacement, Vector2.up);
+        float angle = Vector2.SignedAngle(line.normalized, Vector2.up);
 
         if (angle >= 0)
         {

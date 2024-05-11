@@ -7,16 +7,19 @@ public class PlayerBattlePawn : BattlePawn
 {
     [Header("Player References")]
     [SerializeField] private DrawSpace _drawSpace;
+    private bool blocking;
     public void Block()
     {
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Idle")) return;
+        if (!animatorState.IsName("Idle") || blocking) return;
+        blocking = true;
         _spriteAnimator.Play("Block");
     }
     public void Unblock()
-    {
+    {  
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Block")) return;
+        if (!animatorState.IsName("Block") || !blocking) return;
+        blocking = false;
         _spriteAnimator.Play("Unblock");
     }
     public void Dodge(Direction direction)
@@ -40,10 +43,11 @@ public class PlayerBattlePawn : BattlePawn
         }
     }
     /// <summary>
-    /// Slash in a cardinal direction
+    /// Slash with an amount of strength in a specified cardinal direction
     /// </summary>
+    /// /// <param name="strength"></param>
     /// <param name="direction"></param>
-    public void Slash(Direction direction)
+    public void Slash(float strength, Direction direction)
     {
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
@@ -90,7 +94,7 @@ public class PlayerBattlePawn : BattlePawn
         {
             Dodge(Direction.South);
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             Block();
         }
