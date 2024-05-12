@@ -45,7 +45,7 @@ public class PlayerBattlePawn : BattlePawn
     /// <summary>
     /// Slash with an amount of strength in a specified cardinal direction
     /// </summary>
-    /// /// <param name="strength"></param>
+    /// <param name="strength"></param>
     /// <param name="direction"></param>
     public void Slash(float strength, Direction direction)
     {

@@ -2,10 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : StateMachine<EnemyStateMachine, EnemyState, EnemyStateInput>
+public partial class EnemyStateMachine : StateMachine<EnemyStateMachine, EnemyStateMachine.EnemyState, EnemyStateInput>
 {
+    #region Unity Messages
+    protected override void Start()
+    {
+        base.Start();
+        Conductor.Instance.OnBeat += OnBeat;
+    }
+    private void OnDestroy()
+    {
+        Conductor.Instance.OnBeat -= OnBeat;
+    }
+    #endregion
     protected override void SetInitialState()
     {
-        throw new System.NotImplementedException();
+        Transition<Idle>();
+    }
+    private void OnBeat()
+    {
+        CurrState.ContextTransition();
     }
 }

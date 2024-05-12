@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class EnemyStateInput : StateInput
 {
-    
+    #region Global Variables
+    public EnemyBattlePawn Enemy;
+    #endregion
 }

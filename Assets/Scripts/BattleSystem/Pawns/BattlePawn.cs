@@ -12,8 +12,10 @@ public class BattlePawn : MonoBehaviour
 
     public int HP => _currHP;
     public int SP => _currSP;
+    public BattlePawnData Data => _data;
+    public Animator SpriteAnimator => _spriteAnimator;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _currHP = _data.HP;
         _currSP = _data.SP;

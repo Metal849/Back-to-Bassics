@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemyData _enemyData;
+    [SerializeField] private EnemyBattlePawnData _enemyData;
     [SerializeField] private Animator _animator;
 
     private int _currHP;
