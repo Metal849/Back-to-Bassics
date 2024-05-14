@@ -16,7 +16,7 @@ public class Conductor : Singleton<Conductor>
     {
         if (beating) 
         {
-            Debug.LogWarning("Conductor has been told to beat even though it is already beating");
+            Debug.LogWarning("Conductor was issued to beat when it already is beating");
             return;
         }
 
@@ -26,7 +26,11 @@ public class Conductor : Singleton<Conductor>
     }
     public void StopBeating()
     {
-        if (!beating) return;
+        if (!beating)
+        {
+            Debug.LogWarning("Conductor was issued to stop beating when it already is not beating");
+            return;
+        }
         beating = false;
         StopAllCoroutines();
     } 
