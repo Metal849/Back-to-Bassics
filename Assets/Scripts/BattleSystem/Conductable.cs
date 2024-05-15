@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// MonoBehaviour that has access to OnBeat() for updating beating logic
+/// MonoBehaviour that uses Conductor beating behaviour
 /// </summary>
 public abstract class Conductable : MonoBehaviour
 {
@@ -11,14 +11,15 @@ public abstract class Conductable : MonoBehaviour
     protected virtual void Start()
     {
         Conductor.Instance.OnFirstBeat += OnFirstBeat;
-        Conductor.Instance.OnBeat += OnBeat;
+        Conductor.Instance.OnQuarterBeat += OnQuarterBeat;
+        Conductor.Instance.OnHalfBeat += OnHalfBeat;
+        Conductor.Instance.OnFullBeat += OnFullBeat;
         Conductor.Instance.OnLastBeat += OnLastBeat;
     }
 
-    protected virtual void OnFirstBeat() { OnBeat(); }
-    /// <summary>
-    /// Simlar to Unity Update but called on every beat fired by the Conductor.
-    /// </summary>
-    protected virtual void OnBeat() { }
-    protected virtual void OnLastBeat() { OnBeat(); }
+    protected virtual void OnFirstBeat() { OnFullBeat(); }
+    protected virtual void OnQuarterBeat() { }
+    protected virtual void OnHalfBeat() { }
+    protected virtual void OnFullBeat() { }
+    protected virtual void OnLastBeat() { OnFullBeat(); }
 }

@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using TMPro;
 
 public class PlayerBattlePawn : BattlePawn
 {
     [Header("Player References")]
     [SerializeField] private DrawSpace _drawSpace;
+    [SerializeField] private TextMeshProUGUI _slashText;
     private bool blocking;
     public Direction CurrSlashDirection { get; private set; }
-    private int lastSlashBeat = 0;
+    private float lastSlashBeat = 0;
     protected override void Awake()
     {
         base.Awake();
@@ -59,8 +61,7 @@ public class PlayerBattlePawn : BattlePawn
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
         CurrSlashDirection = direction;
-        lastSlashBeat = Conductor.Instance.Beat;
-        Debug.Log(CurrSlashDirection.ToString() + " slash at beat " + Conductor.Instance.Beat);
+        _slashText.text = CurrSlashDirection.ToString() + " slash at beat " + Conductor.Instance.Beat;
     }
     private void Update()
     {
@@ -86,12 +87,16 @@ public class PlayerBattlePawn : BattlePawn
             Unblock();
         }
     }
-    protected override void OnBeat()
+    public void ReceiveAttackRequest()
     {
-        if (CurrSlashDirection != Direction.None && Conductor.Instance.Beat > lastSlashBeat)
-        {
-            CurrSlashDirection = Direction.None;
-            Debug.Log("Slash complete at beat " + Conductor.Instance.Beat);
-        }
+        CurrSlashDirection = Direction.None;
     }
+    //protected override void OnQuarterBeat()
+    //{
+    //    if (CurrSlashDirection != Direction.None && Conductor.Instance.Beat >= lastSlashBeat)
+    //    {
+    //        CurrSlashDirection = Direction.None;
+    //        _slashCompleteText.text = "Slash complete at beat " + Conductor.Instance.Beat;
+    //    }
+    //}
 }

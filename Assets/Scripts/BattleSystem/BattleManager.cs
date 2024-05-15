@@ -14,7 +14,6 @@ public class BattleManager : Singleton<BattleManager>
     private void Start()
     {
         StartCoroutine(StartBattle());
-        Conductor.Instance.OnBeat += OnBeat;
     }
     private IEnumerator StartBattle()
     {
@@ -22,9 +21,5 @@ public class BattleManager : Singleton<BattleManager>
         yield return new WaitForSeconds(0.4f);
         _enemy.EnterBattle();
         Conductor.Instance.BeginBeating(((EnemyBattlePawnData)_enemy.Data).BPM);
-    }
-    private void OnBeat()
-    {
-
     }
 }

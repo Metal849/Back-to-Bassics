@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Pooler : Conductable
 {
-    [SerializeField] private Projectile _projectileRef;
-    protected override void OnBeat()
+    // Temp stuff to play around with spawning
+    [SerializeField] private Projectile _projectileRef; 
+    [SerializeField] private Transform _target;
+    [SerializeField] private Transform _spawnLocation;
+    [SerializeField] private int _beatsToReachTarget;
+    protected override void OnFullBeat()
     {
-        if (_projectileRef.isDestroyed) _projectileRef.Spawn(new Vector2(4f, 0.6f), new Vector2(-5f, 0f));
+        if (!_projectileRef.isDestroyed) return;
+        // Thank you Physics 1
+        Vector2 r = _target.position - _spawnLocation.position;
+        Vector2 v = r / (_beatsToReachTarget * Conductor.Instance.spb);
+        _projectileRef.Spawn(_spawnLocation.position, v);
     }
 }

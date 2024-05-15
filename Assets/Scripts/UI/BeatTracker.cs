@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class BeatTracker : MonoBehaviour
+public class BeatTracker : Conductable
 {
     private TextMeshProUGUI _textMesh;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _textMesh = GetComponent<TextMeshProUGUI>();
     }
-    private void FixedUpdate()
+    protected override void OnFullBeat()
     {
         _textMesh.text = "Beat: " + Conductor.Instance.Beat;
     }

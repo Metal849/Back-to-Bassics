@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Conductor : Singleton<Conductor>
 {
-    public int Beat { get; private set; }
+    public float Beat { get; private set; }
     public float spb {  get; private set; }
     private bool beating;
-    public event Action OnBeat;
+    
+    public event Action OnQuarterBeat;
+    public event Action OnHalfBeat;
+    public event Action OnFullBeat;
     public event Action OnFirstBeat;
     public event Action OnLastBeat;
     public void Awake()
@@ -35,17 +38,34 @@ public class Conductor : Singleton<Conductor>
             return;
         }
         beating = false;
-        StopAllCoroutines();
-        OnLastBeat.Invoke();
     } 
 
     private IEnumerator Sequencing()
     {
-        while (true)
+        float quarterTime = spb / 4f;
+        OnFirstBeat.Invoke();
+        while (beating)
         {
-            Beat++;
-            OnBeat?.Invoke();
-            yield return new WaitForSeconds(spb);      
+            yield return new WaitForSeconds(quarterTime);
+            Beat += 0.25f;
+            OnQuarterBeat?.Invoke();
+            
+            yield return new WaitForSeconds(quarterTime);
+            Beat += 0.25f;
+            OnQuarterBeat?.Invoke();
+            OnHalfBeat?.Invoke();
+            
+            yield return new WaitForSeconds(quarterTime);
+            Beat += 0.25f;
+            OnQuarterBeat?.Invoke();
+            
+            yield return new WaitForSeconds(quarterTime);
+            Beat += 0.25f;
+            OnQuarterBeat?.Invoke();
+            OnHalfBeat?.Invoke();
+            OnFullBeat?.Invoke();
+            
         }
+        OnLastBeat.Invoke();
     }
 }
