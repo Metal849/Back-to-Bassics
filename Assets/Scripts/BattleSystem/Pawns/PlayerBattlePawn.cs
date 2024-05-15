@@ -8,6 +8,13 @@ public class PlayerBattlePawn : BattlePawn
     [Header("Player References")]
     [SerializeField] private DrawSpace _drawSpace;
     private bool blocking;
+    public Direction CurrSlashDirection { get; private set; }
+    private int lastSlashBeat = 0;
+    protected override void Awake()
+    {
+        base.Awake();
+        CurrSlashDirection = Direction.None;
+    }
     public void Block()
     {
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
@@ -51,6 +58,9 @@ public class PlayerBattlePawn : BattlePawn
     {
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
+        CurrSlashDirection = direction;
+        lastSlashBeat = Conductor.Instance.Beat;
+        Debug.Log("Slash at " + Conductor.Instance.Beat);
         switch (direction)
         {
             case Direction.North:
@@ -101,6 +111,14 @@ public class PlayerBattlePawn : BattlePawn
         if (Input.GetMouseButtonUp(1))
         {
             Unblock();
+        }
+    }
+    protected override void OnBeat()
+    {
+        if (CurrSlashDirection != Direction.None && Conductor.Instance.Beat > lastSlashBeat)
+        {
+            CurrSlashDirection = Direction.None;
+            Debug.Log("Slash complete at " + Conductor.Instance.Beat);
         }
     }
 }

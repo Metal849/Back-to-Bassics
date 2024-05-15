@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattlePawn : MonoBehaviour
+public class BattlePawn : Conductable
 {
     [Header("References")]
     [SerializeField] protected BattlePawnData _data;

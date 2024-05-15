@@ -5,15 +5,21 @@ public class EnemyBattlePawn : BattlePawn
     [Header("Enemy References")]
     [SerializeField] private BattleManager _bm;
     [SerializeField] private EnemyStateMachine _esm;
-    private BattleAction[] _battleActions;
+    [SerializeField] private BattleAction[] _battleActions;
 
     protected override void Awake()
     {
         base.Awake();
+        if (Data.GetType() != typeof(EnemyBattlePawnData))
+        {
+            Debug.LogError("Enemy Battle Pawn is set incorrectly");
+            return;
+        }
         _bm = FindObjectOfType<BattleManager>();
         _esm = GetComponent<EnemyStateMachine>();
 
         // Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
+        if (_battleActions == null) return;
         foreach (BattleAction action in _battleActions)
         {
             action.ParentPawn = this;

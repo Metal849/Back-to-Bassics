@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// MonoBehaviour that using OnBeat() for updating logic as apposed to using Update()
+/// MonoBehaviour that has access to OnBeat() for updating beating logic
 /// </summary>
 public abstract class Conductable : MonoBehaviour
 {
@@ -16,5 +16,5 @@ public abstract class Conductable : MonoBehaviour
     /// <summary>
     /// Simlar to Unity Update but called on every beat fired by the Conductor.
     /// </summary>
-    protected abstract void OnBeat();
+    protected virtual void OnBeat() { }
 }

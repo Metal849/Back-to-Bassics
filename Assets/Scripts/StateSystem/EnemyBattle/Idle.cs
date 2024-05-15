@@ -9,7 +9,7 @@ public partial class EnemyStateMachine
         public override void Enter(EnemyStateInput i)
         {
             base.Enter(i);
-            Input.Enemy.SpriteAnimator.Play("Idle");
+            //Input.Enemy.SpriteAnimator.Play("Idle");
         }
 
         public override void Update()

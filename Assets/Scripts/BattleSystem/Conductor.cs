@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Conductor : Singleton<Conductor>
 {
-    private int _currBeat = 0;
+    public int Beat { get; private set; }
     private float spm;
     private bool beating;
     public event Action OnBeat;
@@ -19,7 +19,7 @@ public class Conductor : Singleton<Conductor>
             Debug.LogWarning("Conductor was issued to beat when it already is beating");
             return;
         }
-
+        Beat = 0;
         spm = 60f / bpm;
         beating = true;
         StartCoroutine(Sequencing());
@@ -39,7 +39,7 @@ public class Conductor : Singleton<Conductor>
     {
         while (true)
         {
-            _currBeat++;
+            Beat++;
             OnBeat?.Invoke();
             yield return new WaitForSeconds(spm);      
         }
