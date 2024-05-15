@@ -9,19 +9,22 @@ public class RandomHomingProjectileSpawner : Conductable
     [SerializeField] private GameObject _projectileRef;
     [SerializeField] private int _maxProjectileSpawn;
     [SerializeField] private BoxCollider _spawnMedium;
+    [SerializeField] private float _spawnRateInBeats;
     [Header("Target Spec")]
     [SerializeField] private Transform _target;
     [SerializeField] private int _beatsToReachTarget;
 
     private Projectile _projectile;
+    private float _currCooldown;
     protected override void Start()
     {
         base.Start();
         _projectile = _projectileRef.GetComponent<Projectile>();
         Pooler.Instance.InstantiateProjectiles(_projectileRef, _maxProjectileSpawn);
     }
-    protected override void OnFullBeat()
+    protected override void OnQuarterBeat()
     {
+        if (Conductor.Instance.Beat < _currCooldown) return;
         Vector2 spawnLocation = new Vector2
             (
                 Random.Range(_spawnMedium.bounds.min.x, _spawnMedium.bounds.max.x),
@@ -31,5 +34,7 @@ public class RandomHomingProjectileSpawner : Conductable
         Vector2 r = _target.position - (Vector3)spawnLocation;
         Vector2 v = r / (_beatsToReachTarget * Conductor.Instance.spb);
         Pooler.Instance.Spawn(_projectile, spawnLocation, v);
+
+        _currCooldown = Conductor.Instance.Beat + _spawnRateInBeats;
     }
 }
