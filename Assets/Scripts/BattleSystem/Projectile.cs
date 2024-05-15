@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,7 +7,6 @@ public class Projectile : Conductable
 {
     [Header("Projectile Specs")]
     [SerializeField] private int _dmg;
-    [SerializeField] private TextMeshProUGUI _attackRequestUI;
     private float _speed;
     private Rigidbody _rb;
     private Direction _opposeDirection;
@@ -55,7 +53,6 @@ public class Projectile : Conductable
     {
         _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
-        _attackRequestUI.text = _opposeDirection + " enemy at beat " + Conductor.Instance.Beat;
         _hitPlayerPawn.ReceiveAttackRequest();
         _attackWindow = Conductor.Instance.Beat + 0.5f;
         _rb.velocity = Vector2.zero;
