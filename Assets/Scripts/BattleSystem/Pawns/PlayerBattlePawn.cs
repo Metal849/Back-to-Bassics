@@ -9,7 +9,7 @@ public class PlayerBattlePawn : BattlePawn
     [Header("Player References")]
     [SerializeField] private DrawSpace _drawSpace;
     [SerializeField] private TextMeshProUGUI _slashText;
-    private bool blocking;
+    public bool blocking { get; private set; }
     public Direction CurrSlashDirection { get; private set; }
     private float lastSlashBeat = 0;
     protected override void Awake()

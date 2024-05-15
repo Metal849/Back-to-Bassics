@@ -59,11 +59,17 @@ public class Projectile : Conductable
     }
     protected override void OnQuarterBeat()
     {
-        if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && Conductor.Instance.Beat < _attackWindow)) return;
+        // Conditionals are yucky, thus do on event calls nub!
+        if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && !_hitPlayerPawn.blocking && Conductor.Instance.Beat < _attackWindow)) return;
 
         if (_hitPlayerPawn.CurrSlashDirection == _opposeDirection)
         {
             Debug.Log("Parried");
+        }
+        else if (_hitPlayerPawn.blocking)
+        {
+            Debug.Log("Blocked");
+            _hitPlayerPawn.Lurch(_dmg);
         }
         else
         {

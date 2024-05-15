@@ -15,5 +15,6 @@ MonoBehaviour:
   _name: Sample
   _hp: 10
   _sp: 5
+  _staggerRecoveryRate: 0
   _lore: hehehe hooo hoo
-  _bpm: 120
+  _bpm: 180
