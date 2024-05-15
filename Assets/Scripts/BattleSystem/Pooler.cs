@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pooler : MonoBehaviour
+public class Pooler : Conductable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Projectile _projectileRef;
+    protected override void OnBeat()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (_projectileRef.isDestroyed) _projectileRef.Spawn(new Vector2(4f, 0.6f), new Vector2(-5f, 0f));
     }
 }

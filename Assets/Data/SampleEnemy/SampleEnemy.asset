@@ -16,5 +16,4 @@ MonoBehaviour:
   _hp: 10
   _sp: 5
   _lore: hehehe hooo hoo
-  _bpm: 30
-  _attacks: []
+  _bpm: 120

@@ -60,34 +60,7 @@ public class PlayerBattlePawn : BattlePawn
         if (!animatorState.IsName("Idle")) return;
         CurrSlashDirection = direction;
         lastSlashBeat = Conductor.Instance.Beat;
-        Debug.Log("Slash at " + Conductor.Instance.Beat);
-        switch (direction)
-        {
-            case Direction.North:
-                Debug.Log("North");
-                break;
-            case Direction.South:
-                Debug.Log("South");
-                break;
-            case Direction.East:
-                Debug.Log("East");
-                break;
-            case Direction.West:
-                Debug.Log("West");
-                break;
-            case Direction.Northeast:
-                Debug.Log("Northeast");
-                break;
-            case Direction.Northwest:
-                Debug.Log("Northwest");
-                break;
-            case Direction.Southeast:
-                Debug.Log("Southeast");
-                break;
-            case Direction.Southwest:
-                Debug.Log("Southwest");
-                break;
-        }
+        Debug.Log(CurrSlashDirection.ToString() + " slash at beat " + Conductor.Instance.Beat);
     }
     private void Update()
     {
@@ -118,7 +91,7 @@ public class PlayerBattlePawn : BattlePawn
         if (CurrSlashDirection != Direction.None && Conductor.Instance.Beat > lastSlashBeat)
         {
             CurrSlashDirection = Direction.None;
-            Debug.Log("Slash complete at " + Conductor.Instance.Beat);
+            Debug.Log("Slash complete at beat " + Conductor.Instance.Beat);
         }
     }
 }

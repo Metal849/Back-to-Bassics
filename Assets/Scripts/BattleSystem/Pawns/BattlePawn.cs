@@ -7,8 +7,10 @@ public class BattlePawn : Conductable
     [Header("References")]
     [SerializeField] protected BattlePawnData _data;
     [SerializeField] protected Animator _spriteAnimator;
-    protected int _currHP;
-    protected int _currSP;
+
+    [Header("Battle Pawn Data")]
+    [SerializeField] protected int _currHP;
+    [SerializeField] protected int _currSP;
 
     public int HP => _currHP;
     public int SP => _currSP;

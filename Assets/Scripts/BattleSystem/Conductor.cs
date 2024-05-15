@@ -5,9 +5,11 @@ using UnityEngine;
 public class Conductor : Singleton<Conductor>
 {
     public int Beat { get; private set; }
-    private float spm;
+    public float spb {  get; private set; }
     private bool beating;
     public event Action OnBeat;
+    public event Action OnFirstBeat;
+    public event Action OnLastBeat;
     public void Awake()
     {
         InitializeSingleton();
@@ -20,8 +22,9 @@ public class Conductor : Singleton<Conductor>
             return;
         }
         Beat = 0;
-        spm = 60f / bpm;
+        spb = 60f / bpm;
         beating = true;
+        OnFirstBeat.Invoke();
         StartCoroutine(Sequencing());
     }
     public void StopBeating()
@@ -33,6 +36,7 @@ public class Conductor : Singleton<Conductor>
         }
         beating = false;
         StopAllCoroutines();
+        OnLastBeat.Invoke();
     } 
 
     private IEnumerator Sequencing()
@@ -41,7 +45,7 @@ public class Conductor : Singleton<Conductor>
         {
             Beat++;
             OnBeat?.Invoke();
-            yield return new WaitForSeconds(spm);      
+            yield return new WaitForSeconds(spb);      
         }
     }
 }
