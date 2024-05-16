@@ -39,8 +39,11 @@ public class DrawSpace : MonoBehaviour
             _lineRenderer = null;
 
             if (line.magnitude < _effectiveSlashLength) return;
-            Direction dir = DirectionHelper.GetVectorDirection(line);
-            _player.Slash(line.magnitude, dir);
+            // Old Cardinal Fixed Cardinal Direction Logic
+            //Direction dir = DirectionHelper.GetVectorDirection(line);
+            //_player.Slash(line.magnitude, dir);
+
+            _player.Slash(line);
         }
     }
 

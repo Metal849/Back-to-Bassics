@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bass
   _hp: 100
-  _sp: 100
+  _sp: 20
   _staggerRecoveryRate: 3
   _lore: This is the player :3

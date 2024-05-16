@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : Conductable
+public class Projectile : Conductable, IAttackRequester
 {
     [Header("Projectile Specs")]
     [SerializeField] private int _dmg;
@@ -17,8 +18,7 @@ public class Projectile : Conductable
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        isDestroyed = true;
-        gameObject.SetActive(false);
+        Destroy();
     }
     #endregion
     /// <summary>
@@ -53,15 +53,20 @@ public class Projectile : Conductable
     {
         _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
-        _hitPlayerPawn.ReceiveAttackRequest();
+        if (_hitPlayerPawn.blocking)
+        {
+            OnReceiverBlock(_hitPlayerPawn);
+            return;
+        }
+        _hitPlayerPawn.AttackRequest(this);
         _attackWindow = Conductor.Instance.Beat + 0.5f;
         _rb.velocity = Vector2.zero;
     }
     protected override void OnQuarterBeat()
     {
         // Conditionals are yucky, thus do on event calls nub!
-        if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && !_hitPlayerPawn.blocking && Conductor.Instance.Beat < _attackWindow)) return;
-
+        //if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && !_hitPlayerPawn.blocking && Conductor.Instance.Beat < _attackWindow)) return;
+        if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
         if (_hitPlayerPawn.CurrSlashDirection == _opposeDirection)
         {
             Debug.Log("Parried");
@@ -77,6 +82,34 @@ public class Projectile : Conductable
             _hitPlayerPawn.Damage(_dmg);
         }
 
+        Destroy();
+    }
+    public void OnReceiverDeflect(IAttackReceiver receiver)
+    {
+        if (IsSlashWithinOpposeDirection(-_rb.velocity, _hitPlayerPawn.SlashDirection) && Conductor.Instance.Beat < _attackWindow)
+        {
+            Debug.Log("Parried");
+            
+        }
+        else
+        {
+            Debug.Log("Miss");
+            _hitPlayerPawn.Damage(_dmg);
+        }
+        Destroy();
+    }
+    public void OnReceiverBlock(IAttackReceiver receiver)
+    {
+        Debug.Log("Blocked");
+        _hitPlayerPawn.Lurch(_dmg);
+        Destroy();
+    }
+    public bool IsSlashWithinOpposeDirection(Vector2 opposeDirection, Vector2 slashDirection)
+    {
+        return Vector2.Angle(slashDirection, opposeDirection) <= 5f;
+    }
+    public void Destroy()
+    {
         isDestroyed = true;
         _hitPlayerPawn = null;
         gameObject.SetActive(false);
