@@ -69,16 +69,19 @@ public class Projectile : Conductable, IAttackRequester
         if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
         if (_hitPlayerPawn.CurrSlashDirection == _opposeDirection)
         {
-            Debug.Log("Parried");
+            Debug.Log("Parried On Beat");
+            UIManager.Instance.IncrementParryTracker();
         }
         else if (_hitPlayerPawn.blocking)
         {
-            Debug.Log("Blocked");
+            Debug.Log("Blocked on Beat");
+            UIManager.Instance.IncrementBlockTracker();
             _hitPlayerPawn.Lurch(_dmg);
         }
         else
         {
-            Debug.Log("Miss");
+            Debug.Log("Miss on Beat");
+            UIManager.Instance.IncrementMissTracker();
             _hitPlayerPawn.Damage(_dmg);
         }
 
@@ -88,19 +91,18 @@ public class Projectile : Conductable, IAttackRequester
     {
         if (IsSlashWithinOpposeDirection(-_rb.velocity, _hitPlayerPawn.SlashDirection) && Conductor.Instance.Beat < _attackWindow)
         {
-            Debug.Log("Parried");
-            
+            UIManager.Instance.IncrementParryTracker();
         }
         else
         {
-            Debug.Log("Miss");
+            UIManager.Instance.IncrementMissTracker();
             _hitPlayerPawn.Damage(_dmg);
         }
         Destroy();
     }
     public void OnReceiverBlock(IAttackReceiver receiver)
     {
-        Debug.Log("Blocked");
+        UIManager.Instance.IncrementBlockTracker();
         _hitPlayerPawn.Lurch(_dmg);
         Destroy();
     }

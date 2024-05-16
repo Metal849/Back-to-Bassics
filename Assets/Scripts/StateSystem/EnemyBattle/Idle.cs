@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class EnemyStateMachine
 {
+    // Create two versions of Idle such that you can either slash at the opponet or not
     public class Idle : EnemyState
     {
         public override void Enter(EnemyStateInput i)

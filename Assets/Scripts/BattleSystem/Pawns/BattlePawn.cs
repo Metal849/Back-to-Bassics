@@ -58,7 +58,7 @@ public class BattlePawn : Conductable, IAttackReceiver
         if (_spBar != null) _spBar.fillAmount = _currSP / _data.SP;
         if (_currSP <= 0)
         {
-            IsStaggered = true;
+            //IsStaggered = true; UNCOMMENT ME WHEN THERE IS A WAY TO UNSTAGGER
             _currSP = 0;
             OnStagger();
         }
