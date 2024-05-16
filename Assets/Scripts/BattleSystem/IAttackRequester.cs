@@ -1,5 +1,5 @@
 public interface IAttackRequester
 {
-    public void OnReceiverDeflect(IAttackReceiver receiver);
-    public void OnReceiverBlock(IAttackReceiver receiver);
+    public void OnRequestDeflect(IAttackReceiver receiver);
+    public void OnRequestBlock(IAttackReceiver receiver);
 }

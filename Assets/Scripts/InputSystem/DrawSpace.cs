@@ -35,14 +35,13 @@ public class DrawSpace : MonoBehaviour
         else if (_lineRenderer != null)
         {
             Vector2 line = _lineRenderer.GetPosition(_lineRenderer.positionCount - 1) - _lineRenderer.GetPosition(0);
+
+            // TODO: Make this more flexier, this is weak sauce
             Destroy(_lineRenderer.gameObject);
             _lineRenderer = null;
+            //-------------------------------------------------
 
             if (line.magnitude < _effectiveSlashLength) return;
-            // Old Cardinal Fixed Cardinal Direction Logic
-            //Direction dir = DirectionHelper.GetVectorDirection(line);
-            //_player.Slash(line.magnitude, dir);
-
             _player.Slash(line);
         }
     }

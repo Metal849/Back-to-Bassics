@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 public class BattlePawn : Conductable, IAttackReceiver
@@ -32,14 +31,10 @@ public class BattlePawn : Conductable, IAttackReceiver
     }
     public void FixedUpdate()
     {
-        if (_currSP < _data.SP)
-        {
-            _currSP += _data.StaggerRecoveryRate * Time.deltaTime;
-            _spBar.fillAmount = _currSP / _data.SP;
-        }
+        RecoverSP(_data.StaggerRecoveryRate * Time.deltaTime);
     }
     #endregion
-    public void Damage(int amount)
+    public virtual void Damage(float amount)
     {
         if (IsDead) return;
         _currHP -= amount;
@@ -51,7 +46,7 @@ public class BattlePawn : Conductable, IAttackReceiver
             OnDeath();
         }
     }
-    public void Lurch(int amount)
+    public virtual void Lurch(float amount)
     {
         if (IsStaggered) return;
         _currSP -= amount;
@@ -63,15 +58,26 @@ public class BattlePawn : Conductable, IAttackReceiver
             OnStagger();
         }
     }
-    public void EnterBattle()
+    public virtual void RecoverSP(float amount)
+    {
+        if (_currSP < _data.SP)
+        {
+            _currSP += amount;
+
+            // TEMP UGLY UI UPDATING
+            _spBar.fillAmount = _currSP / _data.SP;
+        }
+    }
+    public virtual void EnterBattle()
     {
         gameObject.SetActive(true);
         _spriteAnimator.Play("EnterBattle");
     }
-    public void LeaveBattle()
+    public virtual void LeaveBattle()
     {
         // TODO: Play Some Animation that makes the battle pawn leave the battle
     }
+    #region BattlePawn Messages
     protected virtual void OnStagger()
     {
         // TODO: Things that occur on battle pawn stagger
@@ -80,13 +86,14 @@ public class BattlePawn : Conductable, IAttackReceiver
     {
         // TODO: Things that occur on battle pawn death
     }
-    #region IAttackRequester Methods
-    public void AttackRequest(IAttackRequester requester)
+    #endregion
+    #region IAttackReceiver Methods
+    public void ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequester = requester;
     }
 
-    public void AttackComplete(IAttackRequester requester)
+    public void CompleteAttackRequest(IAttackRequester requester)
     {
         if (_activeAttackRequester != requester)
         {

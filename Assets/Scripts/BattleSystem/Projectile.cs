@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -55,10 +54,10 @@ public class Projectile : Conductable, IAttackRequester
         if (_hitPlayerPawn == null) return;
         if (_hitPlayerPawn.blocking)
         {
-            OnReceiverBlock(_hitPlayerPawn);
+            OnRequestBlock(_hitPlayerPawn);
             return;
         }
-        _hitPlayerPawn.AttackRequest(this);
+        _hitPlayerPawn.ReceiveAttackRequest(this);
         _attackWindow = Conductor.Instance.Beat + 0.5f;
         _rb.velocity = Vector2.zero;
     }
@@ -67,12 +66,7 @@ public class Projectile : Conductable, IAttackRequester
         // Conditionals are yucky, thus do on event calls nub!
         //if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && !_hitPlayerPawn.blocking && Conductor.Instance.Beat < _attackWindow)) return;
         if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
-        if (_hitPlayerPawn.CurrSlashDirection == _opposeDirection)
-        {
-            Debug.Log("Parried On Beat");
-            UIManager.Instance.IncrementParryTracker();
-        }
-        else if (_hitPlayerPawn.blocking)
+        if (_hitPlayerPawn.blocking)
         {
             Debug.Log("Blocked on Beat");
             UIManager.Instance.IncrementBlockTracker();
@@ -87,7 +81,7 @@ public class Projectile : Conductable, IAttackRequester
 
         Destroy();
     }
-    public void OnReceiverDeflect(IAttackReceiver receiver)
+    public void OnRequestDeflect(IAttackReceiver receiver)
     {
         if (IsSlashWithinOpposeDirection(-_rb.velocity, _hitPlayerPawn.SlashDirection) && Conductor.Instance.Beat < _attackWindow)
         {
@@ -100,7 +94,7 @@ public class Projectile : Conductable, IAttackRequester
         }
         Destroy();
     }
-    public void OnReceiverBlock(IAttackReceiver receiver)
+    public void OnRequestBlock(IAttackReceiver receiver)
     {
         UIManager.Instance.IncrementBlockTracker();
         _hitPlayerPawn.Lurch(_dmg);
