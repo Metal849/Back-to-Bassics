@@ -18,15 +18,17 @@ public class Pooler : Conductable
         }
     }
     #endregion
-    // Temp stuff to play around with spawning
+    class ProjectileBank
+    {
+        public Projectile[] projectiles { get; set; }
+        public int currIdx { get; set; }
+    }
 
-    private Dictionary<Projectile, Projectile[]> _projectileRefMapping;
-    private Dictionary<Projectile, int> _projectileSpawnIndex;
+    private Dictionary<Projectile, ProjectileBank> _projectileRefMapping;
 
     private void Awake()
     {
-        _projectileRefMapping = new Dictionary<Projectile, Projectile[]>();
-        _projectileSpawnIndex = new Dictionary<Projectile, int>();
+        _projectileRefMapping = new Dictionary<Projectile, ProjectileBank>();
     }
 
     public void InstantiateProjectiles(GameObject projectileRef, int count)
@@ -37,19 +39,20 @@ public class Pooler : Conductable
             Debug.LogError("Pooler cannot instantiate object without Projectile component.");
             return;
         }
-        _projectileRefMapping[projectile] = new Projectile[count];
-        _projectileSpawnIndex[projectile] = 0;
+        _projectileRefMapping[projectile] = new ProjectileBank();
+        _projectileRefMapping[projectile].projectiles = new Projectile[count];
+        _projectileRefMapping[projectile].currIdx = 0;
         for (int i = 0; i < count; i++)
         {
-            _projectileRefMapping[projectile][i] = Instantiate(projectileRef).GetComponent<Projectile>();
-            _projectileRefMapping[projectile][i].transform.SetParent(transform, true);
+            _projectileRefMapping[projectile].projectiles[i] = Instantiate(projectileRef).GetComponent<Projectile>();
+            _projectileRefMapping[projectile].projectiles[i].transform.SetParent(transform, true);
         }
     }
     public void Spawn(Projectile projectile, Vector3 position, Vector3 velocity)
     {
         // If projectile not destroyed then we looped back to max in use projectiles, thus don't spawn a new one
-        if (!_projectileRefMapping[projectile][_projectileSpawnIndex[projectile]].isDestroyed) return;
-        _projectileRefMapping[projectile][_projectileSpawnIndex[projectile]].Spawn(position, velocity);
-        _projectileSpawnIndex[projectile] = (_projectileSpawnIndex[projectile] + 1) % _projectileRefMapping[projectile].Length;
+        if (!_projectileRefMapping[projectile].projectiles[_projectileRefMapping[projectile].currIdx].isDestroyed) return;
+        _projectileRefMapping[projectile].projectiles[_projectileRefMapping[projectile].currIdx].Spawn(position, velocity);
+        _projectileRefMapping[projectile].currIdx = (_projectileRefMapping[projectile].currIdx + 1) % _projectileRefMapping[projectile].projectiles.Length;
     }
 }

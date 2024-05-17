@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyBattlePawn : BattlePawn
+public class EnemyBattlePawn : BattlePawn, IAttackReceiver
 {
     [Header("Enemy References")]
     [SerializeField] private BattleManager _bm;
@@ -47,4 +47,19 @@ public class EnemyBattlePawn : BattlePawn
     {
         _battleActions[i].Perform(dir);
     }
+    #region IAttackReceiver Methods
+    public void ReceiveAttackRequest(IAttackRequester requester)
+    {
+        if (_esm.IsOnState<EnemyStateMachine.Idle>())
+        {
+            Damage(requester.AttackDamage());
+            Lurch(requester.AttackLurch());
+        }
+    }
+
+    public void CompleteAttackRequest(IAttackRequester requester)
+    {
+        throw new System.NotImplementedException();
+    }
+    #endregion
 }

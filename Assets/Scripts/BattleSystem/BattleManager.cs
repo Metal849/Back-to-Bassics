@@ -7,7 +7,9 @@ public class BattleManager : Singleton<BattleManager>
 {
     [SerializeField] private PlayerBattlePawn _player;
     [SerializeField] private EnemyBattlePawn _enemy;
-    public bool IsBattleActive { get; private set; }    
+    public bool IsBattleActive { get; private set; } 
+    public PlayerBattlePawn Player => _player;
+    public EnemyBattlePawn Enemy => _enemy;
     private void Awake()
     {
         InitializeSingleton();

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBattlePawn : BattlePawn
+public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 {
     [Header("Player References")]
-    [SerializeField] private DrawSpace _drawSpace;
+    [SerializeField] private PlayerWeaponData _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
+    private IAttackRequester _activeAttackRequester;
     protected override void Awake()
     {
         base.Awake();
@@ -62,6 +63,10 @@ public class PlayerBattlePawn : BattlePawn
             _activeAttackRequester.OnRequestDeflect(this);
             _activeAttackRequester = null;
         }
+        else // Request Attack to EnemyBattlePawn
+        {
+            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
+        }
     }
     #endregion
     /// <summary>
@@ -97,5 +102,39 @@ public class PlayerBattlePawn : BattlePawn
         {
             Unblock();
         }
+    }
+    #region IAttackReceiver Methods
+    public void ReceiveAttackRequest(IAttackRequester requester)
+    {
+        _activeAttackRequester = requester;
+    }
+
+    public void CompleteAttackRequest(IAttackRequester requester)
+    {
+        if (_activeAttackRequester != requester)
+        {
+            Debug.Log("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequester + "\" instead got \"" + requester + ".\"");
+            return;
+        }
+        _activeAttackRequester = null;
+    }
+    #endregion
+
+    public void OnRequestDeflect(IAttackReceiver receiver)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnRequestBlock(IAttackReceiver receiver)
+    {
+        throw new System.NotImplementedException();
+    }
+    public float AttackDamage()
+    {
+        return _weaponData.Dmg;
+    }
+    public float AttackLurch()
+    {
+        return _weaponData.Lrch;
     }
 }

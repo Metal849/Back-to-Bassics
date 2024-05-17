@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class BattlePawn : Conductable, IAttackReceiver
+public class BattlePawn : Conductable
 {
     [Header("References")]
     [SerializeField] protected BattlePawnData _data;
@@ -21,7 +21,6 @@ public class BattlePawn : Conductable, IAttackReceiver
     public bool IsDead { get; private set; }
     public bool IsStaggered { get; private set; }
     public Animator SpriteAnimator => _spriteAnimator;
-    protected IAttackRequester _activeAttackRequester;
     #region Unity Messages
     protected virtual void Awake()
     {
@@ -85,22 +84,6 @@ public class BattlePawn : Conductable, IAttackReceiver
     protected virtual void OnDeath()
     {
         // TODO: Things that occur on battle pawn death
-    }
-    #endregion
-    #region IAttackReceiver Methods
-    public void ReceiveAttackRequest(IAttackRequester requester)
-    {
-        _activeAttackRequester = requester;
-    }
-
-    public void CompleteAttackRequest(IAttackRequester requester)
-    {
-        if (_activeAttackRequester != requester)
-        {
-            Debug.Log("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequester + "\" instead got \"" + requester +".\"");
-            return;
-        }
-        _activeAttackRequester = null;
     }
     #endregion
 }
