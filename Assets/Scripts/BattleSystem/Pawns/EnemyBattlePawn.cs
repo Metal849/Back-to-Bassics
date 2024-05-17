@@ -25,16 +25,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     }
     public void PerformRandomBattleActionSequence()
     {
-        BroadcastBattleAction(Random.Range(0, _battleActions.Length), (Direction)Random.Range(0, (int)Direction.None));
-    }
-    /// <summary>
-    /// Select from some attack i to broadcast, and then provide a direction if the attack has variants based on this
-    /// </summary>
-    /// <param name="i"></param>
-    /// <param name="dir"></param>
-    public void BroadcastBattleAction(int i, Direction dir)
-    {
-        _battleActions[i].Broadcast(dir);
+        PerformBattleAction(Random.Range(0, _battleActions.Length), (Direction)Random.Range(0, (int)Direction.None));
     }
     /// <summary>
     /// Select from some attack i to perform, and then provide a direction if the attack has variants based on this

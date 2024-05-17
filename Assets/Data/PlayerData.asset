@@ -15,5 +15,6 @@ MonoBehaviour:
   _name: Bass
   _hp: 100
   _sp: 20
-  _staggerRecoveryRate: 3
+  _spRecoveryRate: 0.3
+  _staggerRecoveryTime: 2
   _lore: This is the player :3

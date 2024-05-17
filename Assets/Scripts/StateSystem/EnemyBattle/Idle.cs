@@ -27,7 +27,7 @@ public partial class EnemyStateMachine
         {
             Input.Enemy.Damage(requester.AttackDamage);
             Input.Enemy.Lurch(requester.AttackLurch);
-            Input.Enemy.CompleteAttackRequest(requester);
+            //Input.Enemy.CompleteAttackRequest(requester);
         }
     }
 }

@@ -51,6 +51,8 @@ public class Projectile : Conductable, IAttackRequester
     {
         _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
+        // TODO: Think of a better way for this to work without projectile needing to know player pawn's state
+        // HINT: Use CompleteAttackRequest
         if (_hitPlayerPawn.blocking)
         {
             OnRequestBlock(_hitPlayerPawn);
@@ -62,23 +64,16 @@ public class Projectile : Conductable, IAttackRequester
     }
     protected override void OnQuarterBeat()
     {
-        // TODO: Think of a better way for this to work without projectile needing to know player pawns state
+        // TODO: Think of a better way for this to work without projectile needing to know player pawn's state
         // HINT: Use CompleteAttackRequest
-        // Conditionals are yucky, thus do on event calls nub!
-        //if (_hitPlayerPawn == null || (_hitPlayerPawn.CurrSlashDirection != _opposeDirection && !_hitPlayerPawn.blocking && Conductor.Instance.Beat < _attackWindow)) return;
         if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
-        if (_hitPlayerPawn.blocking)
-        {
-            Debug.Log("Blocked on Beat");
-            UIManager.Instance.IncrementBlockTracker();
-            _hitPlayerPawn.Lurch(AttackLurch);
-        }
-        else
-        {
-            Debug.Log("Miss on Beat");
-            UIManager.Instance.IncrementMissTracker();
-            _hitPlayerPawn.Damage(AttackDamage);
-        }
+
+        // (TEMP) Manual DEBUG UI Tracker -------
+        UIManager.Instance.IncrementMissTracker();
+        //---------------------------------------
+
+        _hitPlayerPawn.Damage(AttackDamage);
+
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }

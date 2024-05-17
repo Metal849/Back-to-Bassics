@@ -5,15 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/BattlePawnData"), System.Serializable]
 public class BattlePawnData : ScriptableObject
 {
-    [SerializeField] private string _name;
-    [SerializeField] private int _hp;
-    [SerializeField] private int _sp;
-    [SerializeField] private float _staggerRecoveryRate;
+    [SerializeField, Tooltip("Name of pawn")] private string _name;
+    [SerializeField, Tooltip("Hit points")] private int _hp;
+    [SerializeField, Tooltip("Stagger points")] private int _sp;
+    [SerializeField, Tooltip("Multiple per fixedDeltaTime")] private float _spRecoveryRate;
+    [SerializeField, Tooltip("In seconds")] private float _staggerRecoveryTime;
     [SerializeField, TextArea] private string _lore;
 
     public string Name => _name;
     public int HP => _hp;
     public int SP => _sp;
-    public float StaggerRecoveryRate => _staggerRecoveryRate;
+    public float SPRecoveryRate => _spRecoveryRate;
+    public float StaggerRecoveryTime => _staggerRecoveryTime;
     public string Lore => _lore;
 }

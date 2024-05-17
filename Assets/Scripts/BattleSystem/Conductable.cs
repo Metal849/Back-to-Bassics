@@ -17,9 +17,9 @@ public abstract class Conductable : MonoBehaviour
         Conductor.Instance.OnLastBeat += OnLastBeat;
     }
 
-    protected virtual void OnFirstBeat() { OnFullBeat(); }
+    protected virtual void OnFirstBeat() { }
     protected virtual void OnQuarterBeat() { }
     protected virtual void OnHalfBeat() { }
     protected virtual void OnFullBeat() { }
-    protected virtual void OnLastBeat() { OnFullBeat(); }
+    protected virtual void OnLastBeat() { }
 }

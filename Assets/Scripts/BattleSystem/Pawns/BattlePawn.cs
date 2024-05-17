@@ -7,41 +7,51 @@ public class BattlePawn : Conductable
     [Header("References")]
     [SerializeField] protected BattlePawnData _data;
     [SerializeField] protected Animator _spriteAnimator;
+    public BattlePawnData Data => _data;
+    public Animator SpriteAnimator => _spriteAnimator;
 
     [Header("Battle Pawn Data")]
     [SerializeField] protected float _currHP;
     [SerializeField] protected float _currSP;
+    public float HP => _currHP;
+    public float SP => _currSP;
 
     [Header("Temporary Direct Ref UI tracking")]
     [SerializeField] private Image _hpBar;
     [SerializeField] private Image _spBar;
-    public float HP => _currHP;
-    public float SP => _currSP;
-    public BattlePawnData Data => _data;
+
+    #region BattlePawn Boolean States
     public bool IsDead { get; private set; }
     public bool IsStaggered { get; private set; }
-    public Animator SpriteAnimator => _spriteAnimator;
+    #endregion
+
     #region Unity Messages
     protected virtual void Awake()
     {
         _currHP = _data.HP;
         _currSP = _data.SP;
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // Remove this and do equivalent in Animator logic
     }
     public void FixedUpdate()
     {
-        RecoverSP(_data.StaggerRecoveryRate * Time.deltaTime);
+        if (IsStaggered) return;
+        RecoverSP(_data.SPRecoveryRate * Time.deltaTime);
     }
     #endregion
     public virtual void Damage(float amount)
     {
         if (IsDead) return;
         _currHP -= amount;
+        // (TEMP) Manual UI BS -> TODO: Needs to be event driven and called, not handled here!
         if (_hpBar != null) _hpBar.fillAmount = _currHP / _data.HP;
+        // -------------------
         if (_currHP <= 0) 
         {
-            IsDead = true;
+            // Battle Pawn Death
             _currHP = 0;
+            IsDead = true;
+            // TODO: Play Death Animation
+            // TODO: Notify BattleManager to broadcast this BattlePawn's death
             OnDeath();
         }
     }
@@ -49,21 +59,28 @@ public class BattlePawn : Conductable
     {
         if (IsStaggered) return;
         _currSP -= amount;
+        // (TEMP) Manual UI BS
         if (_spBar != null) _spBar.fillAmount = _currSP / _data.SP;
+        // --------------------
         if (_currSP <= 0)
         {
-            //IsStaggered = true; UNCOMMENT ME WHEN THERE IS A WAY TO UNSTAGGER
+            // Battle Pawn Stagger
             _currSP = 0;
+            StartCoroutine(StaggerSelf());
             OnStagger();
         }
     }
+    // TODO: Implement Status Ailment Applier Method
+    // This should just be in the form of a GameObject Component
+    //public virtual void ApplyStatusAilment(statusAilment ailment) { }
+
     public virtual void RecoverSP(float amount)
     {
         if (_currSP < _data.SP)
         {
             _currSP += amount;
 
-            // TEMP UGLY UI UPDATING
+            // (TEMP) UGLY MANUAL UI UPDATING
             _spBar.fillAmount = _currSP / _data.SP;
         }
     }
@@ -86,4 +103,14 @@ public class BattlePawn : Conductable
         // TODO: Things that occur on battle pawn death
     }
     #endregion
+    protected virtual IEnumerator StaggerSelf()
+    {
+        IsStaggered = true;
+        // TODO: Play Stagger Animation
+        // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
+        yield return new WaitForSeconds(_data.StaggerRecoveryTime);
+        _currSP = _data.SP;
+        IsStaggered = false;
+        // TODO: Play StaggerRecovery Animation
+    }
 }

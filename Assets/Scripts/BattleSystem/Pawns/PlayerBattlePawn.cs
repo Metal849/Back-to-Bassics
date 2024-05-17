@@ -8,18 +8,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [SerializeField] private PlayerWeaponData _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
-    private IAttackRequester _activeAttackRequester;
+    private Queue<IAttackRequester> _activeAttackRequesters;
 
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
     protected override void Awake()
     {
         base.Awake();
+        _activeAttackRequesters = new Queue<IAttackRequester>();
         SlashDirection = Vector2.zero;
     }
     #region Player Actions
     /// <summary>
-    /// Block :3
+    /// Processes blocks to any active attack requests.
     /// </summary>
     public void Block()
     {
@@ -28,14 +29,15 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (!animatorState.IsName("Idle") || blocking) return;
         blocking = true;
         _spriteAnimator.Play("Block");
-        if (_activeAttackRequester != null)
+        if (_activeAttackRequesters.Count > 0)
         {
-            _activeAttackRequester.OnRequestBlock(this);
-            _activeAttackRequester = null; // Line is more efficent than adding CompleteAttackRequester() to call stack
+            // (Suggestion) Maybe you should process all requests?
+            _activeAttackRequesters.Dequeue().OnRequestBlock(this);
         }
     }
     /// <summary>
-    /// Should Follow Blocking, the animation and the input. Might not need the !blocking check
+    /// Should Follow Blocking, the animation and the input.
+    /// Might not need the !blocking check
     /// </summary>
     public void Unblock()
     {
@@ -52,7 +54,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         _spriteAnimator.Play("Dodge" + direction);
     }
     /// <summary>
-    /// Slash in a given direction, if an attack was requested deflect it, otherwise slash whatever is in front of player.
+    /// Slash in a given direction. 
+    /// If there are active attack requests, deflect them. 
+    /// Otherwise request an attack to the enemy pawn.
     /// </summary>
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 slashDirection)
@@ -61,13 +65,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
         slashDirection.Normalize();
-        if (_activeAttackRequester != null)
+        if (_activeAttackRequesters.Count > 0)
         {
-            _activeAttackRequester.OnRequestDeflect(this);
-            _activeAttackRequester = null; // Line is more efficent than adding CompleteAttackRequester() to call stack
+            // (Suggestion) Maybe you should process all requests?
+            _activeAttackRequesters.Dequeue().OnRequestDeflect(this);
         }
-        else // Request Attack to EnemyBattlePawn
+        else 
         {
+            // Request Attack to EnemyBattlePawn
             BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
         }
     }
@@ -83,7 +88,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     private void Update()
     {
-        // Legacy Input System Memes
+        // (TEMP) Legacy Input System Memes
         if (Input.GetKeyDown(KeyCode.A))
         {
             Dodge(Direction.West);
@@ -108,17 +113,17 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
-        _activeAttackRequester = requester;
+        _activeAttackRequesters.Enqueue(requester);
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
     {
-        if (_activeAttackRequester != requester)
+        if (_activeAttackRequesters.Peek() != requester)
         {
-            Debug.Log("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequester + "\" instead got \"" + requester + ".\"");
+            Debug.Log("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequesters.Peek() + "\" instead got \"" + requester + ".\"");
             return;
         }
-        _activeAttackRequester = null;
+        _activeAttackRequesters.Dequeue();
     }
     #endregion
 
