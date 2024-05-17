@@ -72,7 +72,10 @@ public class BattlePawn : Conductable
     }
     // TODO: Implement Status Ailment Applier Method
     // This should just be in the form of a GameObject Component
-    //public virtual void ApplyStatusAilment(statusAilment ailment) { }
+    public virtual void ApplyStatusAilments(StatusAilments[] ailments)
+    {
+
+    }
 
     public virtual void RecoverSP(float amount)
     {
