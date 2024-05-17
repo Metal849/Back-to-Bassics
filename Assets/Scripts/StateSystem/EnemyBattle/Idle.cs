@@ -23,9 +23,11 @@ public partial class EnemyStateMachine
             base.Exit(i);
         }
 
-        public override void ContextTransition()
+        public override void AttackRequestHandler(IAttackRequester requester)
         {
-            
+            Input.Enemy.Damage(requester.AttackDamage);
+            Input.Enemy.Lurch(requester.AttackLurch);
+            Input.Enemy.CompleteAttackRequest(requester);
         }
     }
 }

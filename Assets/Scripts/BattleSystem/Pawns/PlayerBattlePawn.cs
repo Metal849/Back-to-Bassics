@@ -9,6 +9,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     private IAttackRequester _activeAttackRequester;
+
+    public float AttackDamage { get => _weaponData.Dmg; }
+    public float AttackLurch { get => _weaponData.Lrch; }
     protected override void Awake()
     {
         base.Awake();
@@ -20,7 +23,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// </summary>
     public void Block()
     {
-        if (IsStaggered) return;
+        if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle") || blocking) return;
         blocking = true;
@@ -28,7 +31,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (_activeAttackRequester != null)
         {
             _activeAttackRequester.OnRequestBlock(this);
-            _activeAttackRequester = null;
+            _activeAttackRequester = null; // Line is more efficent than adding CompleteAttackRequester() to call stack
         }
     }
     /// <summary>
@@ -43,7 +46,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     public void Dodge(Direction direction)
     {
-        if (IsStaggered) return;
+        if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
         _spriteAnimator.Play("Dodge" + direction);
@@ -54,14 +57,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 slashDirection)
     {
-        if (IsStaggered) return;
+        if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("Idle")) return;
         slashDirection.Normalize();
         if (_activeAttackRequester != null)
         {
             _activeAttackRequester.OnRequestDeflect(this);
-            _activeAttackRequester = null;
+            _activeAttackRequester = null; // Line is more efficent than adding CompleteAttackRequester() to call stack
         }
         else // Request Attack to EnemyBattlePawn
         {
@@ -75,12 +78,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="amount"></param>
     public override void RecoverSP(float amount)
     {
-        // Technically inefficent due to second method call, but good for readable and modularity!
+        // Technically inefficent due to second method call, but good for readablity and modularity!
         if (!blocking) base.RecoverSP(amount);
     }
     private void Update()
     {
-        if (IsDead) return;
         // Legacy Input System Memes
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -128,13 +130,5 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void OnRequestBlock(IAttackReceiver receiver)
     {
         throw new System.NotImplementedException();
-    }
-    public float AttackDamage()
-    {
-        return _weaponData.Dmg;
-    }
-    public float AttackLurch()
-    {
-        return _weaponData.Lrch;
     }
 }

@@ -17,30 +17,30 @@ public class Conductor : Singleton<Conductor>
     {
         InitializeSingleton();
     }
-    public void BeginBeating(int bpm)
+    public void BeginConducting(int bpm)
     {
         if (beating) 
         {
-            Debug.LogWarning("Conductor was issued to beat when it already is beating");
+            Debug.LogWarning("Conductor was issued to conduct when it already is conducting");
             return;
         }
         Beat = 0;
         spb = 60f / bpm;
         beating = true;
         OnFirstBeat.Invoke();
-        StartCoroutine(Sequencing());
+        StartCoroutine(Conduct());
     }
-    public void StopBeating()
+    public void StopConducting()
     {
         if (!beating)
         {
-            Debug.LogWarning("Conductor was issued to stop beating when it already is not beating");
+            Debug.LogWarning("Conductor was issued to stop conducting when it already is not conducting");
             return;
         }
         beating = false;
     } 
 
-    private IEnumerator Sequencing()
+    private IEnumerator Conduct()
     {
         float quarterTime = spb / 4f;
         OnFirstBeat.Invoke();

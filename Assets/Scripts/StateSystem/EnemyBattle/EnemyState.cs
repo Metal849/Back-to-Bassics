@@ -6,7 +6,7 @@ public partial class EnemyStateMachine
 {
     public abstract class EnemyState : State<EnemyStateMachine, EnemyState, EnemyStateInput>
     {
-        public abstract void ContextTransition();
+        public abstract void AttackRequestHandler(IAttackRequester requester);
     }
 }
 

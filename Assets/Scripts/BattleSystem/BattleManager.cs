@@ -22,7 +22,7 @@ public class BattleManager : Singleton<BattleManager>
     {
         if (_player.IsDead)
         {
-            Conductor.Instance.StopBeating();
+            Conductor.Instance.StopConducting();
         }
     }
     private IEnumerator StartBattle()
@@ -30,7 +30,7 @@ public class BattleManager : Singleton<BattleManager>
         _player.EnterBattle();
         yield return new WaitForSeconds(0.4f);
         _enemy.EnterBattle();
-        Conductor.Instance.BeginBeating(((EnemyBattlePawnData)_enemy.Data).BPM);
+        Conductor.Instance.BeginConducting(((EnemyBattlePawnData)_enemy.Data).BPM);
         IsBattleActive = true;
     }
 }

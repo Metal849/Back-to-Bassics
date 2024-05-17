@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnemyBattlePawn : BattlePawn, IAttackReceiver
 {
     [Header("Enemy References")]
-    [SerializeField] private BattleManager _bm;
     [SerializeField] private EnemyStateMachine _esm;
     [SerializeField] private BattleAction[] _battleActions;
 
@@ -15,7 +14,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             Debug.LogError("Enemy Battle Pawn is set incorrectly");
             return;
         }
-        _bm = FindObjectOfType<BattleManager>();
         _esm = GetComponent<EnemyStateMachine>();
 
         // Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
@@ -50,11 +48,15 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
-        if (_esm.IsOnState<EnemyStateMachine.Idle>())
-        {
-            Damage(requester.AttackDamage());
-            Lurch(requester.AttackLurch());
-        }
+        // More efficent state hanlding method
+        _esm.CurrState.AttackRequestHandler(requester);
+
+        // Conditional Checking Method
+        //if (_esm.IsOnState<EnemyStateMachine.Idle>())
+        //{
+        //    Damage(requester.AttackDamage);
+        //    Lurch(requester.AttackLurch);
+        //}
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
