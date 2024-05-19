@@ -26,7 +26,7 @@ public class Projectile : Conductable, IAttackRequester
     /// </summary>
     /// <param name="position"></param>
     /// <param name="velocity"></param>
-    public void Fire(Vector2 velocity)
+    public void Fire(Vector3 velocity)
     {
         _rb.velocity = velocity;
         isDestroyed = false;

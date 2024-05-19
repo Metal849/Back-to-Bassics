@@ -30,8 +30,8 @@ public class RandomHomingProjectileSpawner : Conductable
                 Random.Range(_spawnMedium.bounds.min.y, _spawnMedium.bounds.max.y)
             );
         // Thank you Physics 1
-        Vector2 r = _target.position - (Vector3)spawnLocation;
-        Vector2 v = r / (_beatsToReachTarget * Conductor.Instance.spb);
+        Vector3 r = _target.position - (Vector3)spawnLocation;
+        Vector3 v = r / (_beatsToReachTarget * Conductor.Instance.spb);
         Pooler.Instance.Spawn(_projectileRef, spawnLocation).GetComponent<Projectile>();
         proj.Fire(v);
 
