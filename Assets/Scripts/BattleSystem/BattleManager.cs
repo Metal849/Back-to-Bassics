@@ -22,6 +22,7 @@ public class BattleManager : Singleton<BattleManager>
     {
         if (_player.IsDead)
         {
+            // Infie loop should not be doing this :3
             Conductor.Instance.StopConducting();
         }
     }

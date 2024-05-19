@@ -8,7 +8,16 @@ public partial class EnemyStateMachine
     {
         public override void AttackRequestHandler(IAttackRequester requester)
         {
-            Input.Enemy.SpriteAnimator.Play("block");
+            AnimatorStateInfo animatorState = Input.Enemy.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!animatorState.IsName("block") && !animatorState.IsName("blocking"))
+            {
+                Input.Enemy.SpriteAnimator.Play("block");
+            }
+            else
+            {
+                Input.Enemy.SpriteAnimator.Play("blocking");
+            }
+             
             ((PlayerBattlePawn)requester)?.Lurch(((EnemyBattlePawnData)Input.Enemy.Data).BlockLrch);
         }
         public override int OnDamage(int amount)
