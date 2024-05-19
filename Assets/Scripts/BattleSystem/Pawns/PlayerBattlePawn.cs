@@ -6,6 +6,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 {
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
+    public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
@@ -68,12 +69,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (_activeAttackRequesters.Count > 0)
         {
             // (Suggestion) Maybe you should process all requests?
-            _activeAttackRequesters.Dequeue().OnRequestDeflect(this);
+            IAttackRequester requester = _activeAttackRequesters.Dequeue();
+            requester.OnRequestDeflect(this);
         }
         else 
         {
             BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
-            BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch);
+            //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
 
             // Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit

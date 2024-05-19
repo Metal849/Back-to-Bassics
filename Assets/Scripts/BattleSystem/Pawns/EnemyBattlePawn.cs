@@ -5,7 +5,9 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [Header("Enemy References")]
     [SerializeField] private EnemyStateMachine _esm;
     [SerializeField] private BattleAction[] _battleActions;
-
+    [SerializeField] private int _beatsPerDecision;
+    private float _decisionTime;
+    private BattleAction _activeAction;
     protected override void Awake()
     {
         base.Awake();
@@ -23,18 +25,35 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             action.ParentPawn = this;
         }
     }
-    public void PerformRandomBattleActionSequence()
+    // Perform Random Battle Action
+    protected override void OnFullBeat()
     {
-        PerformBattleAction(Random.Range(0, _battleActions.Length), (Direction)Random.Range(0, (int)Direction.None));
+        if (Conductor.Instance.Beat < _decisionTime) return;
+        int idx = Random.Range(0, _battleActions.Length + 2) - 2;
+        if (idx == -2)
+        {
+            _esm.Transition<EnemyStateMachine.Idle>();
+        }
+        else if (idx == -1)
+        {
+            _esm.Transition<EnemyStateMachine.Block>();
+        }
+        else
+        {
+            _esm.Transition<EnemyStateMachine.Idle>();
+            PerformBattleAction(idx);
+        }
+        _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
     }
     /// <summary>
     /// Select from some attack i to perform, and then provide a direction if the attack has variants based on this
     /// </summary>
     /// <param name="i"></param>
     /// <param name="dir"></param>
-    public void PerformBattleAction(int i, Direction dir)
+    public void PerformBattleAction(int i)
     {
-        _battleActions[i].Perform(dir);
+        _battleActions[i].StartAction();
+        _activeAction = _battleActions[i];
     }
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)

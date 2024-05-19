@@ -644,7 +644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &156948093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2438,6 +2438,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1062608468}
+  - component: {fileID: 1062608469}
+  - component: {fileID: 1062608470}
   m_Layer: 0
   m_Name: weapon
   m_TagString: Untagged
@@ -2461,6 +2463,42 @@ Transform:
   - {fileID: 2126046280}
   m_Father: {fileID: 683335646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1062608469
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062608467}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 1.97, y: -0.56, z: 0}
+--- !u!114 &1062608470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062608467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackWindow: 0.5
+  _dmg: 10
+  _lrch: 5
 --- !u!1 &1107437948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3516,7 +3554,9 @@ MonoBehaviour:
   _hpBar: {fileID: 1162476957}
   _spBar: {fileID: 860159818}
   _esm: {fileID: 0}
-  _battleActions: []
+  _battleActions:
+  - {fileID: 1062608470}
+  _beatsPerDecision: 4
 --- !u!114 &2129905147
 MonoBehaviour:
   m_ObjectHideFlags: 0

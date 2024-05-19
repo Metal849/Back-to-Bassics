@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Ryan/BattleArena.unity
+    guid: d915880d00df4e243a20de64b8d07dc8
   m_configObjects: {}

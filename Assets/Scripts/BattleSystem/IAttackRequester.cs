@@ -10,6 +10,4 @@ public interface IAttackRequester
     /// </summary>
     /// <param name="receiver"></param>
     public void OnRequestBlock(IAttackReceiver receiver);
-    public float AttackDamage { get; }
-    public float AttackLurch { get; }
 }
