@@ -5,13 +5,13 @@ using UnityEngine;
 /// <summary>
 /// By default, all status ailments are require 100 buildup to max out
 /// </summary>
-public abstract class StatusAilment<A> : Conductable
-    where A : StatusAilment<A>
+public abstract class StatusAilment : Conductable
 {
+    protected AilmentType type;
     protected BattlePawn _pawn;
-    protected int _maxBuildUp;
-    protected int _currBuildUp;
-    protected int _recoveryTime;
+    protected float _maxBuildUp;
+    protected float _currBuildUp;
+    protected float _recoveryTime;
     public bool Inflicted {  get; private set; }
     protected virtual void Awake()
     {
@@ -26,7 +26,7 @@ public abstract class StatusAilment<A> : Conductable
     public virtual void BuildUp(int amount)
     {
         if (Inflicted) return;
-        _currBuildUp += amount * (1 - _pawn.Data.resistence[A]);
+        //_currBuildUp += amount * (1 - _pawn.Data.resistence[A]);
         if (_currBuildUp >= _maxBuildUp)
         {
             _currBuildUp = _maxBuildUp;
@@ -35,6 +35,11 @@ public abstract class StatusAilment<A> : Conductable
     }
     protected override void OnFullBeat()
     {
-        _currBuildUp -= _pawn.Data.resistence[A] * 10;
+        //_currBuildUp -= _pawn.Data.resistence[A] * 10;
     }
+}
+public enum AilmentType
+{
+    None = 0,
+
 }

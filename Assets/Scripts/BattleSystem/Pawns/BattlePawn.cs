@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class BattlePawn : Conductable
@@ -11,9 +12,9 @@ public class BattlePawn : Conductable
     public Animator SpriteAnimator => _spriteAnimator;
 
     [Header("Battle Pawn Data")]
-    [SerializeField] protected float _currHP;
+    [SerializeField] protected int _currHP;
     [SerializeField] protected float _currSP;
-    public float HP => _currHP;
+    public int HP => _currHP;
     public float SP => _currSP;
 
     [Header("Temporary Direct Ref UI tracking")]
@@ -32,18 +33,21 @@ public class BattlePawn : Conductable
         _currSP = _data.SP;
         gameObject.SetActive(false); // Remove this and do equivalent in Animator logic
     }
-    public void FixedUpdate()
+    #endregion
+    #region Conductable Methods
+    protected override void OnHalfBeat()
     {
         if (IsStaggered) return;
-        RecoverSP(_data.SPRecoveryRate * Time.deltaTime);
+        RecoverSP(_data.SPRecoveryRate);
     }
     #endregion
-    public virtual void Damage(float amount)
+    #region Modification Methods
+    public virtual void Damage(int amount)
     {
         if (IsDead) return;
         _currHP -= amount;
         // (TEMP) Manual UI BS -> TODO: Needs to be event driven and called, not handled here!
-        if (_hpBar != null) _hpBar.fillAmount = _currHP / _data.HP;
+        if (_hpBar != null) _hpBar.fillAmount = (float)_currHP / _data.HP;
         // -------------------
         if (_currHP <= 0) 
         {
@@ -70,27 +74,48 @@ public class BattlePawn : Conductable
             OnStagger();
         }
     }
-    // TODO: Implement Status Ailment Applier Method
-    // This should just be in the form of a GameObject Component
-    public virtual void ApplyStatusAilments(StatusAilments[] ailments)
+    public virtual void Heal(int amount)
     {
+        if (_currHP < _data.HP)
+        {
+            _currHP += amount;
 
+            // (TEMP) UGLY MANUAL UI UPDATING -> This should slowly build up through a float
+            _hpBar.fillAmount = (float)_currHP / _data.HP;
+        }
     }
-
     public virtual void RecoverSP(float amount)
     {
         if (_currSP < _data.SP)
         {
+            // Updates integer wise
             _currSP += amount;
 
-            // (TEMP) UGLY MANUAL UI UPDATING
+            // (TEMP) UGLY MANUAL UI UPDATING -> This should slowly build up through a float
             _spBar.fillAmount = _currSP / _data.SP;
         }
     }
+    // TODO: Implement Status Ailment Applier Method
+    // This should just be in the form of a GameObject Component
+    public virtual void ApplyStatusAilments(StatusAilment[] ailments)
+    {
+        // (For Future Programmer) Code template when I actually implement everything
+        //foreach (StatusAilment ailment in ailments)
+        //{
+        //    var ailmentComponent = GetComponent<ailment.type>();
+        //    if (ailmentComponent == null)
+        //    {
+        //        ailmentComponent = gameObject.AddComponent<ailment.type>();
+        //    }
+        //    ailmentComponent.BuildUp(ailment.strength);
+        //}
+    }
+
+    #endregion
     public virtual void EnterBattle()
     {
         gameObject.SetActive(true);
-        _spriteAnimator.Play("EnterBattle");
+        _spriteAnimator.Play("enter_battle");
     }
     public virtual void LeaveBattle()
     {
@@ -113,6 +138,7 @@ public class BattlePawn : Conductable
         // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
         yield return new WaitForSeconds(_data.StaggerRecoveryTime);
         _currSP = _data.SP;
+        // TODO: UI update should happen here
         IsStaggered = false;
         // TODO: Play StaggerRecovery Animation
     }

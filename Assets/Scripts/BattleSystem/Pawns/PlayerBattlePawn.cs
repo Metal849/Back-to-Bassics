@@ -26,9 +26,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Idle") || blocking) return;
+        if (!animatorState.IsName("idle") || blocking) return;
         blocking = true;
-        _spriteAnimator.Play("Block");
+        _spriteAnimator.Play("block");
         if (_activeAttackRequesters.Count > 0)
         {
             // (Suggestion) Maybe you should process all requests?
@@ -42,16 +42,16 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void Unblock()
     {
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Block") || !blocking) return;
+        if (!animatorState.IsName("block") || !blocking) return;
         blocking = false;
-        _spriteAnimator.Play("Unblock");
+        _spriteAnimator.Play("unblock");
     }
     public void Dodge(Direction direction)
     {
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Idle")) return;
-        _spriteAnimator.Play("Dodge" + direction);
+        if (!animatorState.IsName("idle")) return;
+        _spriteAnimator.Play("dodge_" + direction.ToString().ToLower());
     }
     /// <summary>
     /// Slash in a given direction. 
@@ -63,7 +63,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("Idle")) return;
+        if (!animatorState.IsName("idle")) return;
         slashDirection.Normalize();
         if (_activeAttackRequesters.Count > 0)
         {
@@ -72,7 +72,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         }
         else 
         {
-            // Request Attack to EnemyBattlePawn
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch);
+            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
+
+            // Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
             BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
         }
     }
@@ -86,6 +90,48 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Technically inefficent due to second method call, but good for readablity and modularity!
         if (!blocking) base.RecoverSP(amount);
     }
+    #region IAttackReceiver Methods
+    public void ReceiveAttackRequest(IAttackRequester requester)
+    {
+        _activeAttackRequesters.Enqueue(requester);
+    }
+
+    public void CompleteAttackRequest(IAttackRequester requester)
+    {
+        if (_activeAttackRequesters.Peek() != requester)
+        {
+            Debug.LogError("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequesters.Peek() + "\" instead got \"" + requester + ".\"");
+            return;
+        }
+        _activeAttackRequesters.Dequeue();
+    }
+    #endregion
+
+    public void OnRequestDeflect(IAttackReceiver receiver)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnRequestBlock(IAttackReceiver receiver)
+    {
+        _spriteAnimator.Play("attack_blocked");
+    }
+
+    // Legacy Input...
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
     private void Update()
     {
         // (TEMP) Legacy Input System Memes
@@ -109,31 +155,5 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             Unblock();
         }
-    }
-    #region IAttackReceiver Methods
-    public void ReceiveAttackRequest(IAttackRequester requester)
-    {
-        _activeAttackRequesters.Enqueue(requester);
-    }
-
-    public void CompleteAttackRequest(IAttackRequester requester)
-    {
-        if (_activeAttackRequesters.Peek() != requester)
-        {
-            Debug.Log("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequesters.Peek() + "\" instead got \"" + requester + ".\"");
-            return;
-        }
-        _activeAttackRequesters.Dequeue();
-    }
-    #endregion
-
-    public void OnRequestDeflect(IAttackReceiver receiver)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnRequestBlock(IAttackReceiver receiver)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -39,20 +39,24 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
-        // More efficent state hanlding method
         _esm.CurrState.AttackRequestHandler(requester);
-
-        // Conditional Checking Method
-        //if (_esm.IsOnState<EnemyStateMachine.Idle>())
-        //{
-        //    Damage(requester.AttackDamage);
-        //    Lurch(requester.AttackLurch);
-        //}
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
     {
         throw new System.NotImplementedException();
+    }
+    #endregion
+    #region BattlePawn Overrides
+    public override void Damage(int amount)
+    {
+        amount = _esm.CurrState.OnDamage(amount);
+        base.Damage(amount);
+    }
+    public override void Lurch(float amount)
+    {
+        amount = _esm.CurrState.OnLurch(amount);
+        base.Lurch(amount);
     }
     #endregion
 }

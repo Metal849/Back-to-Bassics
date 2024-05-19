@@ -15,6 +15,10 @@ MonoBehaviour:
   _name: Sample
   _hp: 100
   _sp: 20
-  _staggerRecoveryRate: 0
+  _spRecoveryRate: 0
+  _staggerRecoveryTime: 0
   _lore: hehehe hooo hoo
+  _confuseResistance: 0
+  _poisonResistance: 0
   _bpm: 180
+  _blockLrch: 2

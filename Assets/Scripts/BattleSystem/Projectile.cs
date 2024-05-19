@@ -26,9 +26,8 @@ public class Projectile : Conductable, IAttackRequester
     /// </summary>
     /// <param name="position"></param>
     /// <param name="velocity"></param>
-    public void Spawn(Vector3 position, Vector2 velocity)
+    public void Fire(Vector2 velocity)
     {
-        transform.position = position;
         _rb.velocity = velocity;
         isDestroyed = false;
         gameObject.SetActive(true);
@@ -38,9 +37,8 @@ public class Projectile : Conductable, IAttackRequester
     /// </summary>
     /// <param name="position"></param>
     /// <param name="dir"></param>
-    public void Spawn(Vector3 position, Direction dir)
+    public void Fire(Direction dir)
     {
-        transform.position = position;
         _rb.velocity = _speed * DirectionHelper.GetVectorFromDirection(dir);
 
         // Inefficent as heck, but does the job
@@ -72,7 +70,7 @@ public class Projectile : Conductable, IAttackRequester
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
 
-        _hitPlayerPawn.Damage(AttackDamage);
+        _hitPlayerPawn.Damage(_dmg);
 
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
