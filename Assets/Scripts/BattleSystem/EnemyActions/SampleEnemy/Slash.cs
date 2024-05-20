@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slash : BattleAction, IAttackRequester
+public class Slash : EnemyAction, IAttackRequester
 {
     [Header("Slash Action")]
+    [SerializeField] private SlashNote[] _attackSequence;
     [SerializeField] private float _attackWindow = 0.5f;
     [SerializeField] private int _dmg;
     [SerializeField] private int _lrch;
     private PlayerBattlePawn _hitPlayerPawn;
     private float _attackTime;
+    private int currIdx;
     public override void StartAction()
     {
         base.StartAction();
@@ -67,5 +70,13 @@ public class Slash : BattleAction, IAttackRequester
         }
         _attackTime = Conductor.Instance.Beat + _attackWindow;
         _hitPlayerPawn.ReceiveAttackRequest(this);
+    }
+    [Serializable]
+    public struct SlashNote
+    {
+        public bool isSlash;
+        public Vector2 direction;
+        [Tooltip("In Quarter Beats")] public int attackWindow;
+        [Tooltip("In Quarter Beats")] public int delayToNextAttack;
     }
 }

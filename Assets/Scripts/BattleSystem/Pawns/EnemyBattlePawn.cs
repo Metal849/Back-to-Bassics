@@ -4,10 +4,10 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
 {
     [Header("Enemy References")]
     [SerializeField] private EnemyStateMachine _esm;
-    [SerializeField] private BattleAction[] _battleActions;
+    [SerializeField] private EnemyAction[] _enemyActions;
     [SerializeField] private int _beatsPerDecision;
     private float _decisionTime;
-    private BattleAction _activeAction;
+    private EnemyAction _activeAction;
     protected override void Awake()
     {
         base.Awake();
@@ -19,8 +19,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         _esm = GetComponent<EnemyStateMachine>();
 
         // Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
-        if (_battleActions == null) return;
-        foreach (BattleAction action in _battleActions)
+        if (_enemyActions == null) return;
+        foreach (EnemyAction action in _enemyActions)
         {
             action.ParentPawn = this;
         }
@@ -28,8 +28,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // Perform Random Battle Action
     protected override void OnFullBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime) return;
-        int idx = Random.Range(0, _battleActions.Length + 2) - 2;
+        if (Conductor.Instance.Beat < _decisionTime || !_esm.IsOnState<EnemyStateMachine.Attacking>() || IsStaggered) return;
+        int idx = Random.Range(0, _enemyActions.Length + 2) - 2;
         if (idx == -2)
         {
             _esm.Transition<EnemyStateMachine.Idle>();
@@ -40,7 +40,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         }
         else
         {
-            _esm.Transition<EnemyStateMachine.Idle>();
             PerformBattleAction(idx);
         }
         _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
@@ -52,8 +51,9 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     /// <param name="dir"></param>
     public void PerformBattleAction(int i)
     {
-        _battleActions[i].StartAction();
-        _activeAction = _battleActions[i];
+        _esm.Transition<EnemyStateMachine.Attacking>();
+        _enemyActions[i].StartAction();
+        _activeAction = _enemyActions[i];
     }
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
