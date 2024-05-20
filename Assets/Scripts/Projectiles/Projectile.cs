@@ -77,6 +77,7 @@ public class Projectile : Conductable, IAttackRequester
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
+        // Not happy with slash direction
         if (IsSlashWithinOpposeDirection(-_rb.velocity, _hitPlayerPawn.SlashDirection) && Conductor.Instance.Beat < _attackWindow)
         {
             UIManager.Instance.IncrementParryTracker();

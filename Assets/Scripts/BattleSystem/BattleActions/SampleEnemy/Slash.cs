@@ -46,6 +46,7 @@ public class Slash : BattleAction, IAttackRequester
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
+        // Require a specfic slash to process this
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
