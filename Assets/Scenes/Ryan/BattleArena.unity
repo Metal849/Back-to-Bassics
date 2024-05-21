@@ -2521,7 +2521,7 @@ MonoBehaviour:
     lrch: 10
     direction: {x: -1, y: 0}
     animationName: 
-    attackWindow: 4
+    attackWindow: 2
     delayToNextAttack: 0
     performed: 0
 --- !u!1 &1107437948
