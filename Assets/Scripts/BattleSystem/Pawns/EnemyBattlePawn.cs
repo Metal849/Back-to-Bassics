@@ -7,7 +7,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [SerializeField] private EnemyAction[] _enemyActions;
     [SerializeField] private int _beatsPerDecision;
     private float _decisionTime;
-    private EnemyAction _activeAction;
+    private int _actionIdx;
     protected override void Awake()
     {
         base.Awake();
@@ -19,7 +19,11 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         _esm = GetComponent<EnemyStateMachine>();
 
         // Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
-        if (_enemyActions == null) return;
+        if (_enemyActions == null)
+        {
+            Debug.LogWarning("Enemy Battle Pawn has no actions referenced!");
+            return;
+        }
         foreach (EnemyAction action in _enemyActions)
         {
             action.ParentPawn = this;
@@ -28,8 +32,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // Perform Random Battle Action
     protected override void OnFullBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime || !_esm.IsOnState<EnemyStateMachine.Attacking>() || IsStaggered) return;
-        int idx = Random.Range(0, _enemyActions.Length + 2) - 2;
+        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered) return;
+        int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
         if (idx == -2)
         {
             _esm.Transition<EnemyStateMachine.Idle>();
@@ -51,9 +55,14 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     /// <param name="dir"></param>
     public void PerformBattleAction(int i)
     {
+        if (i >= _enemyActions.Length)
+        {
+            Debug.Log("Non Existent index call for batlle action!");
+            return;
+        }
         _esm.Transition<EnemyStateMachine.Attacking>();
         _enemyActions[i].StartAction();
-        _activeAction = _enemyActions[i];
+        _actionIdx = i;
     }
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)

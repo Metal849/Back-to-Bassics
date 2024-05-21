@@ -1,40 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Slash : EnemyAction, IAttackRequester
 {
     [Header("Slash Action")]
     [SerializeField] private SlashNote[] _attackSequence;
-    [SerializeField] private float _attackWindow = 0.5f;
-    [SerializeField] private int _dmg;
-    [SerializeField] private int _lrch;
-    private PlayerBattlePawn _hitPlayerPawn;
-    private float _attackTime;
     private int currIdx;
+    private float _attackTime;
+    private float _nextSequenceTime;
     public override void StartAction()
     {
         base.StartAction();
-        // Change this later
-        Debug.Log("Slash Action");
-        ParentPawn.SpriteAnimator.SetFloat("xdir", -1f);
-        ParentPawn.SpriteAnimator.Play("slash_broadcast");
-        // Then do attack slash
+        // Initial Broadcast of Slash
+        currIdx = -1;
+        TraverseSequence();
+    }
+    public override void StopAction()
+    {
+        base.StopAction();
+        ParentPawn.SpriteAnimator.Play("Idle");
     }
     protected override void OnQuarterBeat()
     {
-        if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackTime) return;
-        // (TEMP) Manual DEBUG UI Tracker -------
-        UIManager.Instance.IncrementMissTracker();
-        //---------------------------------------
-        ParentPawn.SpriteAnimator.ResetTrigger("performed");
-        ParentPawn.SpriteAnimator.SetTrigger("performed");
-        _hitPlayerPawn.Damage(_dmg);
-        //_hitPlayerPawn.Lurch(_lrch); -> Should the player be punished SP as wewll?
+        if (!IsActive) return;
 
-        _hitPlayerPawn.CompleteAttackRequest(this);
-        IsActive = false;
+        // Attack Window
+        if (_attackSequence[currIdx].isSlash && Conductor.Instance.Beat >= _attackTime && !_attackSequence[currIdx].performed)
+        {
+            PerformSlashOnPlayer();
+        }
+
+        // Next Sequence
+        if (Conductor.Instance.Beat >= _nextSequenceTime)
+        {
+            TraverseSequence();
+        }
+
     }
     public void OnRequestBlock(IAttackReceiver receiver)
     {
@@ -43,40 +47,89 @@ public class Slash : EnemyAction, IAttackRequester
         //---------------------------------------
         ParentPawn.SpriteAnimator.ResetTrigger("blocked");
         ParentPawn.SpriteAnimator.SetTrigger("blocked");
-        _hitPlayerPawn.Lurch(_lrch);
-        _hitPlayerPawn = null;
-        IsActive = false;
+        BattleManager.Instance.Player.Lurch(_attackSequence[currIdx].lrch);
+        _attackSequence[currIdx].performed = true;
+        BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
-        // Require a specfic slash to process this
-        // (TEMP) Manual DEBUG UI Tracker -------
-        UIManager.Instance.IncrementParryTracker();
-        //---------------------------------------
-        ParentPawn.SpriteAnimator.ResetTrigger("deflected");
-        ParentPawn.SpriteAnimator.SetTrigger("deflected");
-        ParentPawn.Lurch(_hitPlayerPawn.WeaponData.Lrch);
-        _hitPlayerPawn = null;
-        IsActive = false;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        _hitPlayerPawn = other.GetComponent<PlayerBattlePawn>();
-        if (_hitPlayerPawn == null) return;
-        if (_hitPlayerPawn.blocking)
+        if (DirectionHelper.MaxAngleBetweenVectors(_attackSequence[currIdx].direction, BattleManager.Instance.Player.SlashDirection, 5f)
+            && Conductor.Instance.Beat >= _attackTime)
         {
-            OnRequestBlock(_hitPlayerPawn);
+            // (TEMP) Manual DEBUG UI Tracker -------
+            UIManager.Instance.IncrementParryTracker();
+            //---------------------------------------
+            ParentPawn.SpriteAnimator.ResetTrigger("deflected");
+            ParentPawn.SpriteAnimator.SetTrigger("deflected");
+            ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
+            _attackSequence[currIdx].performed = true;
+            BattleManager.Instance.Player.CompleteAttackRequest(this);
+        }
+        else
+        {
+            PerformSlashOnPlayer();
+        }
+        
+    }
+    private void PerformSlashOnPlayer()
+    {
+        // (TEMP) Manual DEBUG UI Tracker -------
+        UIManager.Instance.IncrementMissTracker();
+        //---------------------------------------
+        ParentPawn.SpriteAnimator.ResetTrigger("performed");
+        ParentPawn.SpriteAnimator.SetTrigger("performed");
+        BattleManager.Instance.Player.Damage(_attackSequence[currIdx].dmg);
+        //_hitPlayerPawn.Lurch(_attackSequence[currIdx].lrch); -> Should the player be punished SP as wewll?
+
+        BattleManager.Instance.Player.CompleteAttackRequest(this);
+        _attackSequence[currIdx].performed = true;
+    }
+    private void TraverseSequence()
+    {
+        if (++currIdx >= _attackSequence.Length)
+        {
+            StopAction();
             return;
         }
-        _attackTime = Conductor.Instance.Beat + _attackWindow;
-        _hitPlayerPawn.ReceiveAttackRequest(this);
+        // Animation
+        ParentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
+        ParentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
+        ParentPawn.SpriteAnimator.Play("slash_" + _attackSequence[currIdx].animationName);
+
+        // Timeing
+        if (_attackSequence[currIdx].isSlash)
+        {
+            _attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * 0.25f;
+            BattleManager.Instance.Player.ReceiveAttackRequest(this);
+        }
+        
+        _nextSequenceTime = Conductor.Instance.Beat + _attackSequence[currIdx].delayToNextAttack * 0.25f + _attackSequence[currIdx].attackWindow * 0.25f;
+        
     }
+    // Avoiding Collider Implementation
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    _hitPlayerPawn = other.GetComponent<PlayerBattlePawn>();
+    //    if (_hitPlayerPawn == null) return;
+    //    if (_hitPlayerPawn.blocking)
+    //    {
+    //        OnRequestBlock(_hitPlayerPawn);
+    //        return;
+    //    }
+    //    _attackTime = Conductor.Instance.Beat + _attackWindow;
+    //    _hitPlayerPawn.ReceiveAttackRequest(this);
+    //}
     [Serializable]
     public struct SlashNote
     {
         public bool isSlash;
+        public bool isCharged;
+        public int dmg;
+        public int lrch;
         public Vector2 direction;
+        public string animationName;
         [Tooltip("In Quarter Beats")] public int attackWindow;
         [Tooltip("In Quarter Beats")] public int delayToNextAttack;
+        [HideInInspector] public bool performed; 
     }
 }

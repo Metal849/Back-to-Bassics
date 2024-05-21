@@ -2496,9 +2496,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackWindow: 0.5
-  _dmg: 10
-  _lrch: 5
+  _attackSequence:
+  - isSlash: 0
+    isCharged: 0
+    dmg: 0
+    lrch: 0
+    direction: {x: -1, y: 0}
+    animationName: broadcast
+    attackWindow: 0
+    delayToNextAttack: 12
+    performed: 0
+  - isSlash: 1
+    isCharged: 0
+    dmg: 10
+    lrch: 0
+    direction: {x: -1, y: 0}
+    animationName: perform
+    attackWindow: 2
+    delayToNextAttack: 0
+    performed: 0
 --- !u!1 &1107437948
 GameObject:
   m_ObjectHideFlags: 0
@@ -3554,7 +3570,7 @@ MonoBehaviour:
   _hpBar: {fileID: 1162476957}
   _spBar: {fileID: 860159818}
   _esm: {fileID: 0}
-  _battleActions:
+  _enemyActions:
   - {fileID: 1062608470}
   _beatsPerDecision: 4
 --- !u!114 &2129905147

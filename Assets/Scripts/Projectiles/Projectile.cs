@@ -62,8 +62,6 @@ public class Projectile : Conductable, IAttackRequester
     }
     protected override void OnQuarterBeat()
     {
-        // TODO: Think of a better way for this to work without projectile needing to know player pawn's state
-        // HINT: Use CompleteAttackRequest
         if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
 
         // (TEMP) Manual DEBUG UI Tracker -------
@@ -77,27 +75,28 @@ public class Projectile : Conductable, IAttackRequester
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
-        // Not happy with slash direction
-        if (IsSlashWithinOpposeDirection(-_rb.velocity, _hitPlayerPawn.SlashDirection) && Conductor.Instance.Beat < _attackWindow)
+        if (DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f) && Conductor.Instance.Beat < _attackWindow)
         {
+            // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
+            //---------------------------------------
         }
         else
         {
+            // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementMissTracker();
+            //---------------------------------------
             _hitPlayerPawn.Damage(_dmg);
         }
         Destroy();
     }
     public void OnRequestBlock(IAttackReceiver receiver)
     {
+        // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
+        //---------------------------------------
         _hitPlayerPawn.Lurch(_dmg);
         Destroy();
-    }
-    public bool IsSlashWithinOpposeDirection(Vector2 opposeDirection, Vector2 slashDirection)
-    {
-        return Vector2.Angle(slashDirection, opposeDirection) <= 5f;
     }
     public void Destroy()
     {

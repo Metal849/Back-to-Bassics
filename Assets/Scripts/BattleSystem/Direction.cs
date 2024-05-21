@@ -75,4 +75,5 @@ public static class DirectionHelper
             default: return Vector2.zero;
         }
     }
+    public static bool MaxAngleBetweenVectors(Vector2 u, Vector2 v, float angle) => Vector2.Angle(u, v) <= angle;
 }
