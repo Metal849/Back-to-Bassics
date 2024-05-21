@@ -45,23 +45,25 @@ public class Slash : EnemyAction, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
-        ParentPawn.SpriteAnimator.SetTrigger("blocked");
         ParentPawn.SpriteAnimator.ResetTrigger("blocked");
+        ParentPawn.SpriteAnimator.SetTrigger("blocked");
         BattleManager.Instance.Player.Lurch(_attackSequence[currIdx].lrch);
         _attackSequence[currIdx].performed = true;
+        BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
         if (DirectionHelper.MaxAngleBetweenVectors(-_attackSequence[currIdx].direction, BattleManager.Instance.Player.SlashDirection, 5f)
-            && Conductor.Instance.Beat >= _attackTime)
+            && Conductor.Instance.Beat < _attackTime)
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
-            ParentPawn.SpriteAnimator.SetTrigger("deflected");
             ParentPawn.SpriteAnimator.ResetTrigger("deflected");
+            ParentPawn.SpriteAnimator.SetTrigger("deflected");
             ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
             _attackSequence[currIdx].performed = true;
+            BattleManager.Instance.Player.CompleteAttackRequest(this);
         }      
     }
     private void PerformSlashOnPlayer()
@@ -69,13 +71,13 @@ public class Slash : EnemyAction, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
-        ParentPawn.SpriteAnimator.SetTrigger("performed");
         ParentPawn.SpriteAnimator.ResetTrigger("performed");
+        ParentPawn.SpriteAnimator.SetTrigger("performed");
         BattleManager.Instance.Player.Damage(_attackSequence[currIdx].dmg);
         //_hitPlayerPawn.Lurch(_attackSequence[currIdx].lrch); -> Should the player be punished SP as wewll?
 
-        BattleManager.Instance.Player.CompleteAttackRequest(this);
         _attackSequence[currIdx].performed = true;
+        BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
     private void TraverseSequence()
     {
@@ -103,6 +105,10 @@ public class Slash : EnemyAction, IAttackRequester
         {
             BattleManager.Instance.Player.ReceiveAttackRequest(this);
             _attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * 0.25f;
+            if (BattleManager.Instance.Player.blocking)
+            {
+                OnRequestBlock(BattleManager.Instance.Player);
+            }       
         }
         
         _nextSequenceTime = Conductor.Instance.Beat 

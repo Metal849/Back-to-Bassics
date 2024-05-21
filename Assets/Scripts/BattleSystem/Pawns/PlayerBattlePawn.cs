@@ -34,7 +34,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             // (Suggestion) Maybe you should process all requests?
             // Note we are dequeing!
-            _activeAttackRequesters.Dequeue().OnRequestBlock(this);
+            _activeAttackRequesters.Peek().OnRequestBlock(this);
         }
     }
     /// <summary>
@@ -71,7 +71,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             // (Suggestion) Maybe you should process all requests?
             // Note we are dequeing!
-            _activeAttackRequesters.Dequeue().OnRequestDeflect(this);
+            _activeAttackRequesters.Peek().OnRequestDeflect(this);
         }
         else 
         {

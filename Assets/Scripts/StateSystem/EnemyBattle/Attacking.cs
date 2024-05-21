@@ -18,10 +18,5 @@ public partial class EnemyStateMachine
         {
             return amount;
         }
-        public override void Exit(EnemyStateInput i)
-        {
-            base.Exit(i);
-            Input.Enemy.SpriteAnimator.Play("idle");
-        }
     }
 }
