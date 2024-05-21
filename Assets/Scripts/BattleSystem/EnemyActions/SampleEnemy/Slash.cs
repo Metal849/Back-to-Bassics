@@ -21,7 +21,7 @@ public class Slash : EnemyAction, IAttackRequester
     public override void StopAction()
     {
         base.StopAction();
-        ParentPawn.SpriteAnimator.Play("Idle");
+        ParentPawn.ESM.Transition<EnemyStateMachine.Idle>();
     }
     protected override void OnQuarterBeat()
     {
@@ -45,39 +45,32 @@ public class Slash : EnemyAction, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
-        ParentPawn.SpriteAnimator.ResetTrigger("blocked");
         ParentPawn.SpriteAnimator.SetTrigger("blocked");
+        ParentPawn.SpriteAnimator.ResetTrigger("blocked");
         BattleManager.Instance.Player.Lurch(_attackSequence[currIdx].lrch);
         _attackSequence[currIdx].performed = true;
-        BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
-        if (DirectionHelper.MaxAngleBetweenVectors(_attackSequence[currIdx].direction, BattleManager.Instance.Player.SlashDirection, 5f)
+        if (DirectionHelper.MaxAngleBetweenVectors(-_attackSequence[currIdx].direction, BattleManager.Instance.Player.SlashDirection, 5f)
             && Conductor.Instance.Beat >= _attackTime)
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
-            ParentPawn.SpriteAnimator.ResetTrigger("deflected");
             ParentPawn.SpriteAnimator.SetTrigger("deflected");
+            ParentPawn.SpriteAnimator.ResetTrigger("deflected");
             ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
             _attackSequence[currIdx].performed = true;
-            BattleManager.Instance.Player.CompleteAttackRequest(this);
-        }
-        else
-        {
-            PerformSlashOnPlayer();
-        }
-        
+        }      
     }
     private void PerformSlashOnPlayer()
     {
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
-        ParentPawn.SpriteAnimator.ResetTrigger("performed");
         ParentPawn.SpriteAnimator.SetTrigger("performed");
+        ParentPawn.SpriteAnimator.ResetTrigger("performed");
         BattleManager.Instance.Player.Damage(_attackSequence[currIdx].dmg);
         //_hitPlayerPawn.Lurch(_attackSequence[currIdx].lrch); -> Should the player be punished SP as wewll?
 
@@ -86,6 +79,13 @@ public class Slash : EnemyAction, IAttackRequester
     }
     private void TraverseSequence()
     {
+        // Rest Any Dynamic Values before next traversal
+        if (currIdx >= 0 && currIdx < _attackSequence.Length)
+        {
+            _attackSequence[currIdx].performed = false;
+        }
+        
+        // Traversal
         if (++currIdx >= _attackSequence.Length)
         {
             StopAction();
@@ -94,16 +94,21 @@ public class Slash : EnemyAction, IAttackRequester
         // Animation
         ParentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
         ParentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
-        ParentPawn.SpriteAnimator.Play("slash_" + _attackSequence[currIdx].animationName);
+        string animation = "slash_" + _attackSequence[currIdx].animationName;
+        bool hasStateAnimation = ParentPawn.SpriteAnimator.HasState(0, Animator.StringToHash(animation));
+        if (hasStateAnimation) ParentPawn.SpriteAnimator.Play(animation);
 
-        // Timeing
+        // Timing
         if (_attackSequence[currIdx].isSlash)
         {
-            _attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * 0.25f;
             BattleManager.Instance.Player.ReceiveAttackRequest(this);
+            _attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * 0.25f;
         }
         
-        _nextSequenceTime = Conductor.Instance.Beat + _attackSequence[currIdx].delayToNextAttack * 0.25f + _attackSequence[currIdx].attackWindow * 0.25f;
+        _nextSequenceTime = Conductor.Instance.Beat 
+            + (hasStateAnimation ? ParentPawn.SpriteAnimator.GetAnimatorTransitionInfo(0).duration : 0)
+            + _attackSequence[currIdx].delayToNextAttack * 0.25f 
+            + _attackSequence[currIdx].attackWindow * 0.25f;
         
     }
     // Avoiding Collider Implementation
@@ -130,6 +135,8 @@ public class Slash : EnemyAction, IAttackRequester
         public string animationName;
         [Tooltip("In Quarter Beats")] public int attackWindow;
         [Tooltip("In Quarter Beats")] public int delayToNextAttack;
+
+        // Dynamic Values
         [HideInInspector] public bool performed; 
     }
 }

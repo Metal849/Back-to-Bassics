@@ -28,6 +28,11 @@ public partial class EnemyStateMachine
         {
             return 0;
         }
+        public override void Exit(EnemyStateInput i)
+        {
+            base.Exit(i);
+            Input.Enemy.SpriteAnimator.Play("idle");
+        }
     }
 }
 

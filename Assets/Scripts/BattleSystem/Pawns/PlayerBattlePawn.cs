@@ -33,6 +33,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (_activeAttackRequesters.Count > 0)
         {
             // (Suggestion) Maybe you should process all requests?
+            // Note we are dequeing!
             _activeAttackRequesters.Dequeue().OnRequestBlock(this);
         }
     }
@@ -69,8 +70,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (_activeAttackRequesters.Count > 0)
         {
             // (Suggestion) Maybe you should process all requests?
-            IAttackRequester requester = _activeAttackRequesters.Dequeue();
-            requester.OnRequestDeflect(this);
+            // Note we are dequeing!
+            _activeAttackRequesters.Dequeue().OnRequestDeflect(this);
         }
         else 
         {

@@ -2506,10 +2506,19 @@ MonoBehaviour:
     attackWindow: 0
     delayToNextAttack: 12
     performed: 0
+  - isSlash: 0
+    isCharged: 0
+    dmg: 0
+    lrch: 0
+    direction: {x: -1, y: 0}
+    animationName: perform
+    attackWindow: 0
+    delayToNextAttack: 0
+    performed: 0
   - isSlash: 1
     isCharged: 0
     dmg: 10
-    lrch: 0
+    lrch: 10
     direction: {x: -1, y: 0}
     animationName: perform
     attackWindow: 2

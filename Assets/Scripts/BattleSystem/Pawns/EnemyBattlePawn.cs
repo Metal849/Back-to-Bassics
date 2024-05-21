@@ -8,6 +8,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [SerializeField] private int _beatsPerDecision;
     private float _decisionTime;
     private int _actionIdx;
+    public EnemyStateMachine ESM => _esm;
     protected override void Awake()
     {
         base.Awake();

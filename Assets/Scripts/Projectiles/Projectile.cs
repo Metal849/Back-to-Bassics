@@ -81,13 +81,6 @@ public class Projectile : Conductable, IAttackRequester
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
         }
-        else
-        {
-            // (TEMP) Manual DEBUG UI Tracker -------
-            UIManager.Instance.IncrementMissTracker();
-            //---------------------------------------
-            _hitPlayerPawn.Damage(_dmg);
-        }
         Destroy();
     }
     public void OnRequestBlock(IAttackReceiver receiver)
