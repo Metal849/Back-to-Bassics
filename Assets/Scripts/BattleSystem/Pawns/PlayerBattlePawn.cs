@@ -13,6 +13,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
+    public bool attacking { get; private set; }
     protected override void Awake()
     {
         base.Awake();
@@ -63,17 +64,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 slashDirection)
     {
-        if (IsStaggered || IsDead) return;
+        if (IsStaggered || IsDead || attacking || blocking) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
         slashDirection.Normalize();
-        if (_activeAttackRequesters.Count > 0)
-        {
-            // (Suggestion) Maybe you should process all requests?
-            // Note we are dequeing!
-            _activeAttackRequesters.Peek().OnRequestDeflect(this);
-        }
-        else 
+        StartCoroutine(Attacking());
+        //if (_activeAttackRequesters.Count > 0)
+        //{
+        //    // (Suggestion) Maybe you should process all requests?
+        //    // Note we are dequeing!
+        //    //_activeAttackRequesters.Peek().OnRequestDeflect(this);
+        //}
+        //else 
+        if (_activeAttackRequesters.Count <= 0)
         {
             BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
             //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
@@ -97,6 +100,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
+        if (blocking)
+        {
+            requester.OnRequestBlock(this);
+        }
+        if (attacking)
+        {
+            requester.OnRequestDeflect(this);
+        }  
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
@@ -118,6 +129,12 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void OnRequestBlock(IAttackReceiver receiver)
     {
         _spriteAnimator.Play("attack_blocked");
+    }
+    private IEnumerator Attacking()
+    {
+        attacking = true;
+        yield return new WaitForSeconds(_weaponData.AttackDuration);
+        attacking = false;
     }
 
     // Legacy Input...

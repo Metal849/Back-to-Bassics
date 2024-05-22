@@ -15,4 +15,5 @@ MonoBehaviour:
   _name: Slasher
   _dmg: 10
   _lrch: 5
+  _attackDuration: 2
   _lore: Very Simple
