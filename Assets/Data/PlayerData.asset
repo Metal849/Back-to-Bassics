@@ -16,7 +16,7 @@ MonoBehaviour:
   _hp: 100
   _sp: 20
   _spRecoveryRate: 0.1
-  _staggerRecoveryTime: 2
+  _staggerRecoveryTime: 8
   _lore: This is the player :3
   _confuseResistance: 0
   _poisonResistance: 0

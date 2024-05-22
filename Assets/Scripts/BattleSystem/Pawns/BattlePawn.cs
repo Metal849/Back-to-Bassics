@@ -71,7 +71,6 @@ public class BattlePawn : Conductable
             // Battle Pawn Stagger
             _currSP = 0;
             StartCoroutine(StaggerSelf());
-            OnStagger();
         }
     }
     public virtual void Heal(int amount)
@@ -130,16 +129,22 @@ public class BattlePawn : Conductable
     {
         // TODO: Things that occur on battle pawn death
     }
+    protected virtual void OnUnstagger()
+    {
+        // TODO: Things that occur on battle pawn after unstaggering
+    }
     #endregion
     protected virtual IEnumerator StaggerSelf()
     {
         IsStaggered = true;
+        OnStagger();
         // TODO: Play Stagger Animation
         // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
         yield return new WaitForSeconds(_data.StaggerRecoveryTime);
         _currSP = _data.SP;
         // TODO: UI update should happen here
         IsStaggered = false;
+        OnUnstagger();
         // TODO: Play StaggerRecovery Animation
     }
 }

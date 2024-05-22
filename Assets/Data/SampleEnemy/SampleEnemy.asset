@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SampleEnemy
   m_EditorClassIdentifier: 
   _name: Sample
-  _hp: 100
-  _sp: 20
+  _hp: 500
+  _sp: 100
   _spRecoveryRate: 0
-  _staggerRecoveryTime: 0
+  _staggerRecoveryTime: 10
   _lore: hehehe hooo hoo
   _confuseResistance: 0
   _poisonResistance: 0
-  _bpm: 180
+  _bpm: 240
   _blockLrch: 2

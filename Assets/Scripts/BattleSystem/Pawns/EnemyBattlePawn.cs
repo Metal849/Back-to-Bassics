@@ -6,6 +6,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [SerializeField] private EnemyStateMachine _esm;
     [SerializeField] private EnemyAction[] _enemyActions;
     [SerializeField] private int _beatsPerDecision;
+    [SerializeField] private ParticleSystem _particleSystem;
     private float _decisionTime;
     private int _actionIdx;
     public EnemyStateMachine ESM => _esm;
@@ -86,6 +87,14 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     {
         amount = _esm.CurrState.OnLurch(amount);
         base.Lurch(amount);
+    }
+    protected override void OnStagger()
+    {
+        _particleSystem?.Play();
+    }
+    protected override void OnUnstagger()
+    {
+        _particleSystem?.Stop();
     }
     #endregion
 }
