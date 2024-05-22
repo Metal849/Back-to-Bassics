@@ -6,6 +6,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 {
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
+    [SerializeField] private ParticleSystem _particleSystem;
     public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
@@ -141,6 +142,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     protected override void OnStagger()
     {
         Unblock();
+        _particleSystem.Play();
+    }
+    protected override void OnUnstagger()
+    {
+        _particleSystem.Stop();
     }
 
     // Legacy Input...
