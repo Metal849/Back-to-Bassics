@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4b5622965f2c0d4e8ca37115d55f0be, type: 3}
-  m_Name: SampleEnemy
+  m_Name: Bassics
   m_EditorClassIdentifier: 
-  _name: Sample
-  _hp: 500
+  _name: Bassics
+  _hp: 1000
   _sp: 100
   _spRecoveryRate: 0
   _staggerRecoveryTime: 10
-  _lore: hehehe hooo hoo
-  _preStaggerMultiplier: 0.1
+  _lore: The bass himself!
+  _preStaggerMultiplier: 0.2
   _confuseResistance: 0
   _poisonResistance: 0
-  _bpm: 240
-  _blockLrch: 2
+  _bpm: 120
+  _blockLrch: 5

@@ -114,7 +114,7 @@ public class BattlePawn : Conductable
     public virtual void EnterBattle()
     {
         gameObject.SetActive(true);
-        _spriteAnimator.Play("enter_battle");
+        _spriteAnimator.Play("enterbattle");
     }
     public virtual void LeaveBattle()
     {
@@ -143,6 +143,9 @@ public class BattlePawn : Conductable
         yield return new WaitForSeconds(_data.StaggerRecoveryTime);
         _currSP = _data.SP;
         // TODO: UI update should happen here
+        // (TEMP) Manual UI BS
+        if (_spBar != null) _spBar.fillAmount = _currSP / _data.SP;
+        // --------------------
         IsStaggered = false;
         OnUnstagger();
         // TODO: Play StaggerRecovery Animation

@@ -13,7 +13,7 @@ public partial class EnemyStateMachine
         }
         public override int OnDamage(int amount)
         {
-            return amount;
+            return (int)(amount * Input.Enemy.Data.PreStaggerMultiplier);
         }
         public override float OnLurch(float amount)
         {

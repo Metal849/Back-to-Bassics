@@ -64,7 +64,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 slashDirection)
     {
-        if (IsStaggered || IsDead || attacking || blocking) return;
+        if (IsStaggered || IsDead || blocking || attacking) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
         slashDirection.Normalize();
@@ -94,7 +94,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public override void RecoverSP(float amount)
     {
         // Technically inefficent due to second method call, but good for readablity and modularity!
-        if (!blocking) base.RecoverSP(amount);
+        if (!blocking && !attacking) base.RecoverSP(amount);
     }
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
@@ -132,9 +132,15 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     private IEnumerator Attacking()
     {
+        //if (attacking && BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Attacking>()) Lurch(2f);
+        //StopAllCoroutines();
         attacking = true;
-        yield return new WaitForSeconds(_weaponData.AttackDuration);
+        yield return new WaitForSeconds(_weaponData.AttackDuration * 0.25f * Conductor.Instance.spb);
         attacking = false;
+    }
+    protected override void OnStagger()
+    {
+        Unblock();
     }
 
     // Legacy Input...

@@ -11,7 +11,6 @@ public class Projectile : Conductable, IAttackRequester
     private Rigidbody _rb;
     public bool isDestroyed { get; private set; }
     private PlayerBattlePawn _hitPlayerPawn;
-    private float _attackWindow;
     public float AttackDamage => _dmg;
     public float AttackLurch => _dmg;
     #region Unity Messages
@@ -49,38 +48,29 @@ public class Projectile : Conductable, IAttackRequester
     {
         _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
-        // TODO: Think of a better way for this to work without projectile needing to know player pawn's state
-        // HINT: Use CompleteAttackRequest
-        if (_hitPlayerPawn.blocking)
-        {
-            OnRequestBlock(_hitPlayerPawn);
-            return;
-        }
         _hitPlayerPawn.ReceiveAttackRequest(this);
-        _attackWindow = Conductor.Instance.Beat + 0.5f;
-        _rb.velocity = Vector2.zero;
-    }
-    protected override void OnQuarterBeat()
-    {
-        if (_hitPlayerPawn == null || Conductor.Instance.Beat < _attackWindow) return;
+        if (!isDestroyed)
+        {
+            // (TEMP) Manual DEBUG UI Tracker -------
+            UIManager.Instance.IncrementMissTracker();
+            //---------------------------------------
 
-        // (TEMP) Manual DEBUG UI Tracker -------
-        UIManager.Instance.IncrementMissTracker();
-        //---------------------------------------
+            _hitPlayerPawn.Damage(_dmg);
 
-        _hitPlayerPawn.Damage(_dmg);
+            _hitPlayerPawn.CompleteAttackRequest(this);
+            Destroy();
+        }
 
-        _hitPlayerPawn.CompleteAttackRequest(this);
-        Destroy();
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
-        if (DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f) && Conductor.Instance.Beat < _attackWindow)
+        if (DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f))
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
         }
+        _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
     public void OnRequestBlock(IAttackReceiver receiver)
@@ -89,6 +79,7 @@ public class Projectile : Conductable, IAttackRequester
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
         _hitPlayerPawn.Lurch(_dmg);
+        _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
     public void Destroy()

@@ -28,6 +28,10 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         }
         foreach (EnemyAction action in _enemyActions)
         {
+            if (action == null)
+            {
+                Debug.LogWarning("Enemy Battle Pawn has null action!");
+            }
             action.ParentPawn = this;
         }
     }
@@ -85,15 +89,20 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     }
     public override void Lurch(float amount)
     {
+        if (IsStaggered) return;
         amount = _esm.CurrState.OnLurch(amount);
         base.Lurch(amount);
     }
     protected override void OnStagger()
     {
+        // Staggered Animation (Paper Crumple)
+        _esm.Transition<EnemyStateMachine.Stagger>();
         _particleSystem?.Play();
     }
     protected override void OnUnstagger()
     {
+        // Unstagger Animation transition to idle
+        _esm.Transition<EnemyStateMachine.Idle>();
         _particleSystem?.Stop();
     }
     #endregion

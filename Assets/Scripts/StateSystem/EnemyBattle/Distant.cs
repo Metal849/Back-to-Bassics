@@ -4,7 +4,8 @@ using UnityEngine;
 
 public partial class EnemyStateMachine
 {
-    public class Stagger : EnemyState
+    // Create two versions of Idle such that you can either slash at the opponet or not
+    public class Distant: EnemyState
     {
         public override void AttackRequestHandler(IAttackRequester requester)
         {
@@ -12,7 +13,7 @@ public partial class EnemyStateMachine
         }
         public override int OnDamage(int amount)
         {
-            return amount;
+            return 0;
         }
         public override float OnLurch(float amount)
         {
@@ -20,4 +21,3 @@ public partial class EnemyStateMachine
         }
     }
 }
-
