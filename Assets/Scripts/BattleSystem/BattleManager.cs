@@ -18,14 +18,6 @@ public class BattleManager : Singleton<BattleManager>
     {
         StartCoroutine(StartBattle());
     }
-    private void Update()
-    {
-        if (_player.IsDead)
-        {
-            // Infie loop should not be doing this :3
-            Conductor.Instance.StopConducting();
-        }
-    }
     private IEnumerator StartBattle()
     {
         _player.EnterBattle();
@@ -33,5 +25,13 @@ public class BattleManager : Singleton<BattleManager>
         _enemy.EnterBattle();
         Conductor.Instance.BeginConducting(((EnemyBattlePawnData)_enemy.Data).BPM);
         IsBattleActive = true;
+    }
+    public void OnPlayerDeath()
+    {
+        Conductor.Instance.StopConducting();
+    }
+    public void OnEnemyDeath()
+    {
+        Conductor.Instance.StopConducting();
     }
 }

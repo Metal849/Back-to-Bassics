@@ -66,6 +66,7 @@ public abstract class StateMachine<M, S, I> : MonoBehaviour
 
     public void Transition<NextStateType>() where NextStateType : S, new() {
         if (!_locked) {
+            //Debug.Log("Transition To State: " + typeof(NextStateType).Name);
             CurrState?.Exit(CurrInput);
             SetState<NextStateType>();
             CurrState.Enter(CurrInput);

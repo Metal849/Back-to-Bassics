@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Bassics
   m_EditorClassIdentifier: 
   _name: Bassics
-  _hp: 1000
-  _sp: 100
+  _hp: 100
+  _sp: 10
   _spRecoveryRate: 0
   _staggerRecoveryTime: 10
   _lore: The bass himself!

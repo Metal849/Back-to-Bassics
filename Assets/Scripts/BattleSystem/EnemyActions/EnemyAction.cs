@@ -20,7 +20,6 @@ public abstract class EnemyAction : Conductable
     public virtual void StopAction()
     {
         IsActive = false;
-        ParentPawn.ESM.Transition<EnemyStateMachine.Idle>();
         ParentPawn.OnActionComplete();
     }
 }

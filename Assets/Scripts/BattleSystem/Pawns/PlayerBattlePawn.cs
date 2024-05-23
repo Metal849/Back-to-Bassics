@@ -151,12 +151,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     protected override void OnStagger()
     {
+        base.OnStagger();
         Unblock();
         _particleSystem.Play();
     }
     protected override void OnUnstagger()
     {
+        base.OnUnstagger();
         _particleSystem.Stop();
+    }
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        BattleManager.Instance.OnPlayerDeath();
     }
 
     // Legacy Input...

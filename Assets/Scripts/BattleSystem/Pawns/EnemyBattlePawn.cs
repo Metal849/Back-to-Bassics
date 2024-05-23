@@ -38,7 +38,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // Perform Random Battle Action
     protected override void OnFullBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered) return;
+        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered || IsDead) return;
         int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
         if (idx == -2)
         {
@@ -73,6 +73,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
+        if (IsDead) return;
         _esm.CurrState.AttackRequestHandler(requester);
     }
 
@@ -95,19 +96,29 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     }
     protected override void OnStagger()
     {
+        base.OnStagger();
         // Staggered Animation (Paper Crumple)
         _esm.Transition<EnemyStateMachine.Stagger>();
         _particleSystem?.Play();
     }
     protected override void OnUnstagger()
     {
+        base.OnUnstagger();
         // Unstagger Animation transition to idle
         _esm.Transition<EnemyStateMachine.Idle>();
         _particleSystem?.Stop();
     }
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        _esm.Transition<EnemyStateMachine.Dead>();
+        BattleManager.Instance.OnEnemyDeath();
+    }
     public void OnActionComplete()
     {
         _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
+        if (IsStaggered || IsDead) return;
+        _esm.Transition<EnemyStateMachine.Idle>();
     }
     #endregion
 }
