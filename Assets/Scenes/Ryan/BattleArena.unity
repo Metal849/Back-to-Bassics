@@ -5506,52 +5506,6 @@ MonoBehaviour:
   _spawnRateInBeats: 3
   _target: {fileID: 75822319}
   _beatsToReachTarget: 5
---- !u!1 &172392776
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 172392777}
-  - component: {fileID: 172392778}
-  m_Layer: 0
-  m_Name: MusicAttack3 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &172392777
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172392776}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1826137503}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &172392778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172392776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e20bdd44a2ba2f45878c65d47c4576d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directions: 0100000001000000010000000200000002000000
-  musicNoteRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
 --- !u!1 &225726756
 GameObject:
   m_ObjectHideFlags: 0
@@ -11033,7 +10987,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -508457017, guid: f685b1f3ceb5e984d8be2a14c59720a0, type: 3}
+  m_Sprite: {fileID: -1396773948, guid: ceeb471fd0cbb714d9f779f2535ed409, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11358,52 +11312,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 600496740}
   m_CullTransparentMesh: 1
---- !u!1 &613498020
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 613498021}
-  - component: {fileID: 613498022}
-  m_Layer: 0
-  m_Name: MusicAttack3 (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &613498021
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613498020}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1826137503}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &613498022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613498020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e20bdd44a2ba2f45878c65d47c4576d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  directions: 0200000002000000030000000300000003000000
-  musicNoteRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
 --- !u!1 &634560931
 GameObject:
   m_ObjectHideFlags: 0
@@ -16741,6 +16649,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2069415211}
+  - {fileID: 1149822392}
   m_Father: {fileID: 2129905145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &887350513
@@ -16863,6 +16772,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963962457}
   m_CullTransparentMesh: 1
+--- !u!1 &964189037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 964189038}
+  - component: {fileID: 964189039}
+  m_Layer: 0
+  m_Name: SlashEast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &964189038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964189037}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.71000004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1826137503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &964189039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964189037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSequence:
+  - isSlash: 0
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 0
+    lrch: 0
+    direction: {x: 1, y: 0}
+    animationName: broadcast
+    delayToNextAttack: 16
+    performed: 0
+  - isSlash: 1
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 5
+    lrch: 2
+    direction: {x: 1, y: 0}
+    animationName: perform
+    delayToNextAttack: 8
+    performed: 0
 --- !u!1 &980233179
 GameObject:
   m_ObjectHideFlags: 0
@@ -17333,6 +17305,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1149822391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1149822392}
+  - component: {fileID: 1149822393}
+  m_Layer: 0
+  m_Name: SlashWest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1149822392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149822391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 861628309}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1149822393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149822391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSequence:
+  - isSlash: 0
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 0
+    lrch: 0
+    direction: {x: -1, y: 0}
+    animationName: broadcast
+    delayToNextAttack: 12
+    performed: 0
+  - isSlash: 1
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 5
+    lrch: 2
+    direction: {x: -1, y: 0}
+    animationName: perform
+    delayToNextAttack: 8
+    performed: 0
 --- !u!1 &1162476955
 GameObject:
   m_ObjectHideFlags: 0
@@ -17408,6 +17443,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162476955}
   m_CullTransparentMesh: 1
+--- !u!1 &1257420952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1257420953}
+  - component: {fileID: 1257420954}
+  m_Layer: 0
+  m_Name: SlashWest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1257420953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257420952}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.71000004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1826137503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1257420954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257420952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackSequence:
+  - isSlash: 0
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 0
+    lrch: 0
+    direction: {x: -1, y: 0}
+    animationName: broadcast
+    delayToNextAttack: 16
+    performed: 0
+  - isSlash: 1
+    isCharged: 0
+    includeAnimatorTime: 1
+    dmg: 5
+    lrch: 2
+    direction: {x: -1, y: 0}
+    animationName: perform
+    delayToNextAttack: 8
+    performed: 0
 --- !u!1 &1365501125
 GameObject:
   m_ObjectHideFlags: 0
@@ -17867,8 +17965,8 @@ MonoBehaviour:
   - {fileID: 845431418}
   - {fileID: 980233181}
   - {fileID: 2042639718}
-  - {fileID: 172392778}
-  - {fileID: 613498022}
+  - {fileID: 964189039}
+  - {fileID: 1257420954}
   _beatsPerDecision: 2
   _particleSystem: {fileID: 548670170}
 --- !u!4 &1786412172
@@ -17880,7 +17978,7 @@ Transform:
   m_GameObject: {fileID: 1786412169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.29, z: 0.06999993}
+  m_LocalPosition: {x: 0, y: 2.58, z: 0.06999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17920,8 +18018,8 @@ Transform:
   - {fileID: 845431417}
   - {fileID: 980233180}
   - {fileID: 2042639717}
-  - {fileID: 172392777}
-  - {fileID: 613498021}
+  - {fileID: 964189038}
+  - {fileID: 1257420953}
   m_Father: {fileID: 1786412172}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1911879094
@@ -18144,7 +18242,7 @@ MonoBehaviour:
     includeAnimatorTime: 1
     dmg: 0
     lrch: 0
-    direction: {x: -1, y: 0}
+    direction: {x: 1, y: 0}
     animationName: broadcast
     delayToNextAttack: 12
     performed: 0
@@ -18153,7 +18251,7 @@ MonoBehaviour:
     includeAnimatorTime: 1
     dmg: 5
     lrch: 2
-    direction: {x: -1, y: 0}
+    direction: {x: 1, y: 0}
     animationName: perform
     delayToNextAttack: 8
     performed: 0
@@ -18490,7 +18588,7 @@ MonoBehaviour:
   _esm: {fileID: 0}
   _enemyActions:
   - {fileID: 2069415212}
-  - {fileID: 1481221692}
+  - {fileID: 1149822393}
   _beatsPerDecision: 2
   _particleSystem: {fileID: 683335651}
 --- !u!114 &2129905147

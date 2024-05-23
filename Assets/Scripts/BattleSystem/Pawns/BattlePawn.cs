@@ -31,7 +31,6 @@ public class BattlePawn : Conductable
     {
         _currHP = _data.HP;
         _currSP = _data.SP;
-        gameObject.SetActive(false); // Remove this and do equivalent in Animator logic
     }
     #endregion
     #region Conductable Methods

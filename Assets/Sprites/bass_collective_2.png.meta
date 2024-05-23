@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f685b1f3ceb5e984d8be2a14c59720a0
+guid: ceeb471fd0cbb714d9f779f2535ed409
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,106 +110,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bass_collective_transparent_0
+      name: bass_collective_2_0
       rect:
         serializedVersion: 2
-        x: 35
-        y: 502
-        width: 269
-        height: 490
+        x: 25
+        y: 510
+        width: 306
+        height: 479
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4caf69228eef514f8bbfd6d9e9fd3f9
-      internalID: -508457017
+      spriteID: 2bd9e3a0e096d4d4199dae878bd8f19b
+      internalID: 1456040793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bass_collective_transparent_1
+      name: bass_collective_2_1
       rect:
         serializedVersion: 2
-        x: 350
-        y: 502
-        width: 269
-        height: 490
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 103d23248f9bad64d81ece25ee769e2f
-      internalID: -2065715383
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bass_collective_transparent_2
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 502
-        width: 343
-        height: 490
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cec1960e9a4c1af4daca8999ddb89b67
-      internalID: -1280842819
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bass_collective_transparent_3
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 11
-        width: 343
-        height: 490
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8411e65fa4fbbc94098de8607a1fad1a
-      internalID: -1460547554
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bass_collective_transparent_4
-      rect:
-        serializedVersion: 2
-        x: 424
-        y: 11
-        width: 428
-        height: 490
+        x: 435
+        y: 526
+        width: 419
+        height: 444
       alignment: 9
-      pivot: {x: 0.64984727, y: 0.48470205}
+      pivot: {x: 0.6544335, y: 0.50747395}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78eff59ad6e4b234582f303984b63d1d
-      internalID: -27176391
+      spriteID: 211add2a421f4f74bad268e1d702cf77
+      internalID: -1396773948
       vertices: []
       indices: 
       edges: []
@@ -217,7 +154,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: d87990afaf49ddd4d932d40dc73ac605
     internalID: 0
     vertices: []
     indices: 
@@ -225,11 +162,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bass_collective_transparent_0: -508457017
-      bass_collective_transparent_1: -2065715383
-      bass_collective_transparent_2: -1280842819
-      bass_collective_transparent_3: -1460547554
-      bass_collective_transparent_4: -27176391
+      bass_collective_2_0: 1456040793
+      bass_collective_2_1: -1396773948
+      bass_collective_2_2: 1612018015
+      bass_collective_2_3: 1471520676
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

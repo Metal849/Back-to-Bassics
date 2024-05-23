@@ -19,11 +19,6 @@ public class MusicAttack : EnemyAction
         currIdx = 0;
         ParentPawn.SpriteAnimator.Play("music");
     }
-    public override void StopAction()
-    {
-        base.StopAction();
-        ParentPawn.SpriteAnimator.Play("idle");
-    }
     protected override void OnFullBeat()
     {
         if (currIdx < directions.Length && IsActive)
@@ -33,11 +28,11 @@ public class MusicAttack : EnemyAction
             ParentPawn.SpriteAnimator.SetFloat("xdir", directionVector.x);
             proj.transform.position = BattleManager.Instance.Player.transform.position + (directionVector) * 6;
             // Take One Beat to fire
-            proj.Fire((BattleManager.Instance.Player.transform.position - proj.transform.position)/Conductor.Instance.spb);
+            proj.Fire((BattleManager.Instance.Player.transform.position - proj.transform.position)/(2*Conductor.Instance.spb));
             currIdx++;
             if (currIdx >= directions.Length)
             {
-                //StartCoroutine(WaitForProjectileToDestroy(proj));
+                StartCoroutine(WaitForProjectileToDestroy(proj));
                 StopAction();
             }
         }

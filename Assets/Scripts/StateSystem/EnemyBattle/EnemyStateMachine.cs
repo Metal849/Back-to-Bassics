@@ -8,7 +8,7 @@ public partial class EnemyStateMachine : StateMachine<EnemyStateMachine, EnemySt
     #endregion
     protected override void SetInitialState()
     {
-        Transition<Idle>();
         CurrInput.Enemy = GetComponent<EnemyBattlePawn>();
+        Transition<Idle>();   
     }
 }

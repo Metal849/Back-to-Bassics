@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Sample
   _hp: 500
-  _sp: 100
+  _sp: 10
   _spRecoveryRate: 0
   _staggerRecoveryTime: 10
   _lore: hehehe hooo hoo

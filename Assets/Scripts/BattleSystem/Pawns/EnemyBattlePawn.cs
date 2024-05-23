@@ -105,5 +105,9 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         _esm.Transition<EnemyStateMachine.Idle>();
         _particleSystem?.Stop();
     }
+    public void OnActionComplete()
+    {
+        _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
+    }
     #endregion
 }

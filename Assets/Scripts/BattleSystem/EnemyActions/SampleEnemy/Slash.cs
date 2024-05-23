@@ -20,11 +20,6 @@ public class Slash : EnemyAction, IAttackRequester
         currIdx = -1;
         TraverseSequence();
     }
-    public override void StopAction()
-    {
-        base.StopAction();
-        ParentPawn.ESM.Transition<EnemyStateMachine.Idle>();
-    }
     protected override void OnQuarterBeat()
     {
         //Debug.Log("NextSequenceTime: " + _nextSequenceTime + "\nAttackTime: " + _attackTime);
