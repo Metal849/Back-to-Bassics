@@ -10,11 +10,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
+    public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
 
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
+    public bool dodging { get; private set; }
     protected override void Awake()
     {
         base.Awake();
@@ -55,6 +57,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
+        // Figure out a way to make the dodging false later
+        //DodgeDirection = direction;
+        //dodging = true;
         _spriteAnimator.Play("dodge_" + direction.ToString().ToLower());
     }
     /// <summary>
@@ -101,14 +106,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
+        if (attacking)
+        {
+            requester.OnRequestDeflect(this);
+        }
         if (blocking)
         {
             requester.OnRequestBlock(this);
         }
-        if (attacking)
+        if (dodging)
         {
-            requester.OnRequestDeflect(this);
-        }  
+
+        }
+         
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
@@ -178,6 +188,10 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (Input.GetKeyDown(KeyCode.S))
         {
             Dodge(Direction.South);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Dodge(Direction.North);
         }
         if (Input.GetMouseButton(1))
         {
