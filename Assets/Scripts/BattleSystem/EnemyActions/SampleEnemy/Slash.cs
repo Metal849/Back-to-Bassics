@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,10 +10,18 @@ public class Slash : EnemyAction, IAttackRequester
     [Header("Slash Action")]
     [SerializeField] private SlashNote[] _attackSequence;
     private int currIdx;
-    private float _animationCompleteTime;
+    
     //private float _attackTime;
+    
+    private const string PERFORM = "slash_perform";
+    private const string BROADCAST = "slash_broadcast";
+    #region technical
+    private float _animationCompleteTime;
     private float _nextSequenceTime;
     private bool _slashing;
+    private bool _broadcasting;
+    private bool _performed;
+    #endregion
     public override void StartAction()
     {
         base.StartAction();
@@ -26,11 +35,31 @@ public class Slash : EnemyAction, IAttackRequester
         if (!IsActive) return;
 
         // Slash Attack Window
-        if (!_attackSequence[currIdx].performed && _attackSequence[currIdx].isSlash && Conductor.Instance.Beat >= _animationCompleteTime)
+        if (!_performed && !_broadcasting && Conductor.Instance.Beat >= _animationCompleteTime)
         {
+            _performed = true;
             _slashing = true;
             BattleManager.Instance.Player.ReceiveAttackRequest(this);
             if (_slashing) PerformSlashOnPlayer();
+        }
+
+        // Perform Slash Attack
+        if (_broadcasting && Conductor.Instance.Beat >= _animationCompleteTime)
+        {
+            _broadcasting = false;
+            ParentPawn.SpriteAnimator.Play(PERFORM);
+
+            float animationTime = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).length;
+            _animationCompleteTime = Conductor.Instance.Beat + (animationTime / Conductor.Instance.spb);
+            // Character Speed Sync with Conductor per beat
+            //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
+            //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
+            //animationTime = beats * Conductor.Instance.spb;
+
+            // Increase Sequence Transition Time
+            // Should probably include The later animation states, so you probably should handle swapping to them in here
+            // instead of the animator :L
+            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? (animationTime/Conductor.Instance.spb) : 0;
         }
 
         // Next Sequence
@@ -40,23 +69,26 @@ public class Slash : EnemyAction, IAttackRequester
         }
 
     }
+    #region IAttackRequester Methods
     public void OnRequestBlock(IAttackReceiver receiver)
     {
+        PlayerBattlePawn player = receiver as PlayerBattlePawn;
+        if (player == null) return;
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
         
         ParentPawn.SpriteAnimator.SetTrigger("blocked");
-        
-        BattleManager.Instance.Player.Lurch(_attackSequence[currIdx].lrch);
+
+        player.Lurch(_attackSequence[currIdx].lrch);
 
         _slashing = false;
-        _attackSequence[currIdx].performed = true;
-        BattleManager.Instance.Player.CompleteAttackRequest(this);
+        player.CompleteAttackRequest(this);
     }
-    public void OnRequestDeflect(IAttackReceiver receiver)
+    public void OnRequestDeflect(IAttackReceiver receiver) 
     {
-        if (DirectionHelper.MaxAngleBetweenVectors(-_attackSequence[currIdx].direction, BattleManager.Instance.Player.SlashDirection, 5f))
+        PlayerBattlePawn player = receiver as PlayerBattlePawn;
+        if (player != null && DirectionHelper.MaxAngleBetweenVectors(-_attackSequence[currIdx].direction, player.SlashDirection, 5f))
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
@@ -67,10 +99,22 @@ public class Slash : EnemyAction, IAttackRequester
             ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
 
             _slashing = false;
-            _attackSequence[currIdx].performed = true;
-            BattleManager.Instance.Player.CompleteAttackRequest(this);
+            player.CompleteAttackRequest(this);
         }      
     }
+    public void OnRequestDodge(IAttackReceiver receiver)
+    {
+        PlayerBattlePawn player = receiver as PlayerBattlePawn;
+        if (player != null && _attackSequence[currIdx].dodgeDirections.Contains(player.DodgeDirection)) 
+        {
+            ParentPawn.SpriteAnimator.SetTrigger("performed");
+
+            _slashing = false;
+            player.CompleteAttackRequest(this);
+        }
+        
+    }
+    #endregion
     private void PerformSlashOnPlayer()
     {
         // (TEMP) Manual DEBUG UI Tracker -------
@@ -83,16 +127,12 @@ public class Slash : EnemyAction, IAttackRequester
         //_hitPlayerPawn.Lurch(_attackSequence[currIdx].lrch); -> Should the player be punished SP as wewll?
 
         _slashing = false;
-        _attackSequence[currIdx].performed = true;
         BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
     private void TraverseSequence()
-    {     
+    {
         // Reset attack performance trigger
-        if (currIdx >= 0 && currIdx < _attackSequence.Length)
-        {
-            _attackSequence[currIdx].performed = false;
-        }
+        _performed = false;
         // Traversal
         if (++currIdx >= _attackSequence.Length)
         {
@@ -100,44 +140,30 @@ public class Slash : EnemyAction, IAttackRequester
             return;
         }
 
-        // Do we have an animation to play?
-        string animation = "slash_" + _attackSequence[currIdx].animationName;
-        bool hasStateAnimation = ParentPawn.SpriteAnimator.HasState(0, Animator.StringToHash(animation));
-        
         // Timing
-        float animationTime = 0;
-        if (hasStateAnimation)
-        {
-            // Character Animation Direction
-            ParentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
-            ParentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
+        // Character Animation Direction
+        ParentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
+        ParentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
 
-            // Play Animation
-            if (_attackSequence[currIdx].isSlash)
-            {
-                ParentPawn.SpriteAnimator.ResetTrigger("performed");
-                ParentPawn.SpriteAnimator.ResetTrigger("deflected");
-                ParentPawn.SpriteAnimator.ResetTrigger("blocked");
-            }
-            ParentPawn.SpriteAnimator.Play(animation);
+        // Broadcast Attack Animation
+        ParentPawn.SpriteAnimator.ResetTrigger("performed");
+        ParentPawn.SpriteAnimator.ResetTrigger("deflected");
+        ParentPawn.SpriteAnimator.ResetTrigger("blocked");
+        ParentPawn.SpriteAnimator.Play(BROADCAST);
 
-            animationTime = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).length;
+        // Character Speed Sync with Conductor per beat
+        //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
+        //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
+        //animationTime = beats * Conductor.Instance.spb;
 
-            // Character Speed Sync with Conductor per beat
-            //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
-            //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
-            //animationTime = beats * Conductor.Instance.spb;
-
-            // For Slashing time
-            _animationCompleteTime = Conductor.Instance.Beat + animationTime;
-        }
+        // For Broadcast time
+        _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * 0.25f;
+        
 
         // Next sequence time calculation
         _nextSequenceTime = Conductor.Instance.Beat
-            + (_attackSequence[currIdx].includeAnimatorTime ? animationTime : 0)
+            + _attackSequence[currIdx].broadcastTime * 0.25f
             + _attackSequence[currIdx].delayToNextAttack * 0.25f;
-            //+ _attackSequence[currIdx].attackWindow * 0.25f;
-        
     }
     private void SlashAttackWindow()
     {
@@ -166,14 +192,13 @@ public class Slash : EnemyAction, IAttackRequester
     [Serializable]
     public struct SlashNote
     {
-        public bool isSlash;
         public bool isCharged;
         public bool includeAnimatorTime;
         public int dmg;
         public int lrch;
         public Vector2 direction;
-        public string animationName;
-        //[Tooltip("In Quarter Beats")] public int attackWindow;
+        public Direction[] dodgeDirections;
+        [Tooltip("In Quarter Beats")] public int broadcastTime;
         [Tooltip("In Quarter Beats")] public int delayToNextAttack;
 
         // Dynamic Values

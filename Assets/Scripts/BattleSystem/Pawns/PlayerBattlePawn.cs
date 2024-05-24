@@ -116,7 +116,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         }
         if (dodging)
         {
-
+            requester.OnRequestDodge(this);
         }
          
     }
@@ -136,10 +136,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         throw new System.NotImplementedException();
     }
-
     public void OnRequestBlock(IAttackReceiver receiver)
     {
         _spriteAnimator.Play("attack_blocked");
+    }
+
+    public void OnRequestDodge(IAttackReceiver receiver)
+    {
+        throw new System.NotImplementedException();
     }
     private IEnumerator Attacking()
     {

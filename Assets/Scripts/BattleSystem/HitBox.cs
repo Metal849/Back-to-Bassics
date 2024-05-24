@@ -13,6 +13,12 @@ public class HitBox : MonoBehaviour, IAttackRequester
     {
         throw new System.NotImplementedException();
     }
+
+    public void OnRequestDodge(IAttackReceiver receiver)
+    {
+        throw new System.NotImplementedException();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var pawn = other.GetComponent<PlayerBattlePawn>();

@@ -16817,22 +16817,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSequence:
-  - isSlash: 0
-    isCharged: 0
-    includeAnimatorTime: 1
-    dmg: 0
-    lrch: 0
-    direction: {x: 1, y: 0}
-    animationName: broadcast
-    delayToNextAttack: 16
-    performed: 0
-  - isSlash: 1
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 5
     lrch: 2
     direction: {x: 1, y: 0}
-    animationName: perform
+    dodgeDirections: 000000000100000003000000
+    broadcastTime: 12
     delayToNextAttack: 8
     performed: 0
 --- !u!1 &980233179
@@ -17350,22 +17341,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSequence:
-  - isSlash: 0
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 0
     lrch: 0
     direction: {x: -1, y: 0}
-    animationName: broadcast
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 12
     performed: 0
-  - isSlash: 1
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 5
     lrch: 2
     direction: {x: -1, y: 0}
-    animationName: perform
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 8
     performed: 0
 --- !u!1 &1162476955
@@ -17488,22 +17479,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSequence:
-  - isSlash: 0
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 0
     lrch: 0
     direction: {x: -1, y: 0}
-    animationName: broadcast
-    delayToNextAttack: 16
-    performed: 0
-  - isSlash: 1
-    isCharged: 0
-    includeAnimatorTime: 1
-    dmg: 5
-    lrch: 2
-    direction: {x: -1, y: 0}
-    animationName: perform
+    dodgeDirections: 000000000200000001000000
+    broadcastTime: 12
     delayToNextAttack: 8
     performed: 0
 --- !u!1 &1365501125
@@ -17685,22 +17667,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSequence:
-  - isSlash: 0
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 0
     lrch: 0
     direction: {x: 1, y: 0}
-    animationName: broadcast
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 12
     performed: 0
-  - isSlash: 1
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 5
     lrch: 2
     direction: {x: 1, y: 0}
-    animationName: perform
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 8
     performed: 0
 --- !u!1 &1553371014
@@ -18237,22 +18219,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSequence:
-  - isSlash: 0
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 0
     lrch: 0
     direction: {x: 1, y: 0}
-    animationName: broadcast
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 12
     performed: 0
-  - isSlash: 1
-    isCharged: 0
+  - isCharged: 0
     includeAnimatorTime: 1
     dmg: 5
     lrch: 2
     direction: {x: 1, y: 0}
-    animationName: perform
+    dodgeDirections: 
+    broadcastTime: 0
     delayToNextAttack: 8
     performed: 0
 --- !u!1 &2096272547

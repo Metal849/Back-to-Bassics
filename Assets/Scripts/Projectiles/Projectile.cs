@@ -82,6 +82,7 @@ public class Projectile : Conductable, IAttackRequester
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
+    public void OnRequestDodge(IAttackReceiver receiver) { }
     public void Destroy()
     {
         isDestroyed = true;
