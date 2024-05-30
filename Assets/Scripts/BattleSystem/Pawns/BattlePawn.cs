@@ -17,10 +17,6 @@ public class BattlePawn : Conductable
     public int HP => _currHP;
     public float SP => _currSP;
 
-    [Header("Temporary Direct Ref UI tracking")]
-    [SerializeField] private Image _hpBar;
-    [SerializeField] private Image _spBar;
-
     #region BattlePawn Boolean States
     public bool IsDead { get; private set; }
     public bool IsStaggered { get; private set; }
@@ -45,9 +41,7 @@ public class BattlePawn : Conductable
     {
         if (IsDead) return;
         _currHP -= amount;
-        // (TEMP) Manual UI BS -> TODO: Needs to be event driven and called, not handled here!
-        if (_hpBar != null) _hpBar.fillAmount = (float)_currHP / _data.HP;
-        // -------------------
+        UIManager.Instance.UpdateHP(this);
         if (_currHP <= 0) 
         {
             // Battle Pawn Death
@@ -62,9 +56,7 @@ public class BattlePawn : Conductable
     {
         if (IsStaggered) return;
         _currSP -= amount;
-        // (TEMP) Manual UI BS
-        if (_spBar != null) _spBar.fillAmount = _currSP / _data.SP;
-        // --------------------
+        UIManager.Instance.UpdateSP(this);
         if (_currSP <= 0)
         {
             // Battle Pawn Stagger
@@ -77,9 +69,7 @@ public class BattlePawn : Conductable
         if (_currHP < _data.HP)
         {
             _currHP += amount;
-
-            // (TEMP) UGLY MANUAL UI UPDATING -> This should slowly build up through a float
-            _hpBar.fillAmount = (float)_currHP / _data.HP;
+            UIManager.Instance.UpdateHP(this);
         }
     }
     public virtual void RecoverSP(float amount)
@@ -88,9 +78,7 @@ public class BattlePawn : Conductable
         {
             // Updates integer wise
             _currSP += amount;
-
-            // (TEMP) UGLY MANUAL UI UPDATING -> This should slowly build up through a float
-            _spBar.fillAmount = _currSP / _data.SP;
+            UIManager.Instance.UpdateSP(this);
         }
     }
     // TODO: Implement Status Ailment Applier Method
@@ -141,10 +129,7 @@ public class BattlePawn : Conductable
         // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
         yield return new WaitForSeconds(_data.StaggerRecoveryTime);
         _currSP = _data.SP;
-        // TODO: UI update should happen here
-        // (TEMP) Manual UI BS
-        if (_spBar != null) _spBar.fillAmount = _currSP / _data.SP;
-        // --------------------
+        UIManager.Instance.UpdateSP(this);
         IsStaggered = false;
         OnUnstagger();
         // TODO: Play StaggerRecovery Animation

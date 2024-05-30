@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 public partial class UIManager : Singleton<UIManager>
 {
+    [Header("Base Specs")]
     [SerializeField] private TextMeshProUGUI parryTracker;
     [SerializeField] private TextMeshProUGUI blockTracker;
     [SerializeField] private TextMeshProUGUI missTracker;

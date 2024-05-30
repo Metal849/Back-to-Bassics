@@ -6015,10 +6015,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 470016859}
+  - component: {fileID: 470016860}
   - component: {fileID: 470016858}
   - component: {fileID: 470016857}
   - component: {fileID: 470016856}
-  - component: {fileID: 470016860}
   m_Layer: 5
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -6127,6 +6127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ec06c612e05794792820b31540d811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHpBar: {fileID: 2120561725}
+  _playerSpBar: {fileID: 1739889328}
+  _enemyHpBar: {fileID: 1162476957}
+  _enemySpBar: {fileID: 860159818}
   parryTracker: {fileID: 1107437951}
   blockTracker: {fileID: 1553371017}
   missTracker: {fileID: 224709}
