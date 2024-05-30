@@ -13,6 +13,11 @@ public class Conductor : Singleton<Conductor>
     public event Action OnFullBeat;
     public event Action OnFirstBeat;
     public event Action OnLastBeat;
+    public static float full = 1f;
+    public static float half = 0.5f;
+    public static float quarter = 0.25f;
+    public static float eighth = 0.125f;
+    public static float sixteenth = 0.0625f;
     public void Awake()
     {
         InitializeSingleton();

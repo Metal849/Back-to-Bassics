@@ -64,12 +64,12 @@ public class Projectile : Conductable, IAttackRequester
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
-        if (DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f))
-        {
-            // (TEMP) Manual DEBUG UI Tracker -------
-            UIManager.Instance.IncrementParryTracker();
-            //---------------------------------------
-        }
+        // Did receiver deflect in correct direction?
+        if (!DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f)) return;
+
+        // (TEMP) Manual DEBUG UI Tracker -------
+        UIManager.Instance.IncrementParryTracker();
+        //---------------------------------------
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
@@ -82,7 +82,10 @@ public class Projectile : Conductable, IAttackRequester
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
-    public void OnRequestDodge(IAttackReceiver receiver) { }
+    public void OnRequestDodge(IAttackReceiver receiver) 
+    { 
+        // Nothing Happens Here :o
+    }
     public void Destroy()
     {
         isDestroyed = true;

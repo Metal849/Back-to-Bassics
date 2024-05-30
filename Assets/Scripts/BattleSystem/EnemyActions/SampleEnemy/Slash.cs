@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Slash : EnemyAction, IAttackRequester
 {
@@ -49,8 +50,8 @@ public class Slash : EnemyAction, IAttackRequester
             _broadcasting = false;
             ParentPawn.SpriteAnimator.Play(PERFORM);
 
-            float animationTime = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).length;
-            _animationCompleteTime = Conductor.Instance.Beat + (animationTime / Conductor.Instance.spb);
+            AnimatorStateInfo info = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
+            _animationCompleteTime = Conductor.Instance.Beat + (info.length / Conductor.Instance.spb);
             // Character Speed Sync with Conductor per beat
             //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
             //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
@@ -59,7 +60,7 @@ public class Slash : EnemyAction, IAttackRequester
             // Increase Sequence Transition Time
             // Should probably include The later animation states, so you probably should handle swapping to them in here
             // instead of the animator :L
-            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? (animationTime/Conductor.Instance.spb) : 0;
+            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? (info.length / Conductor.Instance.spb) : 0;
         }
 
         // Next Sequence
@@ -150,6 +151,7 @@ public class Slash : EnemyAction, IAttackRequester
         ParentPawn.SpriteAnimator.ResetTrigger("deflected");
         ParentPawn.SpriteAnimator.ResetTrigger("blocked");
         ParentPawn.SpriteAnimator.Play(BROADCAST);
+        _broadcasting = true;
 
         // Character Speed Sync with Conductor per beat
         //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
@@ -157,18 +159,19 @@ public class Slash : EnemyAction, IAttackRequester
         //animationTime = beats * Conductor.Instance.spb;
 
         // For Broadcast time
-        _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * 0.25f;
+        _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * Conductor.quarter;
         
 
         // Next sequence time calculation
         _nextSequenceTime = Conductor.Instance.Beat
-            + _attackSequence[currIdx].broadcastTime * 0.25f
-            + _attackSequence[currIdx].delayToNextAttack * 0.25f;
+            + _attackSequence[currIdx].broadcastTime * Conductor.quarter
+            + _attackSequence[currIdx].delayToNextAttack * Conductor.quarter;
     }
+    // This old and deprecated
     private void SlashAttackWindow()
     {
         BattleManager.Instance.Player.ReceiveAttackRequest(this);
-        //_attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * 0.25f;
+        //_attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * Conductor.quarter;
         _slashing = true;
         if (BattleManager.Instance.Player.blocking)
         {

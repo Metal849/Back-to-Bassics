@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// THE OLDEN BOY
+// THIS SHALL BE SLAIN!!!
 public class DrawSpace : MonoBehaviour
 {
     [SerializeField] private GameObject _brush;
@@ -42,7 +44,7 @@ public class DrawSpace : MonoBehaviour
                 //-------------------------------------------------
 
                 if (line.magnitude < _effectiveSlashLength) return;
-                _player.Slash(line);
+                //_player.Slash(line);
             }    
         }
     }

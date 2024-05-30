@@ -1,17 +1,25 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+/// <summary>
+/// Playable Battle Pawn
+/// </summary>
 public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 {
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
     [SerializeField] private ParticleSystem _particleSystem;
+    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW UIIIIII BULLSHIITTT
+    [SerializeField] private GameObject _image;
     public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
+    private PlayerInput _playerinput;
 
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
@@ -22,6 +30,16 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         base.Awake();
         _activeAttackRequesters = new Queue<IAttackRequester>();
         SlashDirection = Vector2.zero;
+
+        // Input Related
+        // (Ryan Genuily doesn't know yet) Could Change dodge and jump to not be same input?
+        _playerinput = GetComponent<PlayerInput>();
+        _playerinput.actions["Dodge"].performed += OnDodge;
+        _playerinput.actions["Jump"].performed += OnDodge;
+        _playerinput.actions["Block"].performed += OnBlock;
+        _playerinput.actions["Block"].canceled += OnBlock;
+        _playerinput.actions["Slash"].performed += OnSlash;
+        _playerinput.actions.Enable();
     }
     #region Player Actions
     /// <summary>
@@ -52,7 +70,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         blocking = false;
         _spriteAnimator.Play("unblock");
     }
-    public void Dodge(Direction direction)
+    public void Dodge(Vector2 direction)
     {
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
@@ -60,7 +78,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Figure out a way to make the dodging false later
         //DodgeDirection = direction;
         //dodging = true;
-        _spriteAnimator.Play("dodge_" + direction.ToString().ToLower());
+        _spriteAnimator.Play("dodge_" + DirectionHelper.GetVectorDirection(direction).ToString().ToLower());
     }
     /// <summary>
     /// Slash in a given direction. 
@@ -68,12 +86,15 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// Otherwise request an attack to the enemy pawn.
     /// </summary>
     /// <param name="slashDirection"></param>
-    public void Slash(Vector2 slashDirection)
+    public void Slash(Vector2 direction)
     {
         if (IsStaggered || IsDead || blocking || attacking) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
-        slashDirection.Normalize();
+        // Set the Slash Direction
+        SlashDirection = direction;
+        SlashDirection.Normalize();
+        //_image.transform.rotation = Quaternion.AxisAngle(Vector3.forward, Vector2.Angle(Vector2.up, slashDirection));
         StartCoroutine(Attacking());
         //if (_activeAttackRequesters.Count > 0)
         //{
@@ -88,7 +109,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
 
-            // Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
+            // (Past Ryan) Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
+            // (Current Ryan) Oh there it is lmao
             BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
         }
     }
@@ -150,7 +172,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //if (attacking && BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Attacking>()) Lurch(2f);
         //StopAllCoroutines();
         attacking = true;
-        yield return new WaitForSeconds(_weaponData.AttackDuration * 0.25f * Conductor.Instance.spb);
+        yield return new WaitForSeconds(_weaponData.AttackDuration * Conductor.quarter * Conductor.Instance.spb);
         attacking = false;
     }
     protected override void OnStagger()
@@ -169,48 +191,25 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         base.OnDeath();
         BattleManager.Instance.OnPlayerDeath();
     }
-
-    // Legacy Input...
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWw
-    private void Update()
+    #region Actions
+    public void OnDodge(InputAction.CallbackContext context)
     {
-        // (TEMP) Legacy Input System Memes
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Dodge(Direction.West);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Dodge(Direction.East);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Dodge(Direction.South);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Dodge(Direction.North);
-        }
-        if (Input.GetMouseButton(1))
+        Dodge(context.ReadValue<Vector2>());
+    }
+    public void OnBlock(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
             Block();
         }
-        if (Input.GetMouseButtonUp(1))
+        if (context.canceled)
         {
             Unblock();
         }
     }
+    public void OnSlash(InputAction.CallbackContext context)
+    {
+        Slash(context.ReadValue<Vector2>());
+    }
+    #endregion
 }
