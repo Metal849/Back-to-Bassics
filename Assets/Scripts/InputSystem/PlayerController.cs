@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static EnemyStateMachine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 [DisallowMultipleComponent]
 public class PlayerController : MonoBehaviour
