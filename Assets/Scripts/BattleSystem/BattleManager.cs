@@ -31,6 +31,9 @@ public class BattleManager : Singleton<BattleManager>
     {
         IsBattleActive = false;
         Conductor.Instance.StopConducting();
+
+        // Instead of directly to world traversal, need a win screen of some kind
+        GameManager.Instance.GSM.Transition<GameStateMachine.WorldTraversal>();
     }
     private IEnumerator IntializeBattle()
     {

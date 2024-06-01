@@ -11,6 +11,7 @@ public class EventTrigger : MonoBehaviour
         if (other.GetComponentInParent<PlayerTraversalPawn>())
         {
             OnTrigger.Invoke();
+            Destroy(gameObject);
         }
     }
 }

@@ -21,6 +21,7 @@ public class BattlePawn : Conductable
     #region BattlePawn Boolean States
     public bool IsDead { get; private set; }
     public bool IsStaggered { get; private set; }
+    public bool ActiveBattlePawn { get; private set; }
     #endregion
 
     #region Unity Messages
@@ -48,8 +49,8 @@ public class BattlePawn : Conductable
             // Battle Pawn Death
             _currHP = 0;
             IsDead = true;
-            // TODO: Play Death Animation
-            // TODO: Notify BattleManager to broadcast this BattlePawn's death
+            ActiveBattlePawn = false;
+            // Handling of Death animation and battlemanger Broadcast happen in OnDeath()
             OnDeath();
         }
     }
@@ -101,7 +102,10 @@ public class BattlePawn : Conductable
     #endregion
     public virtual void EnterBattle()
     {
+        ActiveBattlePawn = true;
         gameObject.SetActive(true);
+        UIManager.Instance.UpdateHP(this);
+        UIManager.Instance.UpdateSP(this);
         //_spriteAnimator.Play("enterbattle");
     }
     public virtual void LeaveBattle()
