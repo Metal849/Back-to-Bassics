@@ -26,7 +26,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         base.Awake();
         _activeAttackRequesters = new Queue<IAttackRequester>();
-        SlashDirection = Vector2.zero;        
+        SlashDirection = Vector2.zero;
     }
     #region Player Actions
     /// <summary>
@@ -62,11 +62,12 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
-        // (Past Ryan) Figure out a way to make the dodging false later
-        // (Ryan) I'm sorry future ryan, but I have figured it out through very scuffed means
+        // (Past Ryan 1) Figure out a way to make the dodging false later
+        // (Past Ryan 2) I'm sorry future ryan, but I have figured it out through very scuffed means
         // Check a file called OnDodgeEnd.cs
+        // (Ryan) This really sucky
         DodgeDirection = DirectionHelper.GetVectorDirection(direction);
-        dodging = true;
+        //dodging = true;
         _spriteAnimator.Play("dodge_" + DodgeDirection.ToString().ToLower());
     }
     /// <summary>
@@ -121,11 +122,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             requester.OnRequestDeflect(this);
         }
-        if (blocking)
+        else if (blocking)
         {
             requester.OnRequestBlock(this);
         }
-        if (dodging)
+        else if (dodging)
         {
             requester.OnRequestDodge(this);
         }

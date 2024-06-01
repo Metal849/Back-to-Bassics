@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -154,8 +155,8 @@ public class Slash : EnemyAction, IAttackRequester
         // Character Speed Sync with Conductor per beat
         //int beats = Mathf.RoundToInt(info.length / Conductor.Instance.spb);
         //ParentPawn.SpriteAnimator.SetFloat("speed", info.length / (beats * Conductor.Instance.spb));
+        ParentPawn.SpriteAnimator.SetFloat("speed", 1f);
         //_animationCompleteTime = Conductor.Instance.Beat + beats * Conductor.Instance.spb;
-
         // For Broadcast time
         _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * Conductor.quarter;
         
