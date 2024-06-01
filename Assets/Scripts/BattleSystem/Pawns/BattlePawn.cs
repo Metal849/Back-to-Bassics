@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+[DisallowMultipleComponent]
 public class BattlePawn : Conductable
 {
     [Header("References")]
@@ -101,7 +102,7 @@ public class BattlePawn : Conductable
     public virtual void EnterBattle()
     {
         gameObject.SetActive(true);
-        _spriteAnimator.Play("enterbattle");
+        //_spriteAnimator.Play("enterbattle");
     }
     public virtual void LeaveBattle()
     {

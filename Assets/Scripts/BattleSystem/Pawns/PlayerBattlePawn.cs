@@ -12,34 +12,21 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
     [SerializeField] private ParticleSystem _particleSystem;
-    // EWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW UIIIIII BULLSHIITTT
-    [SerializeField] private GameObject _image;
     public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
-    private PlayerInput _playerinput;
-
+    public EnemyBattlePawn CurrEnemyOpponent { get; set; }
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
-    public bool dodging { get; private set; }
+    public bool dodging { get; set; }
     protected override void Awake()
     {
         base.Awake();
         _activeAttackRequesters = new Queue<IAttackRequester>();
-        SlashDirection = Vector2.zero;
-
-        // Input Related
-        // (Ryan Genuily doesn't know yet) Could Change dodge and jump to not be same input?
-        _playerinput = GetComponent<PlayerInput>();
-        _playerinput.actions["Dodge"].performed += OnDodge;
-        _playerinput.actions["Jump"].performed += OnDodge;
-        _playerinput.actions["Block"].performed += OnBlock;
-        _playerinput.actions["Block"].canceled += OnBlock;
-        _playerinput.actions["Slash"].performed += OnSlash;
-        _playerinput.actions.Enable();
+        SlashDirection = Vector2.zero;        
     }
     #region Player Actions
     /// <summary>
@@ -75,10 +62,12 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (IsStaggered || IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
-        // Figure out a way to make the dodging false later
-        //DodgeDirection = direction;
-        //dodging = true;
-        _spriteAnimator.Play("dodge_" + DirectionHelper.GetVectorDirection(direction).ToString().ToLower());
+        // (Past Ryan) Figure out a way to make the dodging false later
+        // (Ryan) I'm sorry future ryan, but I have figured it out through very scuffed means
+        // Check a file called OnDodgeEnd.cs
+        DodgeDirection = DirectionHelper.GetVectorDirection(direction);
+        dodging = true;
+        _spriteAnimator.Play("dodge_" + DodgeDirection.ToString().ToLower());
     }
     /// <summary>
     /// Slash in a given direction. 
@@ -94,7 +83,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Set the Slash Direction
         SlashDirection = direction;
         SlashDirection.Normalize();
-        //_image.transform.rotation = Quaternion.AxisAngle(Vector3.forward, Vector2.Angle(Vector2.up, slashDirection));
+        //UIManager.Instance.PlayerSlash(SlashDirection);
         StartCoroutine(Attacking());
         //if (_activeAttackRequesters.Count > 0)
         //{
@@ -105,13 +94,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //else 
         if (_activeAttackRequesters.Count <= 0)
         {
-            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            CurrEnemyOpponent.Damage(_weaponData.Dmg);
             //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
 
             // (Past Ryan) Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
             // (Current Ryan) Oh there it is lmao
-            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
+            CurrEnemyOpponent.ReceiveAttackRequest(this);
         }
     }
     #endregion
@@ -191,25 +180,4 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         base.OnDeath();
         BattleManager.Instance.OnPlayerDeath();
     }
-    #region Actions
-    public void OnDodge(InputAction.CallbackContext context)
-    {
-        Dodge(context.ReadValue<Vector2>());
-    }
-    public void OnBlock(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Block();
-        }
-        if (context.canceled)
-        {
-            Unblock();
-        }
-    }
-    public void OnSlash(InputAction.CallbackContext context)
-    {
-        Slash(context.ReadValue<Vector2>());
-    }
-    #endregion
 }

@@ -65,24 +65,24 @@ public abstract class StateMachine<M, S, I> : MonoBehaviour
     #endregion
 
     public void Transition<NextStateType>() where NextStateType : S, new() {
-        if (!_locked) {
-            //Debug.Log("Transition To State: " + typeof(NextStateType).Name);
-            CurrState?.Exit(CurrInput);
-            SetState<NextStateType>();
-            CurrState.Enter(CurrInput);
+        if (_locked) return;
 
-            StateTransition?.Invoke();
-        }
+        //Debug.Log("Transition To State: " + typeof(NextStateType).Name);
+        CurrState?.Exit(CurrInput);
+        SetState<NextStateType>();
+        CurrState.Enter(CurrInput);
+
+        StateTransition?.Invoke();
     }
     
     //Edit by Chris Lee: Added delayed transition, intended for programmed UI animation between states :O
     public void DelayedTransition<NextStateType>(float delay, bool overrideCurrState) where NextStateType : S, new() {
-        if (!_locked) {
-            if (overrideCurrState) _transitionAction = null;
-            if (_transitionAction == null) {
-                _transitionAction = DelayedTransitionAction<NextStateType>(delay);
-                StartCoroutine(_transitionAction);
-            }
+        if (_locked) return;
+
+        if (overrideCurrState) _transitionAction = null;
+        if (_transitionAction == null) {
+            _transitionAction = DelayedTransitionAction<NextStateType>(delay);
+            StartCoroutine(_transitionAction);
         }
     }
 
@@ -103,16 +103,16 @@ public abstract class StateMachine<M, S, I> : MonoBehaviour
 
     protected void SetState<T>() where T : S, new()
     {
-        if (!_locked) {
-            Type stateType = typeof(T);
-            if (!_stateMap.ContainsKey(stateType)) {
-                CreateNewState(stateType);
-            }
+        if (_locked) return;
 
-            PrevState = CurrState;
-            CurrState = _stateMap[stateType];
-            if (PrevState == null) PrevState = CurrState;
+        Type stateType = typeof(T);
+        if (!_stateMap.ContainsKey(stateType)) {
+            CreateNewState(stateType);
         }
+
+        PrevState = CurrState;
+        CurrState = _stateMap[stateType];
+        if (PrevState == null) PrevState = CurrState;
     }
 
     public bool PrevStateEquals<T>() where T : S

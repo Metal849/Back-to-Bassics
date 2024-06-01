@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""PlayerBattlePawn"",
             ""id"": ""9a91dd49-cdbe-4bc3-827a-27878db01527"",
             ""actions"": [
                 {
@@ -66,7 +66,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""WASD"",
                     ""id"": ""fb2b5874-d5cd-4496-aca4-b89805c7330d"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -121,7 +121,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""ArrowKeys"",
                     ""id"": ""f5c73f89-2b29-457c-85ef-b308f20b290e"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -176,7 +176,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""IJKL"",
                     ""id"": ""f4826d2f-221b-4372-848b-380f01e15b4e"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -231,7 +231,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Space"",
                     ""id"": ""8a41921d-8ebf-474b-90cf-e749d7396dc8"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -297,6 +297,197 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerTraversalPawn"",
+            ""id"": ""e983e834-b3c3-49ac-ac54-e9285ee2deda"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""7a291b14-5554-4593-a1ba-8ee3c4ec4150"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Slash"",
+                    ""type"": ""Value"",
+                    ""id"": ""5286f292-4f1e-4cf9-aebf-b1f3576225e6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""26353d13-fe50-443b-bd04-5b130672eee8"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""580faf74-1734-455f-9fa8-2f891d6131d6"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""fb2a5a2b-01f7-4ef2-8123-24dc10aae7ac"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""6eb2ee38-7d44-4c58-9734-ab760d1b51dc"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""94598d54-e54e-4d68-9726-92038f14acba"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""9f5cac55-4515-436b-b160-6859826374b7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slash"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""41e6eb78-80a0-4ff7-835b-fa42ce5255bd"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4cb5f445-9e53-4558-a9e0-b92ebef5b7ce"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""49e57b99-34c8-499a-aae4-91a9a5912cfe"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""5cbf7571-0b6d-4eb6-914b-4c2b4e379338"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""IJKL"",
+                    ""id"": ""d2dd0492-d6d0-482e-9a6c-3103d892799f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slash"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""02cd4f51-ed81-4d81-9e3b-781e139c36a1"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""0164bf6f-365b-48b7-983a-1ee34f35fd3d"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""280e07f6-529f-4e8c-88c0-b72bd01717b6"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""269567fb-ed7f-4e1b-b85e-af5d41455fcf"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -324,12 +515,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
-        m_Player_Slash = m_Player.FindAction("Slash", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
+        // PlayerBattlePawn
+        m_PlayerBattlePawn = asset.FindActionMap("PlayerBattlePawn", throwIfNotFound: true);
+        m_PlayerBattlePawn_Dodge = m_PlayerBattlePawn.FindAction("Dodge", throwIfNotFound: true);
+        m_PlayerBattlePawn_Slash = m_PlayerBattlePawn.FindAction("Slash", throwIfNotFound: true);
+        m_PlayerBattlePawn_Jump = m_PlayerBattlePawn.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerBattlePawn_Block = m_PlayerBattlePawn.FindAction("Block", throwIfNotFound: true);
+        // PlayerTraversalPawn
+        m_PlayerTraversalPawn = asset.FindActionMap("PlayerTraversalPawn", throwIfNotFound: true);
+        m_PlayerTraversalPawn_Move = m_PlayerTraversalPawn.FindAction("Move", throwIfNotFound: true);
+        m_PlayerTraversalPawn_Slash = m_PlayerTraversalPawn.FindAction("Slash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -388,30 +583,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Dodge;
-    private readonly InputAction m_Player_Slash;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Block;
-    public struct PlayerActions
+    // PlayerBattlePawn
+    private readonly InputActionMap m_PlayerBattlePawn;
+    private List<IPlayerBattlePawnActions> m_PlayerBattlePawnActionsCallbackInterfaces = new List<IPlayerBattlePawnActions>();
+    private readonly InputAction m_PlayerBattlePawn_Dodge;
+    private readonly InputAction m_PlayerBattlePawn_Slash;
+    private readonly InputAction m_PlayerBattlePawn_Jump;
+    private readonly InputAction m_PlayerBattlePawn_Block;
+    public struct PlayerBattlePawnActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
-        public InputAction @Slash => m_Wrapper.m_Player_Slash;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Block => m_Wrapper.m_Player_Block;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public PlayerBattlePawnActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Dodge => m_Wrapper.m_PlayerBattlePawn_Dodge;
+        public InputAction @Slash => m_Wrapper.m_PlayerBattlePawn_Slash;
+        public InputAction @Jump => m_Wrapper.m_PlayerBattlePawn_Jump;
+        public InputAction @Block => m_Wrapper.m_PlayerBattlePawn_Block;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerBattlePawn; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(PlayerBattlePawnActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerBattlePawnActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerBattlePawnActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerBattlePawnActionsCallbackInterfaces.Add(instance);
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
@@ -426,7 +621,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Block.canceled += instance.OnBlock;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IPlayerBattlePawnActions instance)
         {
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
@@ -442,21 +637,75 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Block.canceled -= instance.OnBlock;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IPlayerBattlePawnActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerBattlePawnActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IPlayerBattlePawnActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerBattlePawnActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerBattlePawnActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public PlayerBattlePawnActions @PlayerBattlePawn => new PlayerBattlePawnActions(this);
+
+    // PlayerTraversalPawn
+    private readonly InputActionMap m_PlayerTraversalPawn;
+    private List<IPlayerTraversalPawnActions> m_PlayerTraversalPawnActionsCallbackInterfaces = new List<IPlayerTraversalPawnActions>();
+    private readonly InputAction m_PlayerTraversalPawn_Move;
+    private readonly InputAction m_PlayerTraversalPawn_Slash;
+    public struct PlayerTraversalPawnActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerTraversalPawnActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PlayerTraversalPawn_Move;
+        public InputAction @Slash => m_Wrapper.m_PlayerTraversalPawn_Slash;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerTraversalPawn; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerTraversalPawnActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerTraversalPawnActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerTraversalPawnActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerTraversalPawnActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Slash.started += instance.OnSlash;
+            @Slash.performed += instance.OnSlash;
+            @Slash.canceled += instance.OnSlash;
+        }
+
+        private void UnregisterCallbacks(IPlayerTraversalPawnActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Slash.started -= instance.OnSlash;
+            @Slash.performed -= instance.OnSlash;
+            @Slash.canceled -= instance.OnSlash;
+        }
+
+        public void RemoveCallbacks(IPlayerTraversalPawnActions instance)
+        {
+            if (m_Wrapper.m_PlayerTraversalPawnActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerTraversalPawnActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerTraversalPawnActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerTraversalPawnActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerTraversalPawnActions @PlayerTraversalPawn => new PlayerTraversalPawnActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -475,11 +724,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_ControllerSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface IPlayerBattlePawnActions
     {
         void OnDodge(InputAction.CallbackContext context);
         void OnSlash(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
+    }
+    public interface IPlayerTraversalPawnActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnSlash(InputAction.CallbackContext context);
     }
 }
