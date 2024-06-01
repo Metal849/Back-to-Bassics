@@ -54,9 +54,18 @@ public class BattleManager : Singleton<BattleManager>
     public void OnPlayerDeath()
     {
         EndBattle();
+        UIManager.Instance.UpdateCenterText("Player Is Dead, SAD!");
     }
     public void OnEnemyDeath()
     {
         EndBattle();
+        StartCoroutine(EnemyDefeatTemp());
     } 
+
+    private IEnumerator EnemyDefeatTemp()
+    {
+        UIManager.Instance.UpdateCenterText($"Defeated {Enemy.Data.Name}!");
+        yield return new WaitForSeconds(3f);
+        UIManager.Instance.UpdateCenterText("");
+    }
 }
