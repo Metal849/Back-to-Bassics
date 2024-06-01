@@ -51,16 +51,14 @@ public class Slash : EnemyAction, IAttackRequester
             ParentPawn.SpriteAnimator.Play(PERFORM);
 
             AnimatorStateInfo info = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
-            _animationCompleteTime = Conductor.Instance.Beat + (info.length / Conductor.Instance.spb);
             // Character Speed Sync with Conductor per beat
-            //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
-            //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
-            //animationTime = beats * Conductor.Instance.spb;
-
+            int beats = Mathf.RoundToInt(info.length / Conductor.Instance.spb);
+            ParentPawn.SpriteAnimator.SetFloat("speed", info.length / (beats * Conductor.Instance.spb));
+            _animationCompleteTime = Conductor.Instance.Beat + beats * Conductor.Instance.spb;
             // Increase Sequence Transition Time
             // Should probably include The later animation states, so you probably should handle swapping to them in here
             // instead of the animator :L
-            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? (info.length / Conductor.Instance.spb) : 0;
+            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? beats * Conductor.Instance.spb : 0;
         }
 
         // Next Sequence
@@ -154,9 +152,9 @@ public class Slash : EnemyAction, IAttackRequester
         _broadcasting = true;
 
         // Character Speed Sync with Conductor per beat
-        //int beats = Mathf.RoundToInt(animationTime / Conductor.Instance.spb);
-        //ParentPawn.SpriteAnimator.SetFloat("speed", (beats * Conductor.Instance.spb) / animationTime);
-        //animationTime = beats * Conductor.Instance.spb;
+        //int beats = Mathf.RoundToInt(info.length / Conductor.Instance.spb);
+        //ParentPawn.SpriteAnimator.SetFloat("speed", info.length / (beats * Conductor.Instance.spb));
+        //_animationCompleteTime = Conductor.Instance.Beat + beats * Conductor.Instance.spb;
 
         // For Broadcast time
         _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * Conductor.quarter;
