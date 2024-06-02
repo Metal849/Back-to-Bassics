@@ -19,6 +19,10 @@ public abstract class StatusAilment : Conductable
         _currBuildUp = 0;
         _maxBuildUp = 100;
     }
+    protected virtual void Start()
+    {
+        Enable();
+    }
     /// <summary>
     /// Build when inflicted, don't build up when already inflicted
     /// </summary>

@@ -15,9 +15,9 @@ public class RandomHomingProjectileSpawner : Conductable
     [SerializeField] private int _beatsToReachTarget;
 
     private float _currCooldown;
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
+        Enable();
         Pooler.Instance.PoolGameObject(_projectileRef, _maxProjectileSpawn);
     }
     protected override void OnQuarterBeat()

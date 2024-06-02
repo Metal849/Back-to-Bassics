@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : Conductable, IAttackRequester
+public class Projectile : MonoBehaviour, IAttackRequester
 {
     [Header("Projectile Specs")]
     [SerializeField] private int _dmg;

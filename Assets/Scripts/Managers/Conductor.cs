@@ -7,7 +7,6 @@ public class Conductor : Singleton<Conductor>
     public float Beat { get; private set; }
     public float spb {  get; private set; }
     private bool beating;
-    
     public event Action OnQuarterBeat;
     public event Action OnHalfBeat;
     public event Action OnFullBeat;

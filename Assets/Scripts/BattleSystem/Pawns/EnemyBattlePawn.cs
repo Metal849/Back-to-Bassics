@@ -38,7 +38,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // Perform Random Battle Action
     protected override void OnFullBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered || IsDead || !ActiveBattlePawn) return;
+        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered || IsDead) return;
         int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
         if (idx == -2)
         {

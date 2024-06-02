@@ -59,6 +59,7 @@ public class Slash : EnemyAction, IAttackRequester
             // Increase Sequence Transition Time
             // Should probably include The later animation states, so you probably should handle swapping to them in here
             // instead of the animator :L
+            // Currently they rely on the attack end delay so its kind wack
             _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? beats * Conductor.Instance.spb : 0;
         }
 
@@ -74,7 +75,7 @@ public class Slash : EnemyAction, IAttackRequester
     {
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
         if (player == null) return;
-        // (TEMP) Manual DEBUG UI Tracker -------
+        // (TEMP) DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
         
@@ -90,7 +91,7 @@ public class Slash : EnemyAction, IAttackRequester
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
         if (player != null && DirectionHelper.MaxAngleBetweenVectors(-_attackSequence[currIdx].direction, player.SlashDirection, 5f))
         {
-            // (TEMP) Manual DEBUG UI Tracker -------
+            // (TEMP) DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
             
@@ -117,7 +118,7 @@ public class Slash : EnemyAction, IAttackRequester
     #endregion
     private void PerformSlashOnPlayer()
     {
-        // (TEMP) Manual DEBUG UI Tracker -------
+        // (TEMP) DEBUG UI Tracker -------
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
         
@@ -153,6 +154,11 @@ public class Slash : EnemyAction, IAttackRequester
         _broadcasting = true;
 
         // Character Speed Sync with Conductor per beat
+        // (Ryan) Commented until the following is done:
+        //      If the broadcasts time is lower than the animation broadcast time,
+        //      Then we sync of the animation time to the broadcast time.
+        //      Otherwise just use the given broadcast time.
+
         //int beats = Mathf.RoundToInt(info.length / Conductor.Instance.spb);
         //ParentPawn.SpriteAnimator.SetFloat("speed", info.length / (beats * Conductor.Instance.spb));
         ParentPawn.SpriteAnimator.SetFloat("speed", 1f);
@@ -166,31 +172,6 @@ public class Slash : EnemyAction, IAttackRequester
             + _attackSequence[currIdx].broadcastTime * Conductor.quarter
             + _attackSequence[currIdx].delayToNextAttack * Conductor.quarter;
     }
-    // This old and deprecated
-    private void SlashAttackWindow()
-    {
-        BattleManager.Instance.Player.ReceiveAttackRequest(this);
-        //_attackTime = Conductor.Instance.Beat + _attackSequence[currIdx].attackWindow * Conductor.quarter;
-        _slashing = true;
-        if (BattleManager.Instance.Player.blocking)
-        {
-            OnRequestBlock(BattleManager.Instance.Player);
-            return;
-        }
-    }
-    // Avoiding Collider Implementation
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    _hitPlayerPawn = other.GetComponent<PlayerBattlePawn>();
-    //    if (_hitPlayerPawn == null) return;
-    //    if (_hitPlayerPawn.blocking)
-    //    {
-    //        OnRequestBlock(_hitPlayerPawn);
-    //        return;
-    //    }
-    //    _attackTime = Conductor.Instance.Beat + _attackWindow;
-    //    _hitPlayerPawn.ReceiveAttackRequest(this);
-    //}
     [Serializable]
     public struct SlashNote
     {

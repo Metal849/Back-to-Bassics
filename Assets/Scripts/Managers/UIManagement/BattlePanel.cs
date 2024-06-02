@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// Rewrite this trash, its ugly to read
+/// </summary>
 public partial class UIManager
 {
     [Header("Battle Panel")]

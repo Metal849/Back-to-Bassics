@@ -16,10 +16,12 @@ public abstract class EnemyAction : Conductable
     public virtual void StartAction()
     {
         IsActive = true;
+        Enable();
     }
     public virtual void StopAction()
     {
         IsActive = false;
+        Disable();
         ParentPawn.OnActionComplete();
     }
 }

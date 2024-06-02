@@ -8,9 +8,8 @@ public class MusicAttack : EnemyAction
     [SerializeField] private Direction[] directions;
     [SerializeField] private GameObject musicNoteRef;
     int currIdx;
-    private new void Start()
+    private void Start()
     {
-        base.Start();
         Pooler.Instance.PoolGameObject(musicNoteRef, 20);
     }
     public override void StartAction()
