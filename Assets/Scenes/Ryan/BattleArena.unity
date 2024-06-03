@@ -16933,8 +16933,8 @@ MonoBehaviour:
   OnTrigger:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 593518132}
-        m_TargetAssemblyTypeName: PlayerTraversalPawn, Assembly-CSharp
+      - m_Target: {fileID: 593518129}
+        m_TargetAssemblyTypeName: PlayerBattlePawn, Assembly-CSharp
         m_MethodName: EngageEnemy
         m_Mode: 2
         m_Arguments:
@@ -18977,8 +18977,8 @@ MonoBehaviour:
   OnTrigger:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 593518132}
-        m_TargetAssemblyTypeName: PlayerTraversalPawn, Assembly-CSharp
+      - m_Target: {fileID: 593518129}
+        m_TargetAssemblyTypeName: PlayerBattlePawn, Assembly-CSharp
         m_MethodName: EngageEnemy
         m_Mode: 2
         m_Arguments:

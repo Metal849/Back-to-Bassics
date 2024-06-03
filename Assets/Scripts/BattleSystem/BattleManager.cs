@@ -39,7 +39,6 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator IntializeBattle()
     {
         Player.EnterBattle();
-        yield return new WaitForSeconds(0.4f);
         Enemy.EnterBattle();
         for (float i = battleDelay; i > 0; i--)
         {
@@ -52,12 +51,23 @@ public class BattleManager : Singleton<BattleManager>
         Conductor.Instance.BeginConducting(((EnemyBattlePawnData)Enemy.Data).BPM);
         IsBattleActive = true;
     }
-    public void OnPlayerDeath()
+    public void OnPawnDeath(BattlePawn pawn) 
+    {
+        if (pawn is PlayerBattlePawn) 
+        {
+            OnPlayerDeath();
+        }
+        else if (pawn is EnemyBattlePawn) 
+        {
+            OnEnemyDeath();
+        }
+    }
+    private void OnPlayerDeath()
     {
         EndBattle();
         UIManager.Instance.UpdateCenterText("Player Is Dead, SAD!");
     }
-    public void OnEnemyDeath()
+    private void OnEnemyDeath()
     {
         EndBattle();
         StartCoroutine(EnemyDefeatTemp());

@@ -49,6 +49,7 @@ public class BattlePawn : Conductable
             _currHP = 0;
             IsDead = true;
             // Handling of Death animation and battlemanger Broadcast happen in OnDeath()
+            BattleManager.Instance.OnPawnDeath(this);
             OnDeath();
         }
     }

@@ -7,9 +7,9 @@ public abstract class TraversalPawn : MonoBehaviour
 {
     [Header("Traversal Pawn Specs")]
     [SerializeField] private float speed;
-    protected bool movingToDestination;
+    public bool movingToDestination { get; private set; }
     protected Vector3 destinationTarget;
-    private void Update()
+    private void FixedUpdate()
     {
         if (movingToDestination)
         {

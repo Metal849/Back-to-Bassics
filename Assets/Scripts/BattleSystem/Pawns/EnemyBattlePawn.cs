@@ -115,7 +115,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         base.OnDeath();
         _esm.Transition<EnemyStateMachine.Dead>();
         _particleSystem?.Stop();
-        BattleManager.Instance.OnEnemyDeath();
     }
     public void OnActionComplete()
     {

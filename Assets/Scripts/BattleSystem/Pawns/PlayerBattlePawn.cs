@@ -5,26 +5,35 @@ using UnityEngine;
 /// <summary>
 /// Playable Battle Pawn
 /// </summary>
+[RequireComponent(typeof(PlayerController), typeof(PlayerTraversalPawn))]
 public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
 {
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
     [SerializeField] private ParticleSystem _particleSystem;
+    private PlayerTraversalPawn _traversalPawn;
     public PlayerWeaponData WeaponData => _weaponData;
     public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
-    public EnemyBattlePawn CurrEnemyOpponent { get; set; }
+    public EnemyBattlePawn CurrEnemyOpponent { get; private set; }
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
     public bool dodging { get; set; }
+    private float battlePositionOffset = 1.8f;
     protected override void Awake()
     {
         base.Awake();
         _activeAttackRequesters = new Queue<IAttackRequester>();
+        _traversalPawn = GetComponent<PlayerTraversalPawn>();
         SlashDirection = Vector2.zero;
+    }
+    // This will start a battle
+    public void EngageEnemy(EnemyBattlePawn enemy)
+    {
+        StartCoroutine(EngageOpponent(enemy));
     }
     #region Player Actions
     /// <summary>
@@ -174,9 +183,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         base.OnUnstagger();
         _particleSystem.Stop();
     }
-    protected override void OnDeath()
+    private IEnumerator EngageOpponent(EnemyBattlePawn opponentPawn)
     {
-        base.OnDeath();
-        BattleManager.Instance.OnPlayerDeath();
+        CurrEnemyOpponent = opponentPawn;
+        _traversalPawn.MoveToDestination(new Vector2(opponentPawn.transform.position.x, opponentPawn.transform.position.z + battlePositionOffset));
+        yield return new WaitUntil(() => !_traversalPawn.movingToDestination);
+        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
     }
 }
