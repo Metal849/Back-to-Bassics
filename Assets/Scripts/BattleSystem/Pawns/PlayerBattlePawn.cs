@@ -22,7 +22,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
     public bool dodging { get; set; }
-    private float battlePositionOffset = 1.8f;
+    private float battlePositionOffset = -1.8f;
     protected override void Awake()
     {
         base.Awake();
