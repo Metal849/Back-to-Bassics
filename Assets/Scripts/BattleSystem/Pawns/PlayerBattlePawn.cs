@@ -21,6 +21,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public float AttackDamage { get => _weaponData.Dmg; }
     public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
+    public bool deflectionWindow { get; private set; }
     public bool dodging { get; set; }
     private float battlePositionOffset = -1.8f;
     protected override void Awake()
@@ -125,7 +126,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
-        if (attacking)
+        if (deflectionWindow)
         {
             requester.OnRequestDeflect(this);
         }
@@ -168,8 +169,16 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         //if (attacking && BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Attacking>()) Lurch(2f);
         //StopAllCoroutines();
+        // Divides duration beats into four sections!
+        // First Divsion is early reveive
+        // second divsion is deflection window
+        // Third Division is late receive
+        float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
-        yield return new WaitForSeconds(_weaponData.AttackDuration * Conductor.quarter * Conductor.Instance.spb);
+        deflectionWindow = true;
+        yield return new WaitForSeconds(3 * divisionTime * Conductor.quarter * Conductor.Instance.spb);
+        deflectionWindow = false;
+        yield return new WaitForSeconds(divisionTime * Conductor.quarter * Conductor.Instance.spb);
         attacking = false;
     }
     protected override void OnStagger()
