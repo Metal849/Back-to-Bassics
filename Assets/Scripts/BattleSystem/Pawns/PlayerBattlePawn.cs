@@ -176,10 +176,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
         deflectionWindow = true;
+        Debug.Log("Deflecting");
         yield return new WaitForSeconds(3 * divisionTime * Conductor.quarter * Conductor.Instance.spb);
         deflectionWindow = false;
+        Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime * Conductor.quarter * Conductor.Instance.spb);
         attacking = false;
+        Debug.Log("Ready to slash");
     }
     protected override void OnStagger()
     {
