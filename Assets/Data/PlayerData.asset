@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _name: Bass
-  _hp: 100
+  _hp: 10000
   _sp: 20
   _spRecoveryRate: 0.1
   _staggerRecoveryTime: 8
   _lore: This is the player :3
+  _preStaggerMultiplier: 0
   _confuseResistance: 0
   _poisonResistance: 0

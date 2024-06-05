@@ -120,6 +120,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public override void RecoverSP(float amount)
     {
         // Technically inefficent due to second method call, but good for readablity and modularity!
+        // o7 sp
         if (!blocking && !attacking) base.RecoverSP(amount);
     }
     #region IAttackReceiver Methods
@@ -129,9 +130,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (deflectionWindow)
         {
             requester.OnRequestDeflect(this);
+            // TODO: Right here you can allow the player to attack right away if needed
         }
         else if (blocking)
         {
+            // This is old and dying, kill me soon!
             requester.OnRequestBlock(this);
         }
         else if (dodging)
