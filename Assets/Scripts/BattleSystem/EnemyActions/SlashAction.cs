@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 public class SlashAction : EnemyAction, IAttackRequester
 {
     [Header("Slash Action")]
-    [SerializeField] private SlashNote[] _attackSequence;
+    [SerializeField] private SlashBeat[] _attackSequence;
     private int currIdx;
     
     //private float _attackTime;
@@ -18,6 +18,9 @@ public class SlashAction : EnemyAction, IAttackRequester
     private const string PERFORM = "slash_perform";
     private const string BROADCAST = "slash_broadcast";
     private const string SUCCESS = "slash_success";
+    private float perform_time;
+    private float broadcast_time;
+    private float success_time;
     #region technical
     private float _animationCompleteTime;
     private float _nextSequenceTime;
@@ -25,6 +28,33 @@ public class SlashAction : EnemyAction, IAttackRequester
     private bool _broadcasting;
     private bool _performed;
     #endregion
+
+
+    // HACKY FUNNESS
+    // DON"T DO THIS
+    private void Start()
+    {
+        
+    }
+    public void DynamicAnimatoClipUpdate()
+    {
+        foreach (AnimationClip clip in ParentPawn.SpriteAnimator.runtimeAnimatorController.animationClips) 
+        {
+            switch (clip.name)
+            {
+                case PERFORM:
+                    perform_time = clip.length;
+                    break;
+                case BROADCAST:
+                    broadcast_time = clip.length;
+                    break;
+                case SUCCESS:
+                    success_time = clip.length;
+                    break;
+
+            }
+        }
+    }
     public override void StartAction()
     {
         base.StartAction();
@@ -53,23 +83,21 @@ public class SlashAction : EnemyAction, IAttackRequester
         {
             _broadcasting = false;
             ParentPawn.SpriteAnimator.Play(PERFORM);
-
-            AnimationClip clip = ParentPawn.SpriteAnimator.GetCurrentAnimatorClipInfo(0)[0].clip;
-            AnimatorStateInfo info = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
+            //AnimatorStateInfo info = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
             // Character Speed Sync with Conductor per beat
-            int beats = Mathf.FloorToInt((5f / 60f) / Conductor.Instance.spb);
+            int beats = Mathf.RoundToInt(perform_time / Conductor.Instance.spb);
             if (beats == 0) beats = 1;
             float syncedAnimationTime = beats * Conductor.Instance.spb;
             //ParentPawn.SpriteAnimator.runtimeAnimatorController.animationClips
             // Set speed of animator to that of the animation time
-            ParentPawn.SpriteAnimator.SetFloat("speed", (5f / 60f) / syncedAnimationTime);
+            ParentPawn.SpriteAnimator.SetFloat("speed", perform_time / syncedAnimationTime);
             _animationCompleteTime = Conductor.Instance.Beat + beats;
             Debug.Log($"Beats: {beats}");
             Debug.Log($"Start Beat: {Conductor.Instance.Beat}, End Beat: {_animationCompleteTime}");
             Debug.Log($"Start Time: {Time.time}, End Time: {Time.time + syncedAnimationTime}");
             Debug.Log($"Current SPB: {Conductor.Instance.spb}");
             Debug.Log($"New Animation Duration: {syncedAnimationTime}");
-            Debug.Log($"Original Animation Duration: {(5f / 60f)}");
+            Debug.Log($"Original Animation Duration: {perform_time}");
             // Increase Sequence Transition Time
             // Should probably include The later animation states, so you probably should handle swapping to them in here
             // instead of the animator :L
@@ -186,7 +214,7 @@ public class SlashAction : EnemyAction, IAttackRequester
             + _attackSequence[currIdx].delayToNextAttack * Conductor.quarter;
     }
     [Serializable]
-    public struct SlashNote
+    public struct SlashBeat
     {
         public bool isCharged;
         public bool includeAnimatorTime;
