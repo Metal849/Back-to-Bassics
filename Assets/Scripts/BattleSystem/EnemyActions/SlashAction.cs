@@ -213,6 +213,21 @@ public class SlashAction : EnemyAction, IAttackRequester
             + _attackSequence[currIdx].broadcastTime * Conductor.quarter
             + _attackSequence[currIdx].delayToNextAttack * Conductor.quarter;
     }
+    // Convert this to universal nodes for Performance, Broadcasting, Projectile Shooting, Event Invoking
+    // (RYAN) ACTUALLY!!! THE NODES ARE FOR GENERAL PURPOSE ACTION SEQUENCES!!!!!
+    // THUS SLASH NODES WOULD ACTUALLY BE UNIQUE TO SLASH ACTION ATTACKS!!
+    // TODO: Turn enemy actions to be callable by nodes and all they do is get invoked to perform the action!
+    // Then you just create a sequencer for all the actions that happen! Thus Slashes are just another action!
+    // OK THAT IS ONE THING THOUGH!
+    // FOR SLASHES SPECFICALLY THEY NEED INDEPENDENT SLASH TIMEline
+    // In the UI that you will create allow for action sequencing/randomization/customability
+    // But have a slash sequencing that you can apply to the sequencer that is soley dependent on animations!
+    // Projectile Shooting is pretty much just an action with its own attack sequences :p
+    // Find a generalization for this sorta thing dude
+    // Maybe have it where actions can be called as nodes and then the sequences are the random actions the 
+    // enemy chooses
+    // For Example: Bassics can pick a sequence where he plays notes that attack the player but then he does one slash
+    // action at the end. This can be bundled into one sequnce where play note and slash action can get used.
     [Serializable]
     public struct SlashBeat
     {
