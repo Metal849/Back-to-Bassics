@@ -14,9 +14,5 @@ public partial class EnemyStateMachine
         {
             return (int)(amount * Input.Enemy.Data.PreStaggerMultiplier);
         }
-        public override float OnLurch(float amount)
-        {
-            return amount;
-        }
     }
 }

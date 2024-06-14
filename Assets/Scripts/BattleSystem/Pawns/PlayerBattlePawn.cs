@@ -13,13 +13,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [SerializeField] private ParticleSystem _particleSystem;
     private PlayerTraversalPawn _traversalPawn;
     public PlayerWeaponData WeaponData => _weaponData;
-    public bool blocking { get; private set; }
     public Vector2 SlashDirection { get; private set; }
     public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
     public EnemyBattlePawn CurrEnemyOpponent { get; private set; }
     public float AttackDamage { get => _weaponData.Dmg; }
-    public float AttackLurch { get => _weaponData.Lrch; }
     public bool attacking { get; private set; }
     public bool deflectionWindow { get; private set; }
     public bool dodging { get; set; }
@@ -40,34 +38,34 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <summary>
     /// Processes blocks to any active attack requests.
     /// </summary>
-    public void Block()
-    {
-        if (IsStaggered || IsDead) return;
-        AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("idle") || blocking) return;
-        blocking = true;
-        _spriteAnimator.Play("block");
-        if (_activeAttackRequesters.Count > 0)
-        {
-            // (Suggestion) Maybe you should process all requests?
-            // Note we are dequeing!
-            _activeAttackRequesters.Peek().OnRequestBlock(this);
-        }
-    }
+    //public void Block()
+    //{
+    //    if (IsStaggered || IsDead) return;
+    //    AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
+    //    if (!animatorState.IsName("idle") || blocking) return;
+    //    blocking = true;
+    //    _spriteAnimator.Play("block");
+    //    if (_activeAttackRequesters.Count > 0)
+    //    {
+    //        // (Suggestion) Maybe you should process all requests?
+    //        // Note we are dequeing!
+    //        _activeAttackRequesters.Peek().OnRequestBlock(this);
+    //    }
+    //}
     /// <summary>
     /// Should Follow Blocking, the animation and the input.
     /// Might not need the !blocking check
     /// </summary>
-    public void Unblock()
-    {
-        AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("block") || !blocking) return;
-        blocking = false;
-        _spriteAnimator.Play("unblock");
-    }
+    //public void Unblock()
+    //{
+    //    AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
+    //    if (!animatorState.IsName("block") || !blocking) return;
+    //    blocking = false;
+    //    _spriteAnimator.Play("unblock");
+    //}
     public void Dodge(Vector2 direction)
     {
-        if (IsStaggered || IsDead) return;
+        if (IsDead) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
         // (Past Ryan 1) Figure out a way to make the dodging false later
@@ -86,7 +84,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 direction)
     {
-        if (IsStaggered || IsDead || blocking || attacking) return;
+        if (IsDead || attacking) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
         // Set the Slash Direction
@@ -117,12 +115,12 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// Player cannot recover sp while blocking -> Could be brought further upward, in case we have items that use this method...
     /// </summary>
     /// <param name="amount"></param>
-    public override void RecoverSP(float amount)
-    {
-        // Technically inefficent due to second method call, but good for readablity and modularity!
-        // o7 sp
-        if (!blocking && !attacking) base.RecoverSP(amount);
-    }
+    //public override void RecoverSP(float amount)
+    //{
+    //    // Technically inefficent due to second method call, but good for readablity and modularity!
+    //    // o7 sp
+    //    if (!blocking && !attacking) base.RecoverSP(amount);
+    //}
     #region IAttackReceiver Methods
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
@@ -132,11 +130,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             requester.OnRequestDeflect(this);
             // TODO: Right here you can allow the player to attack right away if needed
         }
-        else if (blocking)
-        {
-            // This is old and dying, kill me soon!
-            requester.OnRequestBlock(this);
-        }
+        //else if (blocking)
+        //{
+        //    // This is old and dying, kill me soon!
+        //    requester.OnRequestBlock(this);
+        //}
         else if (dodging)
         {
             requester.OnRequestDodge(this);
@@ -187,17 +185,17 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         attacking = false;
         Debug.Log("Ready to slash");
     }
-    protected override void OnStagger()
-    {
-        base.OnStagger();
-        Unblock();
-        _particleSystem.Play();
-    }
-    protected override void OnUnstagger()
-    {
-        base.OnUnstagger();
-        _particleSystem.Stop();
-    }
+    //protected override void OnStagger()
+    //{
+    //    base.OnStagger();
+    //    Unblock();
+    //    _particleSystem.Play();
+    //}
+    //protected override void OnUnstagger()
+    //{
+    //    base.OnUnstagger();
+    //    _particleSystem.Stop();
+    //}
     private IEnumerator EngageOpponent(EnemyBattlePawn opponentPawn)
     {
         CurrEnemyOpponent = opponentPawn;

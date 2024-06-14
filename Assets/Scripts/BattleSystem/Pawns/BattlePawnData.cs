@@ -8,9 +8,6 @@ public class BattlePawnData : ScriptableObject
     [Header("Battle Pawn Data")]
     [SerializeField, Tooltip("Name of pawn")] private string _name;
     [SerializeField, Tooltip("Hit points")] private int _hp;
-    [SerializeField, Tooltip("Stagger points")] private int _sp;
-    [SerializeField, Tooltip("Recovery every half beat")] private float _spRecoveryRate;
-    [SerializeField, Tooltip("In seconds")] private float _staggerRecoveryTime;
     [SerializeField, TextArea] private string _lore;
 
     [Header("Resistances")]
@@ -21,9 +18,6 @@ public class BattlePawnData : ScriptableObject
     // Data Properties
     public string Name => _name;
     public int HP => _hp;
-    public int SP => _sp;
-    public float SPRecoveryRate => _spRecoveryRate;
-    public float StaggerRecoveryTime => _staggerRecoveryTime;
     public string Lore => _lore;
 
     // Resistances

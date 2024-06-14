@@ -18,13 +18,9 @@ public partial class EnemyStateMachine
                 Input.Enemy.SpriteAnimator.Play("blocking");
             }
              
-            ((PlayerBattlePawn)requester)?.Lurch(((EnemyBattlePawnData)Input.Enemy.Data).BlockLrch);
+            //((PlayerBattlePawn)requester)?.Lurch(((EnemyBattlePawnData)Input.Enemy.Data).BlockLrch);
         }
         public override int OnDamage(int amount)
-        {
-            return 0;
-        }
-        public override float OnLurch(float amount)
         {
             return 0;
         }

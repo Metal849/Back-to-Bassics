@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
         _playerinput.SwitchCurrentActionMap("PlayerBattlePawn");
         _playerinput.actions["Dodge"].performed += OnDodge;
         _playerinput.actions["Jump"].performed += OnDodge;
-        _playerinput.actions["Block"].performed += OnBlock;
-        _playerinput.actions["Block"].canceled += OnBlock;
+        //_playerinput.actions["Block"].performed += OnBlock;
+        //_playerinput.actions["Block"].canceled += OnBlock;
         _playerinput.actions["Slash"].performed += OnBattleSlash;
 
         // Input World Traversal Actions
@@ -45,17 +45,17 @@ public class PlayerController : MonoBehaviour
     {
         _battlepawn.Dodge(context.ReadValue<Vector2>());
     }
-    public void OnBlock(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _battlepawn.Block();
-        }
-        if (context.canceled)
-        {
-            _battlepawn.Unblock();
-        }
-    }
+    //public void OnBlock(InputAction.CallbackContext context)
+    //{
+    //    if (context.performed)
+    //    {
+    //        _battlepawn.Block();
+    //    }
+    //    if (context.canceled)
+    //    {
+    //        _battlepawn.Unblock();
+    //    }
+    //}
     public void OnBattleSlash(InputAction.CallbackContext context)
     {
         _battlepawn.Slash(context.ReadValue<Vector2>());

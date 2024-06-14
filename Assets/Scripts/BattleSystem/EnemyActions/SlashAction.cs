@@ -102,7 +102,7 @@ public class SlashAction : EnemyAction, IAttackRequester
             // Should probably include The later animation states, so you probably should handle swapping to them in here
             // instead of the animator :L
             // Currently they rely on the attack end delay so its kind wack
-            _nextSequenceTime += _attackSequence[currIdx].includeAnimatorTime ? beats : 0;
+            _nextSequenceTime += beats;
         }
 
         // Next Sequence
@@ -123,7 +123,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         
         ParentPawn.SpriteAnimator.SetTrigger("blocked");
 
-        player.Lurch(_attackSequence[currIdx].lrch);
+        //player.Lurch(_attackSequence[currIdx].lrch);
 
         _slashing = false;
         player.CompleteAttackRequest(this);
@@ -139,7 +139,7 @@ public class SlashAction : EnemyAction, IAttackRequester
             
             ParentPawn.SpriteAnimator.SetTrigger("deflected");
             
-            ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
+            //ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
 
             _slashing = false;
             player.CompleteAttackRequest(this);
@@ -216,13 +216,17 @@ public class SlashAction : EnemyAction, IAttackRequester
     [Serializable]
     public struct SlashBeat
     {
+        public AnimationClip broadcastClip;
+        [Tooltip("In Quarter Beats")] public int broadcastTime;
+        public AnimationClip performanceClip;
+        public AnimationClip completionClip;
+        public AnimationClip deflectionClip;
+        
         public bool isCharged;
-        public bool includeAnimatorTime;
         public int dmg;
-        public int lrch;
         public Vector2 direction;
         public Direction[] dodgeDirections;
-        [Tooltip("In Quarter Beats")] public int broadcastTime;
+        
         [Tooltip("In Quarter Beats")] public int delayToNextAttack;
 
         // Dynamic Values

@@ -14,10 +14,6 @@ public partial class EnemyStateMachine
         {
             return amount;
         }
-        public override float OnLurch(float amount)
-        {
-            return 0;
-        }
         public override void Exit(EnemyStateInput i)
         {
             base.Exit(i);

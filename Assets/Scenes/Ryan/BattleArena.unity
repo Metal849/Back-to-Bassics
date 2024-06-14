@@ -5265,7 +5265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &75904386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6176,9 +6176,7 @@ MonoBehaviour:
   centerText: {fileID: 1443738258}
   battlePanelAnimator: {fileID: 273722748}
   _playerHpBar: {fileID: 2120561725}
-  _playerSpBar: {fileID: 1739889328}
   _enemyHpBar: {fileID: 1162476957}
-  _enemySpBar: {fileID: 860159818}
 --- !u!1 &548670169
 GameObject:
   m_ObjectHideFlags: 0
@@ -11136,7 +11134,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 615d985bad138be4eb9f15eac06a1261, type: 2}
   _spriteAnimator: {fileID: 75822322}
   _currHP: 0
-  _currSP: 0
   _weaponData: {fileID: 11400000, guid: a9fbfbcb976477e4e84d47f073bf3134, type: 2}
   _particleSystem: {fileID: 75822325}
 --- !u!114 &593518130
@@ -16694,7 +16691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &846634139
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18559,7 +18556,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
   _spriteAnimator: {fileID: 548670174}
   _currHP: 0
-  _currSP: 0
   _esm: {fileID: 0}
   _enemyActions:
   - {fileID: 845431418}
@@ -19198,7 +19194,6 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 0955eedc596e02346b1820aaf1cc5e52, type: 2}
   _spriteAnimator: {fileID: 683335649}
   _currHP: 0
-  _currSP: 0
   _esm: {fileID: 0}
   _enemyActions:
   - {fileID: 1015460623}

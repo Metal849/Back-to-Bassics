@@ -15,9 +15,5 @@ public partial class EnemyStateMachine
         {
             return 0;
         }
-        public override float OnLurch(float amount)
-        {
-            return 0;
-        }
     }
 }

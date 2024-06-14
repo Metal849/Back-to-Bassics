@@ -38,7 +38,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // Perform Random Battle Action
     protected override void OnFullBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsStaggered || IsDead) return;
+        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
         int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
         if (idx == -2)
         {
@@ -88,28 +88,28 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         amount = _esm.CurrState.OnDamage(amount);
         base.Damage(amount);
     }
-    public override void Lurch(float amount)
-    {
-        if (IsStaggered) return;
-        amount = _esm.CurrState.OnLurch(amount);
-        base.Lurch(amount);
-    }
-    protected override void OnStagger()
-    {
-        if (IsDead) return;
-        base.OnStagger();
-        // Staggered Animation (Paper Crumple)
-        _esm.Transition<EnemyStateMachine.Stagger>();
-        _particleSystem?.Play();
-    }
-    protected override void OnUnstagger()
-    {
-        if (IsDead) return;
-        base.OnUnstagger();
-        // Unstagger Animation transition to idle
-        _esm.Transition<EnemyStateMachine.Idle>();
-        _particleSystem?.Stop();
-    }
+    //public override void Lurch(float amount)
+    //{
+    //    if (IsStaggered) return;
+    //    amount = _esm.CurrState.OnLurch(amount);
+    //    base.Lurch(amount);
+    //}
+    //protected override void OnStagger()
+    //{
+    //    if (IsDead) return;
+    //    base.OnStagger();
+    //    // Staggered Animation (Paper Crumple)
+    //    _esm.Transition<EnemyStateMachine.Stagger>();
+    //    _particleSystem?.Play();
+    //}
+    //protected override void OnUnstagger()
+    //{
+    //    if (IsDead) return;
+    //    base.OnUnstagger();
+    //    // Unstagger Animation transition to idle
+    //    _esm.Transition<EnemyStateMachine.Idle>();
+    //    _particleSystem?.Stop();
+    //}
     protected override void OnDeath()
     {
         base.OnDeath();
@@ -119,7 +119,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     public void OnActionComplete()
     {
         _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
-        if (IsStaggered || IsDead) return;
+        if (IsDead) return;
         _esm.Transition<EnemyStateMachine.Idle>();
     }
     #endregion

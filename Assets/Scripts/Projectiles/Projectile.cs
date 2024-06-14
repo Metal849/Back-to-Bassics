@@ -78,7 +78,7 @@ public class Projectile : MonoBehaviour, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
-        _hitPlayerPawn.Lurch(_dmg);
+        //_hitPlayerPawn.Lurch(_dmg);
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }
