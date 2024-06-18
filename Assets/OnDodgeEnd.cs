@@ -20,6 +20,7 @@ public class OnDodgeEnd : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // SO FUCKING SCUFFED
+        // (Ryan) This determines when the doging ends so that the boolean is set to false
         PlayerBattlePawn player = animator.GetComponent<PlayerBattlePawn>();
         if (player != null) player.dodging = false;
     }

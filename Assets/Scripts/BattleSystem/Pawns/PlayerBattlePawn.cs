@@ -16,12 +16,10 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public Vector2 SlashDirection { get; private set; }
     public Direction DodgeDirection { get; private set; }
     private Queue<IAttackRequester> _activeAttackRequesters;
-    public EnemyBattlePawn CurrEnemyOpponent { get; private set; }
     public float AttackDamage { get => _weaponData.Dmg; }
     public bool attacking { get; private set; }
     public bool deflectionWindow { get; private set; }
     public bool dodging { get; set; }
-    private float battlePositionOffset = -1.8f;
     protected override void Awake()
     {
         base.Awake();
@@ -32,7 +30,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     // This will start a battle
     public void EngageEnemy(EnemyBattlePawn enemy)
     {
-        StartCoroutine(EngageOpponent(enemy));
+        BattleManager.Instance.StartBattle(new EnemyBattlePawn[] { enemy });
     }
     #region Player Actions
     /// <summary>
@@ -101,13 +99,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //else 
         if (_activeAttackRequesters.Count <= 0)
         {
-            CurrEnemyOpponent.Damage(_weaponData.Dmg);
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
             //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
 
             // (Past Ryan) Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
             // (Current Ryan) Oh there it is lmao
-            CurrEnemyOpponent.ReceiveAttackRequest(this);
+            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
         }
     }
     #endregion
@@ -196,11 +194,4 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     //    base.OnUnstagger();
     //    _particleSystem.Stop();
     //}
-    private IEnumerator EngageOpponent(EnemyBattlePawn opponentPawn)
-    {
-        CurrEnemyOpponent = opponentPawn;
-        _traversalPawn.MoveToDestination(new Vector2(opponentPawn.transform.position.x, opponentPawn.transform.position.z + battlePositionOffset));
-        yield return new WaitUntil(() => !_traversalPawn.movingToDestination);
-        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
-    }
 }

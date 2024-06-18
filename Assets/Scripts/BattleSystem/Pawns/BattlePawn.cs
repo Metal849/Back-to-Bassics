@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class BattlePawn : Conductable
 {
     [Header("References")]
-    [SerializeField] protected BattlePawnData _data;
+    [SerializeField] private BattlePawnData _data;
     [SerializeField] protected Animator _spriteAnimator;
     public BattlePawnData Data => _data;
     public Animator SpriteAnimator => _spriteAnimator;

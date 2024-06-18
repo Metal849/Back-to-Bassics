@@ -7,9 +7,13 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+/// <summary>
+/// DOES NOT HANDLE SEQUENCES ANYMORE!
+/// </summary>
 public class SlashAction : EnemyAction, IAttackRequester
 {
     [Header("Slash Action")]
+    // SHOULD NOT HANDLE THIS ANYMORE!!!
     [SerializeField] private SlashBeat[] _attackSequence;
     private int currIdx;
     
@@ -77,7 +81,7 @@ public class SlashAction : EnemyAction, IAttackRequester
             BattleManager.Instance.Player.ReceiveAttackRequest(this);
             if (_slashing) PerformSlashOnPlayer();
         }
-
+        // THIS SHOULD BE THE ONLY PURPOSE OF ENEMY ACTIONS!
         // Perform Slash Attack
         if (_broadcasting && Conductor.Instance.Beat >= _animationCompleteTime)
         {

@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
     #region Traversal Pawn Actions
     private void Update()
     {
-        _traversalpawn.Move(_playerinput.actions["Move"].ReadValue<Vector2>());
+        Vector2 direction = _playerinput.actions["Move"].ReadValue<Vector2>();
+        _traversalpawn.Move(new Vector3(direction.x, 0, direction.y));
     }
     //public void OnMove(InputAction.CallbackContext context)
     //{

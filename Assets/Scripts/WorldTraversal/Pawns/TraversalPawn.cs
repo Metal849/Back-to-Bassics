@@ -13,21 +13,23 @@ public abstract class TraversalPawn : MonoBehaviour
     {
         if (movingToDestination)
         {
+            // TODO: This section right here is what is causing the floating of our character, see if you
+            // Can change this where gravity is applied and the character isn't going to try to fly.
+            // You might need to use the rigidbody component in order to manipulate their kinetic movement.
             transform.position = Vector3.MoveTowards(transform.position, destinationTarget, speed * Time.deltaTime);
             if (transform.position == destinationTarget) movingToDestination = false;
         }
     }
 
     // X is Right and Left, Y is Forward and Backward 
-    public void Move(Vector2 direction)
+    public void Move(Vector3 direction)
     {
         direction.Normalize();
-        Vector3 displacement = new Vector3(transform.position.x + direction.x, transform.position.y, transform.position.z + direction.y);
-        transform.position = Vector3.MoveTowards(transform.position, displacement, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
     }
-    public void MoveToDestination(Vector2 destination)
+    public void MoveToDestination(Vector3 destination)
     {
         movingToDestination = true;
-        destinationTarget = new Vector3(destination.x, transform.position.y, destination.y);
+        destinationTarget = new Vector3(destination.x, destination.y, destination.z);
     }
 }

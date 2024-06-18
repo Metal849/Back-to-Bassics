@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UITools/BeatSequencer.uss?fileID=7433441132597879392&amp;guid=d3a88e83cea031841a0aba2709552575&amp;type=3#BeatSequencer" />
+    <ui:ScrollView style="height: 289px;">
+        <ui:VisualElement style="flex-grow: 1;" />
+        <ui:ProgressBar value="22" title="my-progress" />
+        <ui:RadioButtonGroup label="Radio Button Group" value="-1" choices="UnityEngine.UIElements.RadioButtonGroup+&lt;get_choices&gt;d__7" />
+    </ui:ScrollView>
+</ui:UXML>

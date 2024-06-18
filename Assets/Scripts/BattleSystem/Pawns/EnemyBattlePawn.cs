@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Manipulate by an external class, not within the class!!
+/// </summary>
 public class EnemyBattlePawn : BattlePawn, IAttackReceiver
 {
     [Header("Enemy References")]
@@ -10,6 +13,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     private float _decisionTime;
     private int _actionIdx;
     public EnemyStateMachine ESM => _esm;
+    public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     protected override void Awake()
     {
         base.Awake();
@@ -35,7 +39,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             action.ParentPawn = this;
         }
     }
-    // Perform Random Battle Action
+    // Perform Random Battle Action --> This is not the way this should be done
     protected override void OnFullBeat()
     {
         if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;

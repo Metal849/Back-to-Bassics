@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Sample
   _hp: 500
-  _sp: 100
-  _spRecoveryRate: 0
-  _staggerRecoveryTime: 10
   _lore: hehehe hooo hoo
   _preStaggerMultiplier: 0.1
   _confuseResistance: 0
   _poisonResistance: 0
   _bpm: 100
-  _blockLrch: 2
+  _relativeBattleDistance: {x: 0, y: 0, z: -1.8}

@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bassics
   _hp: 100
-  _sp: 10
-  _spRecoveryRate: 0
-  _staggerRecoveryTime: 10
   _lore: The bass himself!
   _preStaggerMultiplier: 0.2
   _confuseResistance: 0
   _poisonResistance: 0
   _bpm: 120
-  _blockLrch: 5
+  _relativeBattleDistance: {x: 0, y: 0, z: -1.8}

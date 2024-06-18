@@ -8,7 +8,6 @@ public partial class GameStateMachine
     {
         public override void Enter(GameStateInput i)
         {
-            BattleManager.Instance.StartBattle();
             GameManager.Instance.PC.SwitchToBattleActions();
             UIManager.Instance.ShowBattlePanel();
         }
