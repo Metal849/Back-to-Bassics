@@ -18575,8 +18575,10 @@ MonoBehaviour:
   - {fileID: 2042639718}
   - {fileID: 964189039}
   - {fileID: 1257420954}
+  _enemySequences: []
   _beatsPerDecision: 2
   _particleSystem: {fileID: 548670170}
+  _director: {fileID: 0}
 --- !u!4 &1786412172
 Transform:
   m_ObjectHideFlags: 0
@@ -19167,6 +19169,8 @@ GameObject:
   - component: {fileID: 2129905145}
   - component: {fileID: 2129905146}
   - component: {fileID: 2129905147}
+  - component: {fileID: 2129905149}
+  - component: {fileID: 2129905148}
   m_Layer: 0
   m_Name: EnemyBattlePawn
   m_TagString: Untagged
@@ -19210,8 +19214,10 @@ MonoBehaviour:
   _enemyActions:
   - {fileID: 1015460623}
   - {fileID: 1214911078}
+  _enemySequences: []
   _beatsPerDecision: 2
   _particleSystem: {fileID: 683335651}
+  _director: {fileID: 0}
 --- !u!114 &2129905147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19224,6 +19230,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60ea76a81abc0041b6314b68a817cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2129905148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129905142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: d803b870ee175e448b9ec631e46cfe43, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1214911078}
+          m_TargetAssemblyTypeName: SlashAction, Assembly-CSharp
+          m_MethodName: StartAction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!320 &2129905149
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129905142}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 1
+  m_DirectorUpdateMode: 3
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -8255819015726547123, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+    value: {fileID: 683335649}
+  - key: {fileID: -6609577454838828454, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+    value: {fileID: 2129905148}
+  - key: {fileID: -4437254529158310166, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+    value: {fileID: 1015460621}
+  m_ExposedReferences:
+    m_References:
+    - 457fa556d69408c4e882e8a8c7b30ad4: {fileID: 1015460621}
+    - 1f47c70d02bdd0b4eb0528f01e635f6e: {fileID: 1826137502}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

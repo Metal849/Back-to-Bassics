@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
+
 public class Conductor : Singleton<Conductor>
 {
     public float Beat { get; private set; }
+    public float time => Beat * spb;
     public float spb {  get; private set; }
     private bool beating;
     public event Action OnQuarterBeat;

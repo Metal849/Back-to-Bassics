@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 /// <summary>
 /// Manipulate by an external class, not within the class!!
@@ -8,8 +10,11 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [Header("Enemy References")]
     [SerializeField] private EnemyStateMachine _esm;
     [SerializeField] private EnemyAction[] _enemyActions;
+    // This will replace the need to reference enemy actions!
+    [SerializeField] private TimelineAsset[] _enemySequences;
     [SerializeField] private int _beatsPerDecision;
     [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private PlayableDirector _director;
     private float _decisionTime;
     private int _actionIdx;
     public EnemyStateMachine ESM => _esm;
@@ -23,7 +28,13 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             return;
         }
         _esm = GetComponent<EnemyStateMachine>();
-
+        _director = GetComponent<PlayableDirector>();
+        if (_director == null)
+        {
+            Debug.LogError($"Enemy Battle Pawn \"{Data.name}\" has no playable director referenced!");
+            return;
+        }
+        
         // Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
         if (_enemyActions == null)
         {
@@ -39,25 +50,29 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             action.ParentPawn = this;
         }
     }
-    // Perform Random Battle Action --> This is not the way this should be done
-    protected override void OnFullBeat()
+    protected override void OnQuarterBeat()
     {
-        if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
-        int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
-        if (idx == -2)
-        {
-            _esm.Transition<EnemyStateMachine.Idle>();
-        }
-        else if (idx == -1)
-        {
-            _esm.Transition<EnemyStateMachine.Block>();
-        }
-        else
-        {
-            PerformBattleAction(idx);
-        }
-        _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
+        _director.time += Conductor.quarter;
     }
+    // Perform Random Battle Action --> This is not the way this should be done
+    //protected override void OnFullBeat()
+    //{
+    //    if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
+    //    int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
+    //    if (idx == -2)
+    //    {
+    //        _esm.Transition<EnemyStateMachine.Idle>();
+    //    }
+    //    else if (idx == -1)
+    //    {
+    //        _esm.Transition<EnemyStateMachine.Block>();
+    //    }
+    //    else
+    //    {
+    //        PerformBattleAction(idx);
+    //    }
+    //    _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
+    //}
     /// <summary>
     /// Select from some attack i to perform, and then provide a direction if the attack has variants based on this
     /// </summary>

@@ -33,13 +33,6 @@ public class SlashAction : EnemyAction, IAttackRequester
     private bool _performed;
     #endregion
 
-
-    // HACKY FUNNESS
-    // DON"T DO THIS
-    private void Start()
-    {
-        
-    }
     public void DynamicAnimatoClipUpdate()
     {
         foreach (AnimationClip clip in ParentPawn.SpriteAnimator.runtimeAnimatorController.animationClips) 
