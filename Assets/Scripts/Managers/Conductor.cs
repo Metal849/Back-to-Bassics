@@ -24,7 +24,7 @@ public class Conductor : Singleton<Conductor>
     {
         InitializeSingleton();
     }
-    public void BeginConducting(int bpm)
+    public void BeginConducting(float spb)
     {
         if (beating) 
         {
@@ -32,7 +32,7 @@ public class Conductor : Singleton<Conductor>
             return;
         }
         Beat = 0;
-        spb = 60f / bpm;
+        this.spb = spb;
         beating = true;
         OnFirstBeat.Invoke();
         StartCoroutine(Conduct());

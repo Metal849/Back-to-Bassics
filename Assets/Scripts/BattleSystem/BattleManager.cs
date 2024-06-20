@@ -52,7 +52,7 @@ public class BattleManager : Singleton<BattleManager>
         UIManager.Instance.UpdateCenterText("Battle!");
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");
-        Conductor.Instance.BeginConducting(((EnemyBattlePawnData)Enemy.Data).BPM);
+        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
         IsBattleActive = true;
     }
     private IEnumerator NextEnemyBattle()
@@ -68,7 +68,7 @@ public class BattleManager : Singleton<BattleManager>
         UIManager.Instance.UpdateCenterText("Battle!");
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");
-        Conductor.Instance.BeginConducting(((EnemyBattlePawnData)Enemy.Data).BPM);
+        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
         IsBattleActive = true;
     }
     public void OnPawnDeath(BattlePawn pawn) 

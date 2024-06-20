@@ -35,7 +35,7 @@ public class SlashAction : EnemyAction, IAttackRequester
 
     public void DynamicAnimatoClipUpdate()
     {
-        foreach (AnimationClip clip in ParentPawn.SpriteAnimator.runtimeAnimatorController.animationClips) 
+        foreach (AnimationClip clip in parentPawn.SpriteAnimator.runtimeAnimatorController.animationClips) 
         {
             switch (clip.name)
             {
@@ -79,15 +79,15 @@ public class SlashAction : EnemyAction, IAttackRequester
         if (_broadcasting && Conductor.Instance.Beat >= _animationCompleteTime)
         {
             _broadcasting = false;
-            ParentPawn.SpriteAnimator.Play(PERFORM);
-            //AnimatorStateInfo info = ParentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
+            parentPawn.SpriteAnimator.Play(PERFORM);
+            //AnimatorStateInfo info = parentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
             // Character Speed Sync with Conductor per beat
             int beats = Mathf.RoundToInt(perform_time / Conductor.Instance.spb);
             if (beats == 0) beats = 1;
             float syncedAnimationTime = beats * Conductor.Instance.spb;
-            //ParentPawn.SpriteAnimator.runtimeAnimatorController.animationClips
+            //parentPawn.SpriteAnimator.runtimeAnimatorController.animationClips
             // Set speed of animator to that of the animation time
-            ParentPawn.SpriteAnimator.SetFloat("speed", perform_time / syncedAnimationTime);
+            parentPawn.SpriteAnimator.SetFloat("speed", perform_time / syncedAnimationTime);
             _animationCompleteTime = Conductor.Instance.Beat + beats;
             Debug.Log($"Beats: {beats}");
             Debug.Log($"Start Beat: {Conductor.Instance.Beat}, End Beat: {_animationCompleteTime}");
@@ -118,7 +118,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
         
-        ParentPawn.SpriteAnimator.SetTrigger("blocked");
+        parentPawn.SpriteAnimator.SetTrigger("blocked");
 
         //player.Lurch(_attackSequence[currIdx].lrch);
 
@@ -133,10 +133,10 @@ public class SlashAction : EnemyAction, IAttackRequester
             // (TEMP) DEBUG UI Tracker -------
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
-            
-            ParentPawn.SpriteAnimator.SetTrigger("deflected");
-            
-            //ParentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
+
+            parentPawn.SpriteAnimator.SetTrigger("deflected");
+
+            //parentPawn.Lurch(BattleManager.Instance.Player.WeaponData.Lrch);
 
             _slashing = false;
             player.CompleteAttackRequest(this);
@@ -147,7 +147,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
         if (player != null && _attackSequence[currIdx].dodgeDirections.Contains(player.DodgeDirection)) 
         {
-            ParentPawn.SpriteAnimator.SetTrigger("performed");
+            parentPawn.SpriteAnimator.SetTrigger("performed");
             _slashing = false;
             player.CompleteAttackRequest(this);
         }
@@ -159,9 +159,9 @@ public class SlashAction : EnemyAction, IAttackRequester
         // (TEMP) DEBUG UI Tracker -------
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
-        
-        //ParentPawn.SpriteAnimator.SetTrigger("performed");
-        ParentPawn.SpriteAnimator.Play(SUCCESS);
+
+        //parentPawn.SpriteAnimator.SetTrigger("performed");
+        parentPawn.SpriteAnimator.Play(SUCCESS);
         BattleManager.Instance.Player.Damage(_attackSequence[currIdx].dmg);
         //_hitPlayerPawn.Lurch(_attackSequence[currIdx].lrch); -> Should the player be punished SP as wewll?
 
@@ -181,14 +181,14 @@ public class SlashAction : EnemyAction, IAttackRequester
 
         // Timing
         // Character Animation Direction
-        ParentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
-        ParentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
+        parentPawn.SpriteAnimator.SetFloat("xdir", _attackSequence[currIdx].direction.x);
+        parentPawn.SpriteAnimator.SetFloat("ydir", _attackSequence[currIdx].direction.y);
 
         // Broadcast Attack Animation
-        ParentPawn.SpriteAnimator.ResetTrigger("performed");
-        ParentPawn.SpriteAnimator.ResetTrigger("deflected");
-        ParentPawn.SpriteAnimator.ResetTrigger("blocked");
-        ParentPawn.SpriteAnimator.Play(BROADCAST);
+        parentPawn.SpriteAnimator.ResetTrigger("performed");
+        parentPawn.SpriteAnimator.ResetTrigger("deflected");
+        parentPawn.SpriteAnimator.ResetTrigger("blocked");
+        parentPawn.SpriteAnimator.Play(BROADCAST);
         _broadcasting = true;
 
         // Character Speed Sync with Conductor per beat
@@ -199,7 +199,7 @@ public class SlashAction : EnemyAction, IAttackRequester
 
         //int beats = Mathf.RoundToInt(info.length / Conductor.Instance.spb);
         //ParentPawn.SpriteAnimator.SetFloat("speed", info.length / (beats * Conductor.Instance.spb));
-        ParentPawn.SpriteAnimator.SetFloat("speed", 1f);
+        parentPawn.SpriteAnimator.SetFloat("speed", 1f);
         //_animationCompleteTime = Conductor.Instance.Beat + beats * Conductor.Instance.spb;
         // For Broadcast time
         _animationCompleteTime = Conductor.Instance.Beat + _attackSequence[currIdx].broadcastTime * Conductor.quarter;

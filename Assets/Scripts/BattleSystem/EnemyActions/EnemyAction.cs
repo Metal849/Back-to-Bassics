@@ -7,11 +7,19 @@ using UnityEngine;
 /// </summary>
 public abstract class EnemyAction : Conductable
 {
-    public EnemyBattlePawn ParentPawn { get; set; }
+    [SerializeField] protected EnemyBattlePawn parentPawn;
     public bool IsActive { get; protected set; }
     private void Awake()
     {
         IsActive = false;
+        parentPawn = GetComponentInParent<EnemyBattlePawn>();
+        if (parentPawn == null) 
+        {
+            Debug.LogError($"Enemy Action \"{gameObject.name}\" could not find Enemy Pawn Parent");
+            return;
+        }
+        parentPawn.EnemyActions[GetType()] = this;
+        Debug.Log($"Enemy Action \"{gameObject.name}\" is type: {GetType()}");
     }
     public virtual void StartAction()
     {
@@ -22,6 +30,6 @@ public abstract class EnemyAction : Conductable
     {
         IsActive = false;
         Disable();
-        ParentPawn.OnActionComplete();
+        parentPawn.OnActionComplete();
     }
 }
