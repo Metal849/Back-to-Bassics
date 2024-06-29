@@ -16849,7 +16849,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1015460622}
-  - {fileID: 1214911077}
   m_Father: {fileID: 2129905145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &887350513
@@ -17098,18 +17097,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 0}
-  _attackSequence:
-  - broadcastClip: {fileID: 0}
-    broadcastTime: 12
-    performanceClip: {fileID: 0}
-    completionClip: {fileID: 0}
-    deflectionClip: {fileID: 0}
-    isCharged: 0
-    dmg: 5
-    direction: {x: 1, y: 0}
-    dodgeDirections: 000000000100000003000000
-    delayToNextAttack: 8
-    performed: 0
 --- !u!1 &980233179
 GameObject:
   m_ObjectHideFlags: 0
@@ -17168,7 +17155,7 @@ GameObject:
   - component: {fileID: 1015460622}
   - component: {fileID: 1015460623}
   m_Layer: 0
-  m_Name: SlashEast
+  m_Name: SlashAction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17202,18 +17189,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 0}
-  _attackSequence:
-  - broadcastClip: {fileID: 0}
-    broadcastTime: 12
-    performanceClip: {fileID: 0}
-    completionClip: {fileID: 0}
-    deflectionClip: {fileID: 0}
-    isCharged: 0
-    dmg: 10
-    direction: {x: 1, y: 0}
-    dodgeDirections: 000000000100000003000000
-    delayToNextAttack: 8
-    performed: 0
 --- !u!1 &1036492979
 GameObject:
   m_ObjectHideFlags: 0
@@ -17665,63 +17640,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162476955}
   m_CullTransparentMesh: 1
---- !u!1 &1214911076
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1214911077}
-  - component: {fileID: 1214911078}
-  m_Layer: 0
-  m_Name: SlashWest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1214911077
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214911076}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 27.69}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 861628309}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1214911078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214911076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentPawn: {fileID: 0}
-  _attackSequence:
-  - broadcastClip: {fileID: 0}
-    broadcastTime: 12
-    performanceClip: {fileID: 0}
-    completionClip: {fileID: 0}
-    deflectionClip: {fileID: 0}
-    isCharged: 0
-    dmg: 10
-    direction: {x: -1, y: 0}
-    dodgeDirections: 000000000200000001000000
-    delayToNextAttack: 8
-    performed: 0
 --- !u!1 &1257420952
 GameObject:
   m_ObjectHideFlags: 0
@@ -17767,18 +17685,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 0}
-  _attackSequence:
-  - broadcastClip: {fileID: 0}
-    broadcastTime: 12
-    performanceClip: {fileID: 0}
-    completionClip: {fileID: 0}
-    deflectionClip: {fileID: 0}
-    isCharged: 0
-    dmg: 5
-    direction: {x: -1, y: 0}
-    dodgeDirections: 000000000200000001000000
-    delayToNextAttack: 8
-    performed: 0
 --- !u!1 &1299729310
 GameObject:
   m_ObjectHideFlags: 0
@@ -19212,7 +19118,7 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1214911078}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: SlashAction, Assembly-CSharp
           m_MethodName: StartAction
           m_Mode: 1

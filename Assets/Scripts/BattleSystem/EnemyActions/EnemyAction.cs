@@ -18,8 +18,8 @@ public abstract class EnemyAction : Conductable
             Debug.LogError($"Enemy Action \"{gameObject.name}\" could not find Enemy Pawn Parent");
             return;
         }
-        parentPawn.EnemyActions[GetType()] = this;
-        Debug.Log($"Enemy Action \"{gameObject.name}\" is type: {GetType()}");
+        parentPawn.AddEnemyAction(this);
+        //Debug.Log($"Enemy Action \"{gameObject.name}\" is type: {GetType()}");
     }
     public virtual void StartAction()
     {

@@ -20,7 +20,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     public EnemyStateMachine ESM => _esm;
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
-    public Dictionary<Type, EnemyAction> EnemyActions => _enemyActions;
     protected override void Awake()
     {
         base.Awake();
@@ -50,6 +49,19 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         //    }
         //    action.ParentPawn = this;
         //}
+    }
+    public EA GetEnemyAction<EA>() where EA : EnemyAction
+    {
+        return _enemyActions[typeof(EA)] as EA;
+    }
+    public void AddEnemyAction(EnemyAction action)
+    {
+        if (_enemyActions.ContainsKey(action.GetType()))
+        {
+            Debug.LogError($"Enemy Action {action.GetType()} is redundantly referenced, only one should be.");
+            return;
+        }
+        _enemyActions[action.GetType()] = action;
     }
     // Perform Random Battle Action --> This is not the way this should be done
     protected override void OnFullBeat()
