@@ -19082,9 +19082,7 @@ MonoBehaviour:
   _currHP: 0
   _esm: {fileID: 0}
   _enemySequences:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
   _beatsPerDecision: 1
   _particleSystem: {fileID: 683335651}
   _director: {fileID: 0}
@@ -19117,19 +19115,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d803b870ee175e448b9ec631e46cfe43, type: 2}
     m_Events:
     - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SlashAction, Assembly-CSharp
-          m_MethodName: StartAction
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!320 &2129905149
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -19145,8 +19131,10 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -6609577454838828454, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 2129905148}
+  - key: {fileID: -7575013718885238034, guid: 02eb518e65502ff4890df4f1183d6fa7, type: 2}
+    value: {fileID: 2129905146}
   m_ExposedReferences:
     m_References:
     - 457fa556d69408c4e882e8a8c7b30ad4: {fileID: 1015460621}

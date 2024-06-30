@@ -69,19 +69,20 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         // (Ryan) Should't need to check for death here, just disable the conducatable conductor connection 
         //if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
         if (Conductor.Instance.Beat < _decisionTime || _director.state == PlayState.Playing || IsDead) return;
-        //int idx = Random.Range(0, (_enemyActions != null ? _enemyActions.Length : 0) + 2) - 2;
-        int idx = UnityEngine.Random.Range(0, 4);
-        if (idx == 0)
+        int idx = UnityEngine.Random.Range(0, (_enemySequences != null ? _enemySequences.Length : 0) + 2) - 2;
+        //int idx = UnityEngine.Random.Range(0, 4);
+        if (idx == -2)
         {
             _esm.Transition<EnemyStateMachine.Idle>();
         }
-        else if (idx == 1)
+        else if (idx == -1)
         {
             _esm.Transition<EnemyStateMachine.Block>();
         }
         else
         {
             _esm.Transition<EnemyStateMachine.Attacking>();
+            _director.playableAsset = _enemySequences[0];
             _director.Play();
             _director.playableGraph.GetRootPlayable(0).SetSpeed(1 / EnemyData.SPB);
         }
