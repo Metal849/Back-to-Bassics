@@ -28,7 +28,7 @@ public class FireProjectileAction : EnemyAction
         
         // This Only talors to bassics, not in general
         parentPawn.SpriteAnimator.SetFloat("xdir", -node.relativeSpawnPosition.x);
-        parentPawn.SpriteAnimator.Play("animationName");  
+        parentPawn.SpriteAnimator.Play(animationName);  
     }
 }
 
