@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 5642884798581242194}
   projectilePoolAmount: 20
+  animationName: music
 --- !u!1 &4221122890883084785
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +170,8 @@ PlayableDirector:
     value: {fileID: 7789150339329146010}
   - key: {fileID: -2718098813053094131, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
     value: {fileID: 1961778708237596147}
+  - key: {fileID: 1456448326656696158, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
+    value: {fileID: 7789150339329146010}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &7336980195674786369

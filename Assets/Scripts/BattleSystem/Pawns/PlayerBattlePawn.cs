@@ -11,6 +11,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
     [SerializeField] private ParticleSystem _particleSystem;
+    public Transform playerCollider;
     private PlayerTraversalPawn _traversalPawn;
     public PlayerWeaponData WeaponData => _weaponData;
     public Vector2 SlashDirection { get; private set; }

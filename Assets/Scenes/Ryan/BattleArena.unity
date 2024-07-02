@@ -6230,6 +6230,7 @@ MonoBehaviour:
   _currHP: 0
   _weaponData: {fileID: 11400000, guid: a9fbfbcb976477e4e84d47f073bf3134, type: 2}
   _particleSystem: {fileID: 75822325}
+  playerCollider: {fileID: 75822319}
 --- !u!114 &593518130
 MonoBehaviour:
   m_ObjectHideFlags: 0

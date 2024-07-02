@@ -64,8 +64,10 @@ public class Projectile : MonoBehaviour, IAttackRequester
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
+        PlayerBattlePawn player = receiver as PlayerBattlePawn;
+        if (player == null) return;
         // Did receiver deflect in correct direction?
-        if (!DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, _hitPlayerPawn.SlashDirection, 5f)) return;
+        if (!DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, player.SlashDirection, 5f)) return;
 
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
