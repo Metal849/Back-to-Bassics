@@ -195,3 +195,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template:
     broadcastClip: {fileID: 7400000, guid: 18d8b15fc7698b94c98b376c7eee2f5d, type: 2}
+    broadcastDirection: {x: 1, y: 0}

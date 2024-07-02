@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum Direction
 {
+    None = 0,
     North,
     South,
     East,
@@ -11,8 +12,7 @@ public enum Direction
     Northeast,
     Northwest,
     Southeast,
-    Southwest,
-    None
+    Southwest
 }
 public static class DirectionHelper
 {
@@ -73,6 +73,36 @@ public static class DirectionHelper
             case Direction.Southeast: return (Vector2.down + Vector2.right).normalized;
             case Direction.Southwest: return (Vector2.down + Vector2.left).normalized;
             default: return Vector2.zero;
+        }
+    }
+    public static Vector2 GetVectorFromString(string dir)
+    {
+        switch (dir.ToLower())
+        {
+            case "north": return Vector2.up;
+            case "south": return Vector2.down;
+            case "east": return Vector2.right;
+            case "west": return Vector2.left;
+            case "northeast": return (Vector2.up + Vector2.right).normalized;
+            case "northwest": return (Vector2.up + Vector2.left).normalized;
+            case "southeast": return (Vector2.down + Vector2.right).normalized;
+            case "southwest": return (Vector2.down + Vector2.left).normalized;
+            default: return Vector2.down;
+        }
+    }
+    public static Direction GetDirectionFromString(string dir)
+    {
+        switch (dir.ToLower())
+        {
+            case "north": return Direction.North;
+            case "south": return Direction.South;
+            case "east": return Direction.East;
+            case "west": return Direction.West;
+            case "northeast": return Direction.Northeast;
+            case "northwest": return Direction.Northwest;
+            case "southeast": return Direction.Southeast;
+            case "southwest": return Direction.Southwest;
+            default: return Direction.None;
         }
     }
     public static bool MaxAngleBetweenVectors(Vector2 u, Vector2 v, float angle) => Vector2.Angle(u, v) <= angle;

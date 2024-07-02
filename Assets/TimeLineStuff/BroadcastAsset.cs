@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 
 public class BroadcastAsset : PlayableAsset
 {
-    public override double duration => template.broadcastClip == null ? 2f : template.broadcastClip.length;
     public BroadcastBehaviour template;
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
@@ -13,3 +13,15 @@ public class BroadcastAsset : PlayableAsset
         return playable;
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(BroadcastAsset))]
+public class BroadcastAssetEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        BroadcastAsset ba = target as BroadcastAsset;
+        ba.template.direction = (Direction)EditorGUILayout.EnumPopup("Broadcast Direction", ba.template.direction);
+    }
+}
+#endif

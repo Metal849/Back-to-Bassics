@@ -71,8 +71,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Check a file called OnDodgeEnd.cs
         // (Ryan) This really sucky
         DodgeDirection = DirectionHelper.GetVectorDirection(direction);
-        //dodging = true;
-        _spriteAnimator.Play("dodge_" + DodgeDirection.ToString().ToLower());
+        StartCoroutine(DodgeThread(DodgeDirection.ToString().ToLower()));
+    }
+    private IEnumerator DodgeThread(string directionAnimation)
+    {
+        dodging = true;
+        _spriteAnimator.Play("dodge_" + directionAnimation);
+        yield return new WaitUntil(() => _spriteAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f && _spriteAnimator.GetCurrentAnimatorStateInfo(0).IsName("idle"));
+        dodging = false;
     }
     /// <summary>
     /// Slash in a given direction. 

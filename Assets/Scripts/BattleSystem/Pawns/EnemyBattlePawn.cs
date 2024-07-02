@@ -12,7 +12,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [Header("Enemy References")]
     [SerializeField] private EnemyStateMachine _esm;
     // This will replace the need to reference enemy actions!
-    [SerializeField] private TimelineAsset[] _enemySequences;
+    [SerializeField] private TimelineAsset[] _enemyActionSequences;
     [SerializeField] private int _beatsPerDecision;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private PlayableDirector _director;
@@ -35,20 +35,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             Debug.LogError($"Enemy Battle Pawn \"{Data.name}\" has no playable director referenced!");
             return;
         }
-        //// Attacks Shouldn't be instantiated, they should come bundled with the enemy prefab!! Its cleaner and more efficient!
-        //if (_enemyActions == null)
-        //{
-        //    Debug.LogWarning($"Enemy Battle Pawn \"{Data.name}\" has no actions referenced!");
-        //    return;
-        //}
-        //foreach (EnemyAction action in _enemyActions)
-        //{
-        //    if (action == null)
-        //    {
-        //        Debug.LogWarning($"Enemy Battle Pawn \"{Data.name}\" has a null action!");
-        //    }
-        //    action.ParentPawn = this;
-        //}
     }
     public EA GetEnemyAction<EA>() where EA : EnemyAction
     {
@@ -69,7 +55,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         // (Ryan) Should't need to check for death here, just disable the conducatable conductor connection 
         //if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
         if (Conductor.Instance.Beat < _decisionTime || _director.state == PlayState.Playing || IsDead) return;
-        int idx = UnityEngine.Random.Range(0, (_enemySequences != null ? _enemySequences.Length : 0) + 2) - 2;
+        int idx = UnityEngine.Random.Range(0, (_enemyActionSequences != null ? _enemyActionSequences.Length : 0) + 2) - 2;
         //int idx = UnityEngine.Random.Range(0, 4);
         if (idx == -2)
         {
@@ -82,7 +68,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         else
         {
             _esm.Transition<EnemyStateMachine.Attacking>();
-            _director.playableAsset = _enemySequences[0];
+            _director.playableAsset = _enemyActionSequences[idx];
             _director.Play();
             _director.playableGraph.GetRootPlayable(0).SetSpeed(1 / EnemyData.SPB);
         }
@@ -147,9 +133,11 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     protected override void OnDeath()
     {
         base.OnDeath();
+        _director.Stop();
         _esm.Transition<EnemyStateMachine.Dead>();
         _particleSystem?.Stop();
     }
+    // This could get used or not, was intended for ranom choices :p
     public void OnActionComplete()
     {
         _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;

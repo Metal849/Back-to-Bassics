@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _name: Bass
-  _hp: 1000
+  _hp: 200
   _lore: This is the player :3
   _preStaggerMultiplier: 0
   _confuseResistance: 0

@@ -61,6 +61,10 @@ public class Pooler : Singleton<Pooler>
     /// <returns></returns>
     public GameObject Pool(string goName)
     {
+        if (!_pooledRefMapping.ContainsKey(goName))
+        {
+            return null;
+        }
         int idx = _pooledRefMapping[goName].currIdx;
         _pooledRefMapping[goName].currIdx = (idx + 1) % _pooledRefMapping[goName].objects.Length;
         _pooledRefMapping[goName].objects[idx].transform.SetParent(transform, true);
@@ -75,6 +79,10 @@ public class Pooler : Singleton<Pooler>
     public GameObject Spawn(GameObject go, Vector3 globalPosition)
     {
         go = Pool(go);
+        if (go == null)
+        {
+            return null;
+        }
         go.transform.position = globalPosition;
         go.SetActive(true);
         return go;
@@ -91,5 +99,13 @@ public class Pooler : Singleton<Pooler>
     public GameObject NextObjectToPool(string goName)
     {
         return _pooledRefMapping[goName].objects[_pooledRefMapping[goName].currIdx];
+    }
+    public bool HasObjectInPool(GameObject go)
+    {
+        return _pooledRefMapping.ContainsKey(go.name);
+    }
+    public bool HasObjectInPool(string goName)
+    {
+        return _pooledRefMapping.ContainsKey(goName);
     }
 }
