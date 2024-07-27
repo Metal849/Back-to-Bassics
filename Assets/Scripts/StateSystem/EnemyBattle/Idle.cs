@@ -18,7 +18,7 @@ public partial class EnemyStateMachine
         }
         public override int OnDamage(int amount)
         {
-            return (int)(amount * Input.Enemy.Data.PreStaggerMultiplier);
+            return (int)(amount);
         }
     }
 }

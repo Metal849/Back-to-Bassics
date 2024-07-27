@@ -107,6 +107,10 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     {
         amount = _esm.CurrState.OnDamage(amount);
         base.Damage(amount);
+        if (_esm.IsOnState<EnemyStateMachine.Idle>())
+        {
+            _esm.Transition<EnemyStateMachine.Block>();
+        }
     }
     //public override void Lurch(float amount)
     //{

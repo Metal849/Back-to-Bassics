@@ -22,7 +22,7 @@ public partial class EnemyStateMachine
         }
         public override int OnDamage(int amount)
         {
-            return 0;
+            return (int)(amount * Input.Enemy.Data.BlockingReduction);
         }
         public override void Exit(EnemyStateInput i)
         {

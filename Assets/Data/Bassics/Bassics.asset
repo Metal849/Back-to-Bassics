@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Bassics
   _hp: 100
   _lore: The bass himself!
-  _preStaggerMultiplier: 0.2
+  _blockingReduction: 0.05
   _confuseResistance: 0
   _poisonResistance: 0
   _bpm: 120

@@ -11,7 +11,7 @@ public class BattlePawnData : ScriptableObject
     [SerializeField, TextArea] private string _lore;
 
     [Header("Resistances")]
-    [SerializeField] private float _preStaggerMultiplier;
+    [SerializeField] private float _blockingReduction;
     [SerializeField] private float _confuseResistance;
     [SerializeField] private float _poisonResistance;
 
@@ -21,7 +21,7 @@ public class BattlePawnData : ScriptableObject
     public string Lore => _lore;
 
     // Resistances
-    public float PreStaggerMultiplier => _preStaggerMultiplier;
+    public float BlockingReduction => _blockingReduction;
     public float ConfuseResistance => _confuseResistance;
     public float PoisonResistance => _poisonResistance;
 }

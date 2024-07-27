@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17548f8b76991874b910b12ef4a0e980, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  _name: Bass
+  _name: Poncho
   _hp: 200
   _lore: This is the player :3
-  _preStaggerMultiplier: 0
+  _blockingReduction: 0
   _confuseResistance: 0
   _poisonResistance: 0
