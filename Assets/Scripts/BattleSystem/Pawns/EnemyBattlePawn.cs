@@ -14,7 +14,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     // This will replace the need to reference enemy actions!
     [SerializeField] private TimelineAsset[] _enemyActionSequences;
     [SerializeField] private int _beatsPerDecision;
-    [SerializeField] private ParticleSystem _particleSystem;
+    //[SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private PlayableDirector _director;
     private float _decisionTime;
     public EnemyStateMachine ESM => _esm;
@@ -135,7 +135,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         base.OnDeath();
         _director.Stop();
         _esm.Transition<EnemyStateMachine.Dead>();
-        _particleSystem?.Stop();
+        //_particleSystem?.Stop();
     }
     // This could get used or not, was intended for ranom choices :p
     public void OnActionComplete()

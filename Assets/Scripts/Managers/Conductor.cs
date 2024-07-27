@@ -34,7 +34,7 @@ public class Conductor : Singleton<Conductor>
         Beat = 0;
         this.spb = spb;
         beating = true;
-        OnFirstBeat.Invoke();
+        OnFirstBeat?.Invoke();
         StartCoroutine(Conduct());
     }
     public void StopConducting()
@@ -50,7 +50,7 @@ public class Conductor : Singleton<Conductor>
     private IEnumerator Conduct()
     {
         float quarterTime = spb / 4f;
-        OnFirstBeat.Invoke();
+        OnFirstBeat?.Invoke();
         while (beating)
         {
             yield return new WaitForSeconds(quarterTime);
@@ -73,6 +73,6 @@ public class Conductor : Singleton<Conductor>
             OnFullBeat?.Invoke();
             
         }
-        OnLastBeat.Invoke();
+        OnLastBeat?.Invoke();
     }
 }

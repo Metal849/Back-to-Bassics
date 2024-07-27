@@ -9,7 +9,12 @@ public abstract class TraversalPawn : MonoBehaviour
     [SerializeField] private float speed;
     public bool movingToDestination { get; private set; }
     protected Vector3 destinationTarget;
-    private void FixedUpdate()
+    private Rigidbody _rb;
+    protected virtual void Awake()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
+    protected void FixedUpdate()
     {
         if (movingToDestination)
         {
@@ -25,7 +30,8 @@ public abstract class TraversalPawn : MonoBehaviour
     public void Move(Vector3 direction)
     {
         direction.Normalize();
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
+        _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
     }
     public void MoveToDestination(Vector3 destination)
     {

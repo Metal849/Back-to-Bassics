@@ -46,7 +46,8 @@ public class Projectile : MonoBehaviour, IAttackRequester
     }
     private void OnTriggerEnter(Collider collision)
     {
-        _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
+        _hitPlayerPawn = collision.GetComponent<PlayerBattlePawn>();
+        if (_hitPlayerPawn == null) _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
         _hitPlayerPawn.ReceiveAttackRequest(this);
         if (!isDestroyed)
