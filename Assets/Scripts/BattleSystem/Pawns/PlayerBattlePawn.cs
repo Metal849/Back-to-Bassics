@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 /// <summary>
 /// Playable Battle Pawn
@@ -11,6 +12,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [Header("Player References")]
     [SerializeField] private PlayerWeaponData _weaponData;
     [SerializeField] private ParticleSystem _particleSystem;
+    [SerializeField] private VisualEffect _slashEffect;
     public Transform playerCollider;
     private PlayerTraversalPawn _traversalPawn;
     public PlayerWeaponData WeaponData => _weaponData;
@@ -92,6 +94,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (IsDead || attacking) return;
         AnimatorStateInfo animatorState = _spriteAnimator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
+        _pawnAnimator.Play($"Slash{DirectionHelper.GetVectorDirection(direction)}");
+        _slashEffect.Play();
         // Set the Slash Direction
         SlashDirection = direction;
         SlashDirection.Normalize();

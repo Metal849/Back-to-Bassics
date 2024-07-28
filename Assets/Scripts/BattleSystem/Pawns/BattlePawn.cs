@@ -9,6 +9,7 @@ public class BattlePawn : Conductable
     [Header("References")]
     [SerializeField] private BattlePawnData _data;
     [SerializeField] protected Animator _spriteAnimator;
+    protected Animator _pawnAnimator;
     public BattlePawnData Data => _data;
     public Animator SpriteAnimator => _spriteAnimator;
 
@@ -25,6 +26,7 @@ public class BattlePawn : Conductable
     protected virtual void Awake()
     {
         _currHP = _data.HP;
+        _pawnAnimator = GetComponent<Animator>();
     }
     #endregion
     #region Modification Methods

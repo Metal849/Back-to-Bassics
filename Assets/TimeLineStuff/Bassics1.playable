@@ -31,6 +31,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 3
     fireDistance: 12
@@ -274,6 +275,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 3
     fireDistance: 12
@@ -290,6 +292,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 4
     fireDistance: 12
@@ -395,6 +398,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 4
     fireDistance: 12
@@ -411,6 +415,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 3
     fireDistance: 12
@@ -468,6 +473,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 2
     fireDistance: 12
@@ -484,6 +490,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 4
     fireDistance: 12
@@ -723,6 +730,7 @@ MonoBehaviour:
   m_Name: FireProjectileAsset(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   template:
+    useDefault: 1
     projectileRef: {fileID: 6525783190841855137, guid: 1c95da4203eea1d4a92ee84f349d4beb, type: 3}
     fireDirection: 2
     fireDistance: 12

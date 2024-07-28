@@ -9,6 +9,7 @@ using UnityEngine.Playables;
 [Serializable]
 public class FireProjectileBehaviour : PlayableBehaviour
 {
+    public bool useDefault = true;
     public GameObject projectileRef;
     public Direction fireDirection;
     public float fireDistance = 2f;
@@ -27,6 +28,7 @@ public class FireProjectileBehaviour : PlayableBehaviour
         }
         Vector3 firePosition = -DirectionHelper.GetVectorFromDirection(fireDirection)*fireDistance;
         FireProjectileNode node;
+        node.useDefault = useDefault;
         node.projRef = projectileRef;
         node.speed = (float)playable.GetDuration();
         node.relativeSpawnPosition = firePosition;

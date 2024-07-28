@@ -7,12 +7,14 @@ public abstract class TraversalPawn : MonoBehaviour
 {
     [Header("Traversal Pawn Specs")]
     [SerializeField] private float speed;
+    protected Animator _pawnAnimator;
     public bool movingToDestination { get; private set; }
     protected Vector3 destinationTarget;
     private Rigidbody _rb;
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _pawnAnimator = GetComponent<Animator>();
     }
     protected void FixedUpdate()
     {
