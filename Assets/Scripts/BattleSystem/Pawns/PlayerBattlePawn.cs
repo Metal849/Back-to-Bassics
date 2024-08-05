@@ -185,9 +185,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Third Division is late receive
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
+        Debug.Log("Punishment");
+        yield return new WaitForSeconds(divisionTime * Conductor.quarter * Conductor.Instance.spb);
         deflectionWindow = true;
         Debug.Log("Deflecting");
-        yield return new WaitForSeconds(3 * divisionTime * Conductor.quarter * Conductor.Instance.spb);
+        yield return new WaitForSeconds(2 * divisionTime * Conductor.quarter * Conductor.Instance.spb);
         deflectionWindow = false;
         Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime * Conductor.quarter * Conductor.Instance.spb);
