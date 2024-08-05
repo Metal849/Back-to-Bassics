@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Slasher
   _dmg: 10
-  _attackDuration: 3
+  _attackDuration: 0.25
   _lore: Very Simple
