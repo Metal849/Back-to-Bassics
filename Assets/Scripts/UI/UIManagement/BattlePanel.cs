@@ -13,9 +13,16 @@ public partial class UIManager
     [SerializeField] private TextMeshProUGUI beatTracker;
     [SerializeField] private TextMeshProUGUI centerText;
     [SerializeField] private Animator battlePanelAnimator;
+    [SerializeField] private Image _playerHpBar;
+    [SerializeField] private Image _enemyHpBar;
+    [SerializeField] private Image _comboMeterBar;
     int parryCount;
     int blockCount;
     int missCount;
+    // Replacement For easier use maybe
+    //public GaugeTracker PlayerHP;
+    //public GaugeTracker EnemyHP;
+    //public GaugeTracker ComboMeter;
     private void FixedUpdate()
     {
         beatTracker.text = $"Beat: {(int)Conductor.Instance.Beat}";
@@ -36,12 +43,6 @@ public partial class UIManager
     {
         centerText.text = text;
     }
-
-    [SerializeField] private Image _playerHpBar;
-    //[SerializeField] private Image _playerSpBar;
-
-    [SerializeField] private Image _enemyHpBar;
-    //[SerializeField] private Image _enemySpBar;
     public void UpdateHP(BattlePawn pawn)
     {     
         if (pawn is PlayerBattlePawn)
@@ -53,6 +54,11 @@ public partial class UIManager
 
         // Enemy Pawn
         _enemyHpBar.fillAmount = (float)pawn.HP / pawn.Data.HP;
+    }
+    public void UpdateComboMeter()
+    {
+        // Combo Meter increase
+        _comboMeterBar.fillAmount = 1f;
     }
     //public void UpdateSP(BattlePawn pawn)
     //{  

@@ -6664,7 +6664,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 313967539673444573, guid: a50e0ac39d77a0746a80b9bfa9599e56, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1935991849525557307, guid: a50e0ac39d77a0746a80b9bfa9599e56, type: 3}
       propertyPath: m_ScreenY
@@ -6744,7 +6744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8508354118409827480, guid: a50e0ac39d77a0746a80b9bfa9599e56, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8508354118409827480, guid: a50e0ac39d77a0746a80b9bfa9599e56, type: 3}
       propertyPath: lockHorizontal
