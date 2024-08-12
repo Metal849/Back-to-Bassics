@@ -10,7 +10,7 @@ public partial class EnemyStateMachine
         public override void Enter(EnemyStateInput i)
         {
             base.Enter(i);
-            Input.Enemy.SpriteAnimator.Play("idle");
+            Input.Enemy.SpriteAnimator?.Play("idle");
         }
         public override void AttackRequestHandler(IAttackRequester requester)
         {
