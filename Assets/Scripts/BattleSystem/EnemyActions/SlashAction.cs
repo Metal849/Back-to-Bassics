@@ -26,9 +26,12 @@ public class SlashAction : EnemyAction, IAttackRequester
     public void Broadcast(Direction direction)
     {
         Vector2 slashDirection = DirectionHelper.GetVectorFromDirection(direction);
-        parentPawn.SpriteAnimator.SetFloat("xdir", slashDirection.x);
-        parentPawn.SpriteAnimator.SetFloat("ydir", slashDirection.y);
-        parentPawn.SpriteAnimator.Play($"{animationName}_broadcast");
+        // **************Revise this***********
+        // The y value here is facing forward
+        parentPawnSprite.FaceDirection(new Vector3(-_currNode.slashVector.x, 0, -1));
+        parentPawnSprite.Animator.SetFloat("x_slashDir", slashDirection.x);
+        parentPawnSprite.Animator.SetFloat("y_slashDir", slashDirection.y);
+        parentPawnSprite.Animator.Play($"{animationName}_broadcast");
     }
     public void Slash(SlashNode node)
     {
@@ -38,14 +41,20 @@ public class SlashAction : EnemyAction, IAttackRequester
     {
         // Slash Initialization
         _currNode = node;
-        
-        // Animation Before Hit
+
+        // Animation Before Hit -> Setup animation speed
         //int beats = Mathf.RoundToInt(node.preHitClip.length / Conductor.Instance.spb);
         //if (beats == 0) beats = 1;
         //float syncedAnimationTime = beats * Conductor.Instance.spb;
         //parentPawn.SpriteAnimator.SetFloat("speed", node.preHitClip.length / syncedAnimationTime);
-        parentPawn.SpriteAnimator.Play($"{animationName}_perform");
-        yield return new WaitUntil(() => parentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
+        // Direction Setup
+        // The y value here is facing forward
+        parentPawnSprite.FaceDirection(new Vector3(-_currNode.slashVector.x, 0, -1));
+        parentPawnSprite.Animator.SetFloat("x_slashDir", _currNode.slashVector.x);
+        parentPawnSprite.Animator.SetFloat("y_slashDir", _currNode.slashVector.y);
+
+        parentPawnSprite.Animator.Play($"{animationName}_perform");
+        yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
         // Hit Moment
         _slashing = true;
         BattleManager.Instance.Player.ReceiveAttackRequest(this);
@@ -53,9 +62,9 @@ public class SlashAction : EnemyAction, IAttackRequester
         {
             PerformSlashOnPlayer();
         }
-        yield return new WaitUntil(() => parentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_success") ||
-        parentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_deflected"));
-        yield return new WaitUntil(() => parentPawn.SpriteAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
+        yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_success") ||
+        parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_deflected"));
+        yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
     }
     public void OnRequestBlock(IAttackReceiver receiver)
     {
@@ -65,7 +74,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
 
-        parentPawn.SpriteAnimator.SetTrigger("blocked");
+        parentPawnSprite.Animator.SetTrigger("blocked");
 
         _slashing = false;
         player.CompleteAttackRequest(this);
@@ -79,7 +88,7 @@ public class SlashAction : EnemyAction, IAttackRequester
             UIManager.Instance.IncrementParryTracker();
             //---------------------------------------
 
-            parentPawn.SpriteAnimator.SetTrigger("deflected");
+            parentPawnSprite.Animator.SetTrigger("deflected");
 
             _slashing = false;
             player.CompleteAttackRequest(this);
@@ -90,7 +99,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
         if (player != null && _currNode.dodgeDirections.Contains(player.DodgeDirection))
         {
-            parentPawn.SpriteAnimator.SetTrigger("performed");
+            parentPawnSprite.Animator.SetTrigger("performed");
 
             _slashing = false;
             player.CompleteAttackRequest(this);
@@ -103,7 +112,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         UIManager.Instance.IncrementMissTracker();
         //---------------------------------------
 
-        parentPawn.SpriteAnimator.SetTrigger("performed");
+        parentPawnSprite.Animator.SetTrigger("performed");
         BattleManager.Instance.Player.Damage(_currNode.dmg);
 
         _slashing = false;

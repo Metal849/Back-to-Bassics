@@ -8,14 +8,14 @@ public partial class EnemyStateMachine
     {
         public override void AttackRequestHandler(IAttackRequester requester)
         {
-            AnimatorStateInfo animatorState = Input.Enemy.SpriteAnimator.GetCurrentAnimatorStateInfo(0);
+            AnimatorStateInfo animatorState = Input.EnemySprite.Animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorState.IsName("block") && !animatorState.IsName("blocking"))
             {
-                Input.Enemy.SpriteAnimator.Play("block");
+                Input.EnemySprite.Animator.Play("block");
             }
             else
             {
-                Input.Enemy.SpriteAnimator.Play("blocking");
+                Input.EnemySprite.Animator.Play("blocking");
             }
              
             //((PlayerBattlePawn)requester)?.Lurch(((EnemyBattlePawnData)Input.Enemy.Data).BlockLrch);
@@ -27,7 +27,7 @@ public partial class EnemyStateMachine
         public override void Exit(EnemyStateInput i)
         {
             base.Exit(i);
-            Input.Enemy.SpriteAnimator.Play("idle");
+            Input.EnemySprite.Animator.Play("idle");
         }
     }
 }

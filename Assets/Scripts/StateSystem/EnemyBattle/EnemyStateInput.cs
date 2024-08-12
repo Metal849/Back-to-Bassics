@@ -6,5 +6,6 @@ public class EnemyStateInput : StateInput
 {
     #region Global Variables
     public EnemyBattlePawn Enemy;
+    public PawnSprite EnemySprite;
     #endregion
 }

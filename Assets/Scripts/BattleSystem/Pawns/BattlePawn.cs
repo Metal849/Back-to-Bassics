@@ -8,10 +8,9 @@ public class BattlePawn : Conductable
 {
     [Header("References")]
     [SerializeField] private BattlePawnData _data;
-    [SerializeField] protected Animator _spriteAnimator;
     public BattlePawnData Data => _data;
-    public Animator SpriteAnimator => _spriteAnimator;
     protected Animator _pawnAnimator;
+    protected PawnSprite _pawnSprite;
 
     [Header("Battle Pawn Data")]
     [SerializeField] protected int _currHP;
@@ -27,6 +26,7 @@ public class BattlePawn : Conductable
     {
         _currHP = _data.HP;
         _pawnAnimator = GetComponent<Animator>();
+        _pawnSprite = GetComponentInChildren<PawnSprite>();
     }
     #endregion
     #region Modification Methods

@@ -67,7 +67,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void Dodge(Vector2 direction)
     {
         if (IsDead) return;
-        AnimatorStateInfo animatorState = _pawnAnimator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo animatorState = _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
         // (Past Ryan 1) Figure out a way to make the dodging false later
         // (Past Ryan 2) I'm sorry future ryan, but I have figured it out through very scuffed means
@@ -80,7 +80,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         dodging = true;
         _pawnAnimator.Play("dodge_" + directionAnimation);
-        yield return new WaitUntil(() => _pawnAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f && _pawnAnimator.GetCurrentAnimatorStateInfo(0).IsName("idle"));
+        yield return new WaitUntil(() => _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f 
+        && _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName("idle"));
         dodging = false;
     }
     /// <summary>
@@ -92,8 +93,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void Slash(Vector2 direction)
     {
         if (IsDead || attacking) return;
-        AnimatorStateInfo animatorState = _pawnAnimator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo animatorState = _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0);
         if (!animatorState.IsName("idle")) return;
+        _pawnSprite.FaceDirection(new Vector3(direction.x, 0, 1));
         _pawnAnimator.Play($"Slash{DirectionHelper.GetVectorDirection(direction)}");
         _slashEffect.Play();
         // Set the Slash Direction
@@ -168,7 +170,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     public void OnRequestBlock(IAttackReceiver receiver)
     {
-        _pawnAnimator.Play("attack_blocked");
+        _pawnSprite.Animator.Play("attack_blocked");
     }
 
     public void OnRequestDodge(IAttackReceiver receiver)
@@ -185,16 +187,16 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Third Division is late receive
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
-        Debug.Log("Punishment");
+        //Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = true;
-        Debug.Log("Deflecting");
+        //Debug.Log("Deflecting");
         yield return new WaitForSeconds(2 * divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = false;
-        Debug.Log("Punishment");
+        //Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         attacking = false;
-        Debug.Log("Ready to slash");
+        //Debug.Log("Ready to slash");
     }
     //protected override void OnStagger()
     //{

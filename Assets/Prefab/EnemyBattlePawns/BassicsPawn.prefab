@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 5642884798581242194}
+  parentPawnSprite: {fileID: 0}
   projectilePoolAmount: 20
   animationName: music
   firePattern: 1
@@ -217,7 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
-  _spriteAnimator: {fileID: 643875910039070891}
   _currHP: 0
   _esm: {fileID: 0}
   _enemyActionSequences:
@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 5642884798581242194}
+  parentPawnSprite: {fileID: 0}
   animationName: slash
   preHitClip: {fileID: 7400000, guid: 3f315a64912e07645a97916c5d7603dc, type: 2}
   broadcastClip: {fileID: 7400000, guid: 8ba2ca4d74de4d34c959b793bfa87b6e, type: 2}
@@ -322,6 +323,7 @@ GameObject:
   - component: {fileID: 643875910039070891}
   - component: {fileID: 7309822200007674630}
   - component: {fileID: 2751244974661979364}
+  - component: {fileID: 136050562459318790}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -5215,3 +5217,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &136050562459318790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7685685512346909669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8131888c4971844a35130eb8e682c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

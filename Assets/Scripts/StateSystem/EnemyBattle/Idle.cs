@@ -10,11 +10,11 @@ public partial class EnemyStateMachine
         public override void Enter(EnemyStateInput i)
         {
             base.Enter(i);
-            Input.Enemy.SpriteAnimator?.Play("idle");
+            Input.EnemySprite.Animator?.Play("idle");
         }
         public override void AttackRequestHandler(IAttackRequester requester)
         {
-            //Input.Enemy.SpriteAnimator.Play("take_damage");
+            //Input.EnemySprite.Animator.Play("take_damage");
         }
         public override int OnDamage(int amount)
         {

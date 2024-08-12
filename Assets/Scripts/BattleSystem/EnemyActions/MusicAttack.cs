@@ -16,7 +16,7 @@ public class MusicAttack : EnemyAction
     {
         base.StartAction();
         currIdx = 0;
-        parentPawn.SpriteAnimator.Play("music");
+        parentPawnSprite.Animator.Play("music");
     }
     protected override void OnFullBeat()
     {
@@ -24,7 +24,7 @@ public class MusicAttack : EnemyAction
         {
             Projectile proj = Pooler.Instance.Pool(musicNoteRef).GetComponent<Projectile>();
             Vector3 directionVector = -(Vector3)DirectionHelper.GetVectorFromDirection(directions[currIdx]);
-            parentPawn.SpriteAnimator.SetFloat("xdir", directionVector.x);
+            parentPawnSprite.Animator.SetFloat("xdir", directionVector.x);
             proj.transform.position = BattleManager.Instance.Player.transform.position + (directionVector) * 6;
             // Take One Beat to fire
             proj.Fire((BattleManager.Instance.Player.transform.position - proj.transform.position)/(2*Conductor.Instance.spb));

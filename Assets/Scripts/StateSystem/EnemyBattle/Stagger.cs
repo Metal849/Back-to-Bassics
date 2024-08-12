@@ -8,7 +8,7 @@ public partial class EnemyStateMachine
     {
         public override void AttackRequestHandler(IAttackRequester requester)
         {
-            //Input.Enemy.SpriteAnimator.Play("take_damage");
+            //Input.EnemySprite.Animator.Play("take_damage");
         }
         public override int OnDamage(int amount)
         {

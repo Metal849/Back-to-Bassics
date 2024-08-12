@@ -10,6 +10,7 @@ public abstract class TraversalPawn : MonoBehaviour
     [SerializeField] protected Animator _spriteAnimator;
     public Animator SpriteAnimator => _spriteAnimator;
     protected Animator _pawnAnimator;
+    protected PawnSprite _pawnSprite;
     public bool movingToDestination { get; private set; }
     protected Vector3 destinationTarget;
     private Rigidbody _rb;
@@ -17,6 +18,7 @@ public abstract class TraversalPawn : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _pawnAnimator = GetComponent<Animator>();
+        _pawnSprite = GetComponentInChildren<PawnSprite>();
     }
     protected void FixedUpdate()
     {
@@ -30,32 +32,12 @@ public abstract class TraversalPawn : MonoBehaviour
         }
     }
 
-    // X is Right and Left, Y is Forward and Backward 
-    public void Move(Vector3 direction)
+    // X is Right and Left, Z is Forward and Backward 
+    public virtual void Move(Vector3 direction)
     {
         direction.Normalize();
         _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-        Vector2 curr = new Vector2(_spriteAnimator.GetFloat("DirX"), _spriteAnimator.GetFloat("DirY"));
-        //Animation Related :PPPPP
-        if (direction.x != 0)
-        {
-            _spriteAnimator.SetFloat("DirX", Mathf.Sign(direction.x));
-        }
-        if (direction.z != 0)
-        {
-            _spriteAnimator.SetFloat("DirY", Mathf.Sign(direction.z));
-        }
-        Vector2 change = new Vector2(_spriteAnimator.GetFloat("DirX"), _spriteAnimator.GetFloat("DirY"));
-        float angle = Vector2.SignedAngle(curr, change);
-        if (angle > 0)
-        {
-            _spriteAnimator.SetTrigger("FlipCCW");
-        }
-        else if (angle < 0)
-        {
-            _spriteAnimator.SetTrigger("FlipCW");
-        }
-        //transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
+        _pawnSprite.FaceDirection(direction);
     }
     public void MoveToDestination(Vector3 destination)
     {
