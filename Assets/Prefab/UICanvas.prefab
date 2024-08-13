@@ -820,6 +820,7 @@ MonoBehaviour:
   battlePanelAnimator: {fileID: 9055832781344350838}
   _playerHpBar: {fileID: 922752623745672867}
   _enemyHpBar: {fileID: 4243564878127532608}
+  _comboMeterBar: {fileID: 3334305468991712330}
 --- !u!223 &8334988425258695937
 Canvas:
   m_ObjectHideFlags: 0

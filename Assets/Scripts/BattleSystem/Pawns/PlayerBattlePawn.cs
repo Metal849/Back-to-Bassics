@@ -21,8 +21,30 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     private Queue<IAttackRequester> _activeAttackRequesters;
     public float AttackDamage { get => _weaponData.Dmg; }
     public bool attacking { get; private set; }
+    private bool deflected;
     public bool deflectionWindow { get; private set; }
     public bool dodging { get; set; }
+    [Header("Player Data")]
+    [SerializeField] protected int comboMeterMax = 100;
+    [SerializeField] protected int comboMeterCurr;
+    public int ComboMeterMax => comboMeterMax;
+    public int ComboMeterCurr 
+    { 
+        get { return comboMeterCurr; } 
+        set 
+        { 
+            comboMeterCurr = value;
+            if (comboMeterCurr > comboMeterMax)
+            {   
+                comboMeterCurr = comboMeterMax;
+            }
+            if (comboMeterCurr < 0)
+            {
+                comboMeterCurr = 0;
+            }
+            UIManager.Instance.UpdateComboMeter(this);
+        } 
+    }
     protected override void Awake()
     {
         base.Awake();
@@ -110,16 +132,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //    //_activeAttackRequesters.Peek().OnRequestDeflect(this);
         //}
         //else 
-        if (_activeAttackRequesters.Count <= 0)
-        {
-            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
-            //BattleManager.Instance.Enemy.Lurch(_weaponData.Lrch); -> Uncomment this if we should do this?
-            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment you have defined this
 
-            // (Past Ryan) Whatever the fuck I call completing/processing an attack as opposed to "receving a request" bullshit
-            // (Current Ryan) Oh there it is lmao
-            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
-        }
+        
     }
     #endregion
     /// <summary>
@@ -136,10 +150,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
-        if (deflectionWindow)
+        if (/*!deflected && */ deflectionWindow)
         {
+            deflected = true;
             requester.OnRequestDeflect(this);
-            // TODO: Right here you can allow the player to attack right away if needed
+            ComboMeterCurr += 5;
+            // The following todo is probably old and not needed anymore*
+            // TODO: Right here you can allow the player to follow an attack after a deflect
         }
         //else if (blocking)
         //{
@@ -157,7 +174,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     {
         if (_activeAttackRequesters.Peek() != requester)
         {
-            Debug.LogError("Attack Request and Completion missmatch, expected attack requester \"" + _activeAttackRequesters.Peek() + "\" instead got \"" + requester + ".\"");
+            Debug.LogError($"Attack Request and Completion missmatch, expected attack requester \"{_activeAttackRequesters.Peek()}\" instead got \"{requester}.\"");
             return;
         }
         _activeAttackRequesters.Dequeue();
@@ -187,16 +204,23 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Third Division is late receive
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
-        //Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = true;
-        //Debug.Log("Deflecting");
         yield return new WaitForSeconds(2 * divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = false;
-        //Debug.Log("Punishment");
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         attacking = false;
-        //Debug.Log("Ready to slash");
+        // Direct Attack when no attack requesters
+        // This is where combo strings should be processed
+        if (!deflected && _activeAttackRequesters.Count <= 0)
+        {
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            // Process Combo Strings here if you have enough!
+            ComboMeterCurr -= 5;
+            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
+            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
+        }
+        deflected = false;
     }
     //protected override void OnStagger()
     //{

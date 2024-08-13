@@ -23,6 +23,7 @@ public partial class UIManager
     //public GaugeTracker PlayerHP;
     //public GaugeTracker EnemyHP;
     //public GaugeTracker ComboMeter;
+    // Debug
     private void FixedUpdate()
     {
         beatTracker.text = $"Beat: {(int)Conductor.Instance.Beat}";
@@ -39,6 +40,7 @@ public partial class UIManager
     {
         missTracker.text = $"Misses: {++missCount}";
     }
+    //---------
     public void UpdateCenterText(string text)
     {
         centerText.text = text;
@@ -55,22 +57,11 @@ public partial class UIManager
         // Enemy Pawn
         _enemyHpBar.fillAmount = (float)pawn.HP / pawn.Data.HP;
     }
-    public void UpdateComboMeter()
+    public void UpdateComboMeter(PlayerBattlePawn playerPawn)
     {
-        // Combo Meter increase
-        _comboMeterBar.fillAmount = 1f;
+        // Combo Meter Update
+        _comboMeterBar.fillAmount = (float)playerPawn.ComboMeterCurr / playerPawn.ComboMeterMax;
     }
-    //public void UpdateSP(BattlePawn pawn)
-    //{  
-    //    if (pawn is PlayerBattlePawn)
-    //    {
-    //        // Player Pawn
-    //        _playerSpBar.fillAmount = (float)pawn.SP / pawn.Data.SP;
-    //        return;
-    //    }
-    //    // Enemy Pawn
-    //    _enemySpBar.fillAmount = (float)pawn.SP / pawn.Data.SP;
-    //}
     public void ShowBattlePanel()
     {
         battlePanelAnimator.Play("ShowBattlePanel");
