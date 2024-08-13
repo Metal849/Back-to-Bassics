@@ -28,7 +28,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         Vector2 slashDirection = DirectionHelper.GetVectorFromDirection(direction);
         // **************Revise this***********
         // The y value here is facing forward
-        parentPawnSprite.FaceDirection(new Vector3(-_currNode.slashVector.x, 0, -1));
+        parentPawnSprite.FaceDirection(new Vector3(-slashDirection.x, 0, -1));
         parentPawnSprite.Animator.SetFloat("x_slashDir", slashDirection.x);
         parentPawnSprite.Animator.SetFloat("y_slashDir", slashDirection.y);
         parentPawnSprite.Animator.Play($"{animationName}_broadcast");

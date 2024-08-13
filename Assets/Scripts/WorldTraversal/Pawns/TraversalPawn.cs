@@ -37,6 +37,7 @@ public abstract class TraversalPawn : MonoBehaviour
     {
         direction.Normalize();
         _rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+        _pawnSprite.Animator.SetBool("moving", direction != Vector3.zero);
         _pawnSprite.FaceDirection(direction);
     }
     public void MoveToDestination(Vector3 destination)
