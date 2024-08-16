@@ -54,7 +54,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     {
         // (Ryan) Should't need to check for death here, just disable the conducatable conductor connection 
         //if (Conductor.Instance.Beat < _decisionTime || (_enemyActions != null && _enemyActions[_actionIdx].IsActive) || IsDead) return;
-        if (Conductor.Instance.Beat < _decisionTime || _director.state == PlayState.Playing || IsDead) return;
+        if (Conductor.Instance.Beat < _decisionTime || _director.state == PlayState.Playing || IsDead || IsStaggered) return;
         int idx = UnityEngine.Random.Range(0, (_enemyActionSequences != null ? _enemyActionSequences.Length : 0) + 2) - 2;
         //int idx = UnityEngine.Random.Range(0, 4);
         if (idx == -2)
@@ -96,7 +96,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         if (IsDead) return;
         _esm.CurrState.AttackRequestHandler(requester);
     }
-
     public void CompleteAttackRequest(IAttackRequester requester)
     {
         throw new System.NotImplementedException();
@@ -118,22 +117,22 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     //    amount = _esm.CurrState.OnLurch(amount);
     //    base.Lurch(amount);
     //}
-    //protected override void OnStagger()
-    //{
-    //    if (IsDead) return;
-    //    base.OnStagger();
-    //    // Staggered Animation (Paper Crumple)
-    //    _esm.Transition<EnemyStateMachine.Stagger>();
-    //    _particleSystem?.Play();
-    //}
-    //protected override void OnUnstagger()
-    //{
-    //    if (IsDead) return;
-    //    base.OnUnstagger();
-    //    // Unstagger Animation transition to idle
-    //    _esm.Transition<EnemyStateMachine.Idle>();
-    //    _particleSystem?.Stop();
-    //}
+    protected override void OnStagger()
+    {
+        if (IsDead) return;
+        base.OnStagger();
+        // Staggered Animation (Paper Crumple)
+        _esm.Transition<EnemyStateMachine.Stagger>();
+        //_particleSystem?.Play();
+    }
+    protected override void OnUnstagger()
+    {
+        if (IsDead) return;
+        base.OnUnstagger();
+        // Unstagger Animation transition to idle
+        _esm.Transition<EnemyStateMachine.Idle>();
+        //_particleSystem?.Stop();
+    }
     protected override void OnDeath()
     {
         base.OnDeath();

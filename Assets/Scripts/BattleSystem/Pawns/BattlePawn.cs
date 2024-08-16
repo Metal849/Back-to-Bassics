@@ -18,7 +18,7 @@ public class BattlePawn : Conductable
 
     #region BattlePawn Boolean States
     public bool IsDead { get; private set; }
-    //public bool IsStaggered { get; private set; }
+    public bool IsStaggered { get; private set; }
     #endregion
 
     #region Unity Messages
@@ -53,6 +53,10 @@ public class BattlePawn : Conductable
             UIManager.Instance.UpdateHP(this);
         }
     }
+    public virtual void Stagger()
+    {
+        StartCoroutine(StaggerSelf());
+    }
     // TODO: Implement Status Ailment Applier Method
     // This should just be in the form of a GameObject Component
     public virtual void ApplyStatusAilments(StatusAilment[] ailments)
@@ -82,30 +86,30 @@ public class BattlePawn : Conductable
         Disable();
     }
     #region BattlePawn Messages
-    //protected virtual void OnStagger()
-    //{
-    //    // TODO: Things that occur on battle pawn stagger
-    //}
+    protected virtual void OnStagger()
+    {
+        // TODO: Things that occur on battle pawn stagger
+    }
     protected virtual void OnDeath()
     {
         // TODO: Things that occur on battle pawn death
     }
-    //protected virtual void OnUnstagger()
-    //{
-    //    // TODO: Things that occur on battle pawn after unstaggering
-    //}
+    protected virtual void OnUnstagger()
+    {
+        // TODO: Things that occur on battle pawn after unstaggering
+    }
     #endregion
-    //protected virtual IEnumerator StaggerSelf()
-    //{
-    //    IsStaggered = true;
-    //    OnStagger();
-    //    // TODO: Play Stagger Animation
-    //    // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
-    //    yield return new WaitForSeconds(_data.StaggerRecoveryTime);
-    //    //_currSP = _data.SP;
-    //    UIManager.Instance.UpdateSP(this);
-    //    IsStaggered = false;
-    //    OnUnstagger();
-    //    // TODO: Play StaggerRecovery Animation
-    //}
+    protected virtual IEnumerator StaggerSelf()
+    {
+        IsStaggered = true;
+        OnStagger();
+        // TODO: Play Stagger Animation
+        // TODO: Notify BattleManager to broadcast this BattlePawn's stagger
+        yield return new WaitForSeconds(_data.StaggerDuration);
+        //_currSP = _data.SP;
+        //UIManager.Instance.UpdateSP(this);
+        IsStaggered = false;
+        OnUnstagger();
+        // TODO: Play StaggerRecovery Animation
+    }
 }

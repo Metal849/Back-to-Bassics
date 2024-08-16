@@ -28,6 +28,7 @@ public class SlashAssetEditor : Editor
         SlashAsset sa = target as SlashAsset;
         sa.template.node.slashDirection = (Direction)EditorGUILayout.EnumPopup("Slash Direction", sa.template.node.slashDirection);
         sa.template.node.isCharged = EditorGUILayout.Toggle("Is Charged", sa.template.node.isCharged);
+        sa.template.node.staggersParent = EditorGUILayout.Toggle("Staggers Parent", sa.template.node.staggersParent);
         sa.template.node.dmg = EditorGUILayout.IntField("Damage", sa.template.node.dmg);
         //string[] clipName = sa.template.node.preHitClip.name.Split('_');
         //sa.template.node.slashDirection = DirectionHelper.GetDirectionFromString(clipName[clipName.Length - 1]);

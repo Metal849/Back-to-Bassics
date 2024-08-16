@@ -5192,12 +5192,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 615d985bad138be4eb9f15eac06a1261, type: 2}
-  _spriteAnimator: {fileID: 1593425890846368242}
   _currHP: 100
   _weaponData: {fileID: 11400000, guid: a9fbfbcb976477e4e84d47f073bf3134, type: 2}
   _particleSystem: {fileID: 1032800211107346903}
   _slashEffect: {fileID: 8402795061273862082}
   playerCollider: {fileID: 1388257015085060588}
+  comboMeterMax: 20
+  comboMeterCurr: 0
+  combos:
+  - {fileID: 11400000, guid: b542af4cb3d789248a18d81e2ef257c6, type: 2}
+  - {fileID: 11400000, guid: db9c929ae56fb9a47ac8a0518aba715d, type: 2}
+  - {fileID: 11400000, guid: 11825eb930df7ef48aebf254ae38d529, type: 2}
 --- !u!114 &671168255371899491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5260,9 +5265,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.38
-  m_Height: 1.1434083
+  m_Height: 1.143054
   m_Direction: 1
-  m_Center: {x: 0, y: 0.39772725, z: 0}
+  m_Center: {x: 0, y: 0.5746951, z: 0}
 --- !u!95 &6461832632852835835
 Animator:
   serializedVersion: 5
@@ -5341,7 +5346,7 @@ Transform:
   m_GameObject: {fileID: 8747435454642201029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.386, z: 0}
+  m_LocalPosition: {x: 0, y: 0.559, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

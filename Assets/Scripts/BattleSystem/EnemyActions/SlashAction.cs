@@ -89,6 +89,11 @@ public class SlashAction : EnemyAction, IAttackRequester
             //---------------------------------------
 
             parentPawnSprite.Animator.SetTrigger("deflected");
+            AudioManager.Instance.PlayPlayerSlash(player.WeaponData.SlashHitSound, player.transform.position);
+            if (_currNode.staggersParent)
+            {
+                parentPawn.Stagger();
+            }
 
             _slashing = false;
             player.CompleteAttackRequest(this);
@@ -125,6 +130,7 @@ public struct SlashNode
 {
     public Direction slashDirection;
     public bool isCharged;
+    public bool staggersParent;
     public int dmg;
     public Direction[] dodgeDirections;
     public Vector2 slashVector => DirectionHelper.GetVectorFromDirection(slashDirection);

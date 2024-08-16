@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Bassics
   _hp: 100
+  staggerDuration: 20
   _lore: The bass himself!
   _blockingReduction: 0.05
   _confuseResistance: 0

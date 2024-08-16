@@ -20,7 +20,6 @@ public class BattleManager : Singleton<BattleManager>
     }
     public void StartBattle(EnemyBattlePawn[] pawns)
     {
-        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
         enemyBattlePawns = new Queue<EnemyBattlePawn>(pawns);
         Enemy = enemyBattlePawns?.Dequeue();
         if (Enemy == null)
@@ -42,6 +41,7 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator IntializeBattle()
     {
         yield return PlayerEngageCurrentEnemy();
+        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
         Player.EnterBattle();
         Enemy.EnterBattle();
         for (float i = battleDelay; i > 0; i--)

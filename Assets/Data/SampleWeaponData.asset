@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: SampleWeaponData
   m_EditorClassIdentifier: 
   _name: Slasher
-  _dmg: 10
+  _dmg: 1
   _attackDuration: 0.25
   _lore: Very Simple
+  slashHitSound:
+    Guid:
+      Data1: -1604358143
+      Data2: 1152990667
+      Data3: -1168210009
+      Data4: 1417417996
+    Path: event:/Slash

@@ -27,6 +27,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     [Header("Player Data")]
     [SerializeField] protected int comboMeterMax = 100;
     [SerializeField] protected int comboMeterCurr;
+    [SerializeField] protected Combo[] combos;
     public int ComboMeterMax => comboMeterMax;
     public int ComboMeterCurr 
     { 
@@ -45,9 +46,18 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             UIManager.Instance.UpdateComboMeter(this);
         } 
     }
+    private string comboString;
+    private Dictionary<string, Combo> comboDict;
+    private Coroutine comboStopper;
     protected override void Awake()
     {
         base.Awake();
+        comboString = "";
+        comboDict = new Dictionary<string, Combo>();
+        foreach (Combo combo in combos)
+        {
+            comboDict.Add(combo.StrId, combo);
+        }
         _activeAttackRequesters = new Queue<IAttackRequester>();
         _traversalPawn = GetComponent<PlayerTraversalPawn>();
         SlashDirection = Vector2.zero;
@@ -95,6 +105,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // (Past Ryan 2) I'm sorry future ryan, but I have figured it out through very scuffed means
         // Check a file called OnDodgeEnd.cs
         // (Ryan) This really sucky
+        // Merge to one state called Open
+        updateCombo(false);
         DodgeDirection = DirectionHelper.GetVectorDirection(direction);
         StartCoroutine(DodgeThread(DodgeDirection.ToString().ToLower()));
     }
@@ -115,8 +127,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public void Slash(Vector2 direction)
     {
         if (IsDead || attacking) return;
-        AnimatorStateInfo animatorState = _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0);
-        if (!animatorState.IsName("idle")) return;
+        //AnimatorStateInfo animatorState = _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0);
+        //if (!animatorState.IsName("idle")) return;
         _pawnSprite.FaceDirection(new Vector3(direction.x, 0, 1));
         _pawnAnimator.Play($"Slash{DirectionHelper.GetVectorDirection(direction)}");
         _slashEffect.Play();
@@ -131,9 +143,74 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //    // Note we are dequeing!
         //    //_activeAttackRequesters.Peek().OnRequestDeflect(this);
         //}
-        //else 
-
+        //else   
+    }
+    public void updateCombo(bool slash)
+    {
+        if (BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Block>() 
+            || !(BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Stagger>()
+            || BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Idle>()))
+        {
+            comboString = "";
+            return;
+        }
+        if (comboString.Length >= 4)
+        {
+            comboString = "";
+        }
+        if (slash)
+        {
+            if (SlashDirection == Vector2.left)
+            {
+                comboString += "W";
+            }
+            else if (SlashDirection == Vector2.right)
+            {
+                comboString += "E";
+            }
+            else if (SlashDirection == Vector2.up) 
+            {
+                comboString += "N";
+            }
+            else if (SlashDirection == Vector2.down) 
+            {
+                comboString += "S";
+            }
+        }
+        else
+        {
+            switch(DodgeDirection)
+            {
+                case Direction.North:
+                    comboString += "n";
+                    break;
+                case Direction.South:
+                    comboString += "s";
+                    break;
+                case Direction.West:
+                    comboString += "w";
+                    break;
+                case Direction.East:
+                    comboString += "e";
+                    break;
+            }
+        }
+        if (comboStopper != null)
+        {
+            StopCoroutine(comboStopper);
+        }
+        Debug.Log($"combo: {comboString}");
+        comboStopper = StartCoroutine(TimeToResetCombo());
+        if (!comboDict.ContainsKey(comboString)) return;
+        ComboMeterCurr -= comboDict[comboString].Cost;
+        comboDict[comboString].DoCombo();
         
+    }
+    private IEnumerator TimeToResetCombo()
+    {
+        yield return new WaitForSeconds(2f);
+        comboString = "";
+        Debug.Log($"combo: {comboString}");
     }
     #endregion
     /// <summary>
@@ -154,7 +231,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             deflected = true;
             requester.OnRequestDeflect(this);
-            ComboMeterCurr += 5;
+            ComboMeterCurr += 1;
             // The following todo is probably old and not needed anymore*
             // TODO: Right here you can allow the player to follow an attack after a deflect
         }
@@ -214,9 +291,10 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // This is where combo strings should be processed
         if (!deflected && _activeAttackRequesters.Count <= 0)
         {
-            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
             // Process Combo Strings here if you have enough!
-            ComboMeterCurr -= 5;
+            updateCombo(true);
+            // Merge to one state called Open
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);  
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
             BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
         }
