@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class EnemyStateMachine
 {
-    public class Stagger : Open
+    public class Stagger : EnemyState
     {
         public override void Enter(EnemyStateInput i)
         {

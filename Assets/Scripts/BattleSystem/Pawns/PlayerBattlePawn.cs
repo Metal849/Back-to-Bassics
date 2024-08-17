@@ -151,6 +151,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             || !(BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Stagger>()
             || BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Idle>()))
         {
+            UIManager.Instance.ComboDisplay.HideCombo();
             comboString = "";
             return;
         }
@@ -163,18 +164,22 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             if (SlashDirection == Vector2.left)
             {
                 comboString += "W";
+                UIManager.Instance.ComboDisplay.AddCombo("W");
             }
             else if (SlashDirection == Vector2.right)
             {
                 comboString += "E";
+                UIManager.Instance.ComboDisplay.AddCombo("E");
             }
             else if (SlashDirection == Vector2.up) 
             {
                 comboString += "N";
+                UIManager.Instance.ComboDisplay.AddCombo("N");
             }
             else if (SlashDirection == Vector2.down) 
             {
                 comboString += "S";
+                UIManager.Instance.ComboDisplay.AddCombo("S");
             }
         }
         else
@@ -183,15 +188,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             {
                 case Direction.North:
                     comboString += "n";
+                    UIManager.Instance.ComboDisplay.AddCombo("n");
                     break;
                 case Direction.South:
                     comboString += "s";
+                    UIManager.Instance.ComboDisplay.AddCombo("s");
                     break;
                 case Direction.West:
                     comboString += "w";
+                    UIManager.Instance.ComboDisplay.AddCombo("w");
                     break;
                 case Direction.East:
                     comboString += "e";
+                    UIManager.Instance.ComboDisplay.AddCombo("e");
                     break;
             }
         }
@@ -199,18 +208,17 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             StopCoroutine(comboStopper);
         }
-        Debug.Log($"combo: {comboString}");
         comboStopper = StartCoroutine(TimeToResetCombo());
-        if (!comboDict.ContainsKey(comboString)) return;
+        if (!comboDict.ContainsKey(comboString) || ComboMeterCurr < comboDict[comboString].Cost) return;
         ComboMeterCurr -= comboDict[comboString].Cost;
         comboDict[comboString].DoCombo();
         
     }
     private IEnumerator TimeToResetCombo()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.ComboDisplay.HideCombo();
         comboString = "";
-        Debug.Log($"combo: {comboString}");
     }
     #endregion
     /// <summary>

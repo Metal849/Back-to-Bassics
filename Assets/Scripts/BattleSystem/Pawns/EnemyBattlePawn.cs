@@ -144,7 +144,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     public void OnActionComplete()
     {
         _decisionTime = Conductor.Instance.Beat + _beatsPerDecision;
-        if (IsDead) return;
+        if (IsDead || IsStaggered) return;
         _esm.Transition<EnemyStateMachine.Idle>();
     }
     #endregion

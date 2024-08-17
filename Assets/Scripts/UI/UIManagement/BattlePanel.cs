@@ -16,6 +16,7 @@ public partial class UIManager
     [SerializeField] private Image _playerHpBar;
     [SerializeField] private Image _enemyHpBar;
     [SerializeField] private Image _comboMeterBar;
+    public ComboDisplay ComboDisplay;
     int parryCount;
     int blockCount;
     int missCount;
