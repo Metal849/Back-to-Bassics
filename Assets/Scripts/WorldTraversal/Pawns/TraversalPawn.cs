@@ -27,7 +27,7 @@ public abstract class TraversalPawn : MonoBehaviour
     }
     protected virtual void FixedUpdate()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, pawnFaceRotation, Time.fixedDeltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, pawnFaceRotation, Time.fixedDeltaTime * 0.5f);
         if (movingToDestination)
         {
             // TODO: This section right here is what is causing the floating of our character, see if you
