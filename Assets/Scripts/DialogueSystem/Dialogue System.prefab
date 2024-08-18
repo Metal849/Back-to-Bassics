@@ -50,7 +50,7 @@ MonoBehaviour:
   dialogueViews:
   - {fileID: 0}
   startNode: Start
-  startAutomatically: 1
+  startAutomatically: 0
   runSelectedOptionAsLine: 0
   lineProvider: {fileID: 0}
   verboseLogging: 1

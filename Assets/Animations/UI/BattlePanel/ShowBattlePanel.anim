@@ -223,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: ComboMeter
+    path: ComboGague
     classID: 224
     script: {fileID: 0}
     flags: 0
@@ -290,7 +290,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3797556030
+      path: 4042858103
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
@@ -526,7 +526,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: ComboMeter
+    path: ComboGague
     classID: 224
     script: {fileID: 0}
     flags: 0

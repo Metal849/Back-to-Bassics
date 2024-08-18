@@ -16,6 +16,7 @@ MonoBehaviour:
     node:
       slashDirection: 0
       isCharged: 0
+      staggersParent: 0
       dmg: 0
       dodgeDirections: 
 --- !u!114 &-6936749749794024697
@@ -435,6 +436,7 @@ MonoBehaviour:
     node:
       slashDirection: 0
       isCharged: 0
+      staggersParent: 0
       dmg: 0
       dodgeDirections: 
 --- !u!114 &11400000
@@ -715,6 +717,7 @@ MonoBehaviour:
     node:
       slashDirection: 3
       isCharged: 0
+      staggersParent: 1
       dmg: 10
       dodgeDirections: 01000000020000000000000004000000
 --- !u!114 &8840916852848953748
