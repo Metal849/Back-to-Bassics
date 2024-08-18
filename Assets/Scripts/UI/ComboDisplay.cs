@@ -79,5 +79,9 @@ public class ComboDisplay : MonoBehaviour
     {
         _curridx = 0;
         _animator.Play("FadeOut");
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<Image>().color = Color.red;
+        }
     }
 }

@@ -209,7 +209,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             StopCoroutine(comboStopper);
         }
         comboStopper = StartCoroutine(TimeToResetCombo());
-        if (!comboDict.ContainsKey(comboString) || ComboMeterCurr < comboDict[comboString].Cost) return;
+        if (!comboDict.ContainsKey(comboString)) return;
+        if (ComboMeterCurr < comboDict[comboString].Cost)
+        {
+            UIManager.Instance.ComboDisplay.HideCombo();
+            StopCoroutine(comboStopper);
+            return;
+        }
+        UIManager.Instance.ComboDisplay.ValidCombo();
         ComboMeterCurr -= comboDict[comboString].Cost;
         comboDict[comboString].DoCombo();
         

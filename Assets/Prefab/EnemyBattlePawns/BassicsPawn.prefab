@@ -298,14 +298,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 7978382705582257006}
-  useFadeEffect: 1
+  useFadeEffect: 0
   fadeInTime: 0.25
   fadeOutTime: 0.05
   lineText: {fileID: 5442695896393181257}
   showCharacterNameInLineView: 0
   characterNameText: {fileID: 0}
   characterNameContainer: {fileID: 0}
-  useTypewriterEffect: 0
+  useTypewriterEffect: 1
   onCharacterTyped:
     m_PersistentCalls:
       m_Calls: []
