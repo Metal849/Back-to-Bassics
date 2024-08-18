@@ -5198,7 +5198,7 @@ GameObject:
   - component: {fileID: 4973512005922710264}
   - component: {fileID: 6461832632852835835}
   m_Layer: 0
-  m_Name: PlayerBattlePawnNew
+  m_Name: PlayerPoncho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
