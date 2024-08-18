@@ -56,6 +56,7 @@ public class ComboDisplay : MonoBehaviour
             default:
                 return;
         }
+        child.GetComponent<Image>().color = Color.white;
         child.gameObject.SetActive(true);
         _animator.Play("FadeIn");
         _curridx = (_curridx + 1) % transform.childCount;
@@ -71,7 +72,6 @@ public class ComboDisplay : MonoBehaviour
     {  
         foreach (Transform child in transform)
         {
-            child.GetComponent<Image>().color = Color.white;
             child.gameObject.SetActive(false);
         }
     }
