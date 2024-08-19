@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 4120296559865554346}
+  parentPawnSprite: {fileID: 0}
   projectilePoolAmount: 20
   animationName: music
   firePattern: 0
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 4120296559865554346}
+  parentPawnSprite: {fileID: 0}
   animationName: slash
   preHitClip: {fileID: 7400000, guid: 3f315a64912e07645a97916c5d7603dc, type: 2}
   broadcastClip: {fileID: 7400000, guid: 8ba2ca4d74de4d34c959b793bfa87b6e, type: 2}
@@ -394,7 +396,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
-  _spriteAnimator: {fileID: 0}
   _currHP: 0
   _esm: {fileID: 0}
   _enemyActionSequences: []
@@ -445,6 +446,7 @@ GameObject:
   - component: {fileID: 2084937559046048903}
   - component: {fileID: 249272951574460710}
   - component: {fileID: 2828987059778772901}
+  - component: {fileID: 5500053894193498666}
   m_Layer: 0
   m_Name: knife
   m_TagString: Untagged
@@ -580,6 +582,18 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &5500053894193498666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768513268637482179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412cc711185390548aa272745987f07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6049803077617759701
 GameObject:
   m_ObjectHideFlags: 0

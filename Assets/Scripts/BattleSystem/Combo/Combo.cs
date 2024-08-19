@@ -9,5 +9,5 @@ public abstract class Combo : ScriptableObject
     [SerializeField] private int cost;
     public int Cost => cost;
     public string StrId => strId;
-    public abstract void DoCombo();
+    public abstract void StartComboAttack();
 }

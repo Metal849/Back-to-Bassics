@@ -1,7 +1,9 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using FMOD.Studio;
 
 [DisallowMultipleComponent]
 public abstract class TraversalPawn : MonoBehaviour
@@ -9,6 +11,7 @@ public abstract class TraversalPawn : MonoBehaviour
     [Header("Traversal Pawn Specs")]
     [SerializeField] private float speed;
     [SerializeField] protected Animator _spriteAnimator;
+    [field: SerializeField] public EventReference footStepsReference { get; private set; }
     public Animator SpriteAnimator => _spriteAnimator;
     protected Animator _pawnAnimator;
     protected PawnSprite _pawnSprite;
@@ -17,8 +20,12 @@ public abstract class TraversalPawn : MonoBehaviour
     protected Vector3 destinationTarget;
     private Rigidbody _rb;
     private Quaternion pawnFaceRotation;
+
+    // Audio
+    private EventInstance footStepsInstance;
     protected virtual void Awake()
     {
+        footStepsInstance = AudioManager.Instance.CreateInstance(footStepsReference);
         pawnFaceRotation = transform.rotation;
         _characterController = GetComponent<CharacterController>();
         _rb = GetComponent<Rigidbody>();

@@ -213,12 +213,13 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (ComboMeterCurr < comboDict[comboString].Cost)
         {
             UIManager.Instance.ComboDisplay.HideCombo();
+            comboString = "";
             StopCoroutine(comboStopper);
             return;
         }
         UIManager.Instance.ComboDisplay.ValidCombo();
         ComboMeterCurr -= comboDict[comboString].Cost;
-        comboDict[comboString].DoCombo();
+        comboDict[comboString].StartComboAttack();
         
     }
     private IEnumerator TimeToResetCombo()
@@ -247,8 +248,6 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             deflected = true;
             requester.OnRequestDeflect(this);
             ComboMeterCurr += 1;
-            // The following todo is probably old and not needed anymore*
-            // TODO: Right here you can allow the player to follow an attack after a deflect
         }
         //else if (blocking)
         //{
