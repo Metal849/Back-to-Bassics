@@ -16,6 +16,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [SerializeField] private int _beatsPerDecision;
     //[SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private PlayableDirector _director;
+    [field: SerializeField] public Transform targetFightingLocation { get; private set; }
     private float _decisionTime;
     public EnemyStateMachine ESM => _esm;
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;

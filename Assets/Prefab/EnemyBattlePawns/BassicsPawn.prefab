@@ -187,6 +187,37 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &2530963922217954312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8599476617418693142}
+  m_Layer: 0
+  m_Name: targetBattlePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8599476617418693142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2530963922217954312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9019337329852402836}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2626544429859029837
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +496,7 @@ Transform:
   - {fileID: 7307596539520488816}
   - {fileID: 2764501296762806243}
   - {fileID: 1173152835606605096}
+  - {fileID: 8599476617418693142}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5642884798581242194
@@ -486,6 +518,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
   _beatsPerDecision: 2
   _director: {fileID: 0}
+  <targetFightingLocation>k__BackingField: {fileID: 8599476617418693142}
 --- !u!114 &1337638542897606784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +904,7 @@ Transform:
   m_GameObject: {fileID: 7685685512346909669}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.419443, z: -0.27480555}
+  m_LocalPosition: {x: 0, y: 2.419443, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

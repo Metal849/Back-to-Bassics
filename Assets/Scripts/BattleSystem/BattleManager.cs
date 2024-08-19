@@ -110,7 +110,7 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator PlayerEngageCurrentEnemy()
     {
         TraversalPawn traversalPawn = Player.GetComponent<TraversalPawn>();
-        traversalPawn.MoveToDestination(Enemy.transform.position + Enemy.EnemyData.RelativeBattleDistance);
+        traversalPawn.MoveToDestination(Enemy.targetFightingLocation.position);
         yield return new WaitUntil(() => !traversalPawn.movingToDestination);
     }
 }
