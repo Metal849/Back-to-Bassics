@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +9,7 @@ using static EnemyStateMachine;
 public class PlayerTraversalPawn : TraversalPawn
 {
     [SerializeField] private VisualEffect _slashEffect;
+    [field: SerializeField] public EventReference slashSoundReference { get; private set; }
     private PlayerBattlePawn _battlePawn;
     private bool attacking;
     protected override void Awake()
@@ -22,9 +25,10 @@ public class PlayerTraversalPawn : TraversalPawn
     public void Slash(Vector2 slashDirection)
     {
         if (attacking) return;
-        _pawnSprite.FaceDirection(new Vector3(slashDirection.x, 0, 1));
+        _pawnSprite.FaceDirection(new Vector3(slashDirection.x, 0, 0));
         _pawnAnimator.Play($"Slash{DirectionHelper.GetVectorDirection(slashDirection)}");
         _slashEffect.Play();
+        AudioManager.Instance.PlayOnShotSound(slashSoundReference, transform.position);
         // Set the Slash Direction
         //SlashDirection = direction;
         //SlashDirection.Normalize();

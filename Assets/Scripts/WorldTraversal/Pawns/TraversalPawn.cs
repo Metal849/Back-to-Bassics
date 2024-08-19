@@ -20,21 +20,30 @@ public abstract class TraversalPawn : MonoBehaviour
     protected Vector3 destinationTarget;
     private Rigidbody _rb;
     private Quaternion pawnFaceRotation;
+    private bool isMoving;
 
     // Audio
     private EventInstance footStepsInstance;
     protected virtual void Awake()
     {
-        footStepsInstance = AudioManager.Instance.CreateInstance(footStepsReference);
         pawnFaceRotation = transform.rotation;
         _characterController = GetComponent<CharacterController>();
         _rb = GetComponent<Rigidbody>();
         _pawnAnimator = GetComponent<Animator>();
         _pawnSprite = GetComponentInChildren<PawnSprite>();
     }
+    protected virtual void Start()
+    {
+        footStepsInstance = AudioManager.Instance.CreateInstance(footStepsReference);
+    }
     protected virtual void FixedUpdate()
     {
+        UpdateSound();
+        // Rotation and Movement Correction
         transform.rotation = Quaternion.Slerp(transform.rotation, pawnFaceRotation, Time.fixedDeltaTime * 0.5f);
+
+        // Movement operation under fixedUpdate
+        // *Could be removed to be its own corutine*
         if (movingToDestination)
         {
             // TODO: This section right here is what is causing the floating of our character, see if you
@@ -54,7 +63,8 @@ public abstract class TraversalPawn : MonoBehaviour
         //_rb.AddForce(move - _rb.velocity);
         //_rb.MovePosition(transform.position + move * Time.deltaTime);
         //_characterController.Move(transform.rotation * direction * speed * Time.deltaTime);
-        _pawnSprite.Animator.SetBool("moving", direction != Vector3.zero);
+        isMoving = direction != Vector3.zero;
+        _pawnSprite.Animator.SetBool("moving", isMoving);
         _pawnSprite.FaceDirection(direction);
     }
     public void MoveToDestination(Vector3 destination)
@@ -65,5 +75,22 @@ public abstract class TraversalPawn : MonoBehaviour
     public void RotateOnYAxis(float y)
     {
         pawnFaceRotation = Quaternion.Euler(0, y, 0);
+    }
+    private void UpdateSound()
+    {
+        // Footstep Sounds
+        if (isMoving)
+        {
+            PLAYBACK_STATE playbackState;
+            footStepsInstance.getPlaybackState(out playbackState);
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                footStepsInstance.start();
+            }
+        }
+        else
+        {
+            footStepsInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 }

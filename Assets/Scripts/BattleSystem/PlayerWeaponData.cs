@@ -10,7 +10,8 @@ public class PlayerWeaponData : ScriptableObject
     //[SerializeField] private int _lrch;
     [SerializeField, Tooltip("In Seconds")] private float _attackDuration; 
     [SerializeField, TextArea] private string _lore;
-    [SerializeField] private EventReference slashHitSound;
+    [field: SerializeField] public EventReference slashAirSound { get; private set; }
+    [field: SerializeField] public EventReference slashHitSound { get; private set; }
 
     public string Name => _name;
     public int Dmg => _dmg;

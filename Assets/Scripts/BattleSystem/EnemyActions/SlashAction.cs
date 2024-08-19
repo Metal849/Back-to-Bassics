@@ -89,7 +89,6 @@ public class SlashAction : EnemyAction, IAttackRequester
             //---------------------------------------
 
             parentPawnSprite.Animator.SetTrigger("deflected");
-            AudioManager.Instance.PlayPlayerSlash(player.WeaponData.SlashHitSound, player.transform.position);
             if (_currNode.staggersParent)
             {
                 parentPawn.Stagger();

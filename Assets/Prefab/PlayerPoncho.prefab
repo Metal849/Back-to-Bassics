@@ -5405,7 +5405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   _spriteAnimator: {fileID: 1593425890846368242}
-  <footSteps>k__BackingField:
+  <footStepsReference>k__BackingField:
     Guid:
       Data1: 1445941837
       Data2: 1162028685
@@ -5413,6 +5413,13 @@ MonoBehaviour:
       Data4: -1358691694
     Path: event:/PlayerFootsteps
   _slashEffect: {fileID: 8402795061273862082}
+  <slashSoundReference>k__BackingField:
+    Guid:
+      Data1: 593575934
+      Data2: 1297913944
+      Data3: -1079367544
+      Data4: 1437121827
+    Path: event:/SlashAir
 --- !u!54 &2940784301700036450
 Rigidbody:
   m_ObjectHideFlags: 0

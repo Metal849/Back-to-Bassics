@@ -132,6 +132,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         _pawnSprite.FaceDirection(new Vector3(direction.x, 0, 1));
         _pawnAnimator.Play($"Slash{DirectionHelper.GetVectorDirection(direction)}");
         _slashEffect.Play();
+        AudioManager.Instance.PlayOnShotSound(WeaponData.slashAirSound, transform.position);
         // Set the Slash Direction
         SlashDirection = direction;
         SlashDirection.Normalize();
@@ -246,6 +247,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (/*!deflected && */ deflectionWindow)
         {
             deflected = true;
+            AudioManager.Instance.PlayOnShotSound(WeaponData.slashHitSound, transform.position);
             requester.OnRequestDeflect(this);
             ComboMeterCurr += 1;
         }

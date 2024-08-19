@@ -89,7 +89,7 @@ MonoBehaviour:
     m_Start: 9.05
     m_ClipIn: 0
     m_Asset: {fileID: 1890049342598268839}
-    m_Duration: 1
+    m_Duration: 1.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: -3915014800414136409}
     m_EaseInDuration: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: BassicsCam
+    m_DisplayName: PnBCam
   - m_Version: 1
     m_Start: 7.016666666666667
     m_ClipIn: 0

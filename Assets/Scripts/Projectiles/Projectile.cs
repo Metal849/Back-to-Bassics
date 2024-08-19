@@ -73,7 +73,6 @@ public class Projectile : MonoBehaviour, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
-        AudioManager.Instance.PlayPlayerSlash(player.WeaponData.SlashHitSound, player.transform.position);
         _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
     }

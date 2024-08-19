@@ -16,10 +16,17 @@ MonoBehaviour:
   _dmg: 1
   _attackDuration: 0.25
   _lore: Very Simple
-  slashHitSound:
+  <slashAirSound>k__BackingField:
+    Guid:
+      Data1: 593575934
+      Data2: 1297913944
+      Data3: -1079367544
+      Data4: 1437121827
+    Path: event:/SlashAir
+  <slashHitSound>k__BackingField:
     Guid:
       Data1: -1604358143
       Data2: 1152990667
       Data3: -1168210009
       Data4: 1417417996
-    Path: event:/Slash
+    Path: event:/SlashHit

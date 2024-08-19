@@ -11,7 +11,7 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     // (RYAN) THIS IS TEMP PLEASE DON"T ACTUALLY DO THIS!!!
-    public void PlayPlayerSlash(EventReference sound, Vector3 worldPos)
+    public void PlayOnShotSound(EventReference sound, Vector3 worldPos)
     {
         RuntimeManager.PlayOneShot(sound, worldPos);
     }
