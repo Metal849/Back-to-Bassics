@@ -14,7 +14,10 @@ public partial class EnemyStateMachine
         public override void Enter(EnemyStateInput i)
         {
             base.Enter(i);
-            Input.EnemySprite.Animator.Play("dead");
+            if (Input.EnemySprite != null)
+            {
+                Input.EnemySprite.Animator?.Play("dead");
+            }   
         }
 
         public override int OnDamage(int amount)
