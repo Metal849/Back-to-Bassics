@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spinning : MonoBehaviour
 {
     public float speed;
-    private bool left;
+    public bool ccw;
     private float speedUp;
     private const float accelerate = 0.05f;
 
@@ -19,12 +19,13 @@ public class Spinning : MonoBehaviour
         {
             speedUp = speed;
         }
-        Quaternion rotateTo = transform.rotation * Quaternion.AngleAxis((left ? -1 : 1) * 90, Vector3.up);
+        Quaternion rotateTo = transform.rotation * Quaternion.AngleAxis((ccw ? -1 : 1) * 90, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, Time.deltaTime * speedUp);
     }
-    public void ChangeDirection()
+    public void ChangeDirection(float newSpeedUp)
     {
-        speedUp = 0f;
-        left = !left;
+        Debug.Log("Change Direction");
+        speedUp = newSpeedUp;
+        ccw = !ccw;
     }
 }

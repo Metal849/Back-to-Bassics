@@ -5380,7 +5380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 615d985bad138be4eb9f15eac06a1261, type: 2}
-  _currHP: 100
+  _currHP: 20
   _weaponData: {fileID: 11400000, guid: a9fbfbcb976477e4e84d47f073bf3134, type: 2}
   _particleSystem: {fileID: 1032800211107346903}
   _slashEffect: {fileID: 8402795061273862082}

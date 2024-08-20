@@ -148,9 +148,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     public void updateCombo(bool slash)
     {
-        if (BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Block>() 
-            || !(BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Stagger>()
-            || BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Idle>()))
+        if (BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Block>() 
+            || !(BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Stagger>()
+            || BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Idle>()))
         {
             UIManager.Instance.ComboDisplay.HideCombo();
             comboString = "";

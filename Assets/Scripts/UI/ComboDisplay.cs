@@ -5,7 +5,7 @@ public class ComboDisplay : MonoBehaviour
 {
     [SerializeField] private Sprite slashArrow;
     [SerializeField] private Sprite dodgeArrow;
-    private int _curridx;
+    private int _curridx = 0;
     private Animator _animator;
     private void Awake()
     {
@@ -63,9 +63,9 @@ public class ComboDisplay : MonoBehaviour
     }
     public void ValidCombo()
     {
-        for (int i = 0; i <= _curridx; i++)
+        foreach (Transform child in transform)
         { 
-            transform.GetChild(i).GetComponent<Image>().color = Color.green;
+            child.GetComponent<Image>().color = Color.green;
         }
     }
     public void ResetCombo()

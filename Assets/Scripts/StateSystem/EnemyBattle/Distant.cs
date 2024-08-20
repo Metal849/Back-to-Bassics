@@ -12,6 +12,11 @@ public partial class EnemyStateMachine
             base.Enter(i);
             Input.EnemySprite.Animator.Play("step_back");
         }
+        public override void Exit(EnemyStateInput i)
+        {
+            base.Exit(i);
+            Input.EnemySprite.Animator.Play("center");
+        }
         public override void AttackRequestHandler(IAttackRequester requester)
         {
             //Input.EnemySprite.Animator.Play("take_damage");

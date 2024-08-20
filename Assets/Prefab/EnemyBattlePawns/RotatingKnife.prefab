@@ -1,55 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &17028802201933890
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5314830095081811883}
-  - component: {fileID: 1246193917701125344}
-  m_Layer: 0
-  m_Name: FireProjectileAction
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5314830095081811883
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17028802201933890}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8183781759787433158}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1246193917701125344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17028802201933890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1be2721dfd1b374484d3c108adbbfc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentPawn: {fileID: 4120296559865554346}
-  parentPawnSprite: {fileID: 0}
-  projectilePoolAmount: 20
-  animationName: music
-  firePattern: 0
-  projectileFabs: []
 --- !u!1 &62479423885629352
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e41efaeb493184db44801193057725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 0
+  ccw: 0
 --- !u!64 &3554161244446700700
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -231,7 +182,7 @@ Transform:
   - {fileID: 5096048922733302814}
   m_Father: {fileID: 1652961080193806069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1503893348864649022
+--- !u!1 &1031738768316292381
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,22 +190,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 270632066547753884}
-  - component: {fileID: 6660232167880554234}
+  - component: {fileID: 487387400368186718}
+  - component: {fileID: 3154889745656669106}
   m_Layer: 0
-  m_Name: SlashAction
+  m_Name: StartRotationAction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &270632066547753884
+--- !u!4 &487387400368186718
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503893348864649022}
+  m_GameObject: {fileID: 1031738768316292381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -263,23 +214,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8183781759787433158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6660232167880554234
+--- !u!114 &3154889745656669106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503893348864649022}
+  m_GameObject: {fileID: 1031738768316292381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc54e90959d96154aab26c1f86371b61, type: 3}
+  m_Script: {fileID: 11500000, guid: 21f8294a8d3e8c3438cea906399e64ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 4120296559865554346}
   parentPawnSprite: {fileID: 0}
-  animationName: slash
-  preHitClip: {fileID: 7400000, guid: 3f315a64912e07645a97916c5d7603dc, type: 2}
-  broadcastClip: {fileID: 7400000, guid: 8ba2ca4d74de4d34c959b793bfa87b6e, type: 2}
+  knifeFab: {fileID: 0}
+  spinner: {fileID: 7741238043298341659}
+--- !u!1 &2875592871770529580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7955827430294983148}
+  m_Layer: 0
+  m_Name: targetBattlePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7955827430294983148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2875592871770529580}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8514043373142664286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3157896012837038500
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8183781759787433158}
   m_Layer: 0
-  m_Name: battleActions
+  m_Name: enemy_actions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,8 +290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 270632066547753884}
-  - {fileID: 5314830095081811883}
+  - {fileID: 487387400368186718}
   m_Father: {fileID: 8514043373142664286}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3392972609814776976
@@ -359,6 +339,7 @@ GameObject:
   - component: {fileID: 4120296559865554346}
   - component: {fileID: 6757703160721079755}
   - component: {fileID: 4677417291862444604}
+  - component: {fileID: 5125261406916202024}
   m_Layer: 0
   m_Name: RotatingKnife
   m_TagString: Untagged
@@ -379,6 +360,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7955827430294983148}
   - {fileID: 2951958150686077828}
   - {fileID: 8183781759787433158}
   m_Father: {fileID: 0}
@@ -395,12 +377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32910dd26ce0b24cb9ca362f9a228dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
+  _data: {fileID: 11400000, guid: 3e5796343f9c8ad4daeb1f5a1cb850ae, type: 2}
   _currHP: 0
-  _esm: {fileID: 0}
-  _enemyActionSequences: []
-  _beatsPerDecision: 2
-  _director: {fileID: 0}
+  <esm>k__BackingField: {fileID: 0}
+  <targetFightingLocation>k__BackingField: {fileID: 7955827430294983148}
 --- !u!114 &6757703160721079755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +412,18 @@ PlayableDirector:
     value: {fileID: 4120296559865554346}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &5125261406916202024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095286020021042877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c3a588bf0f7e5468c67609e4e6bb77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5768513268637482179
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +438,7 @@ GameObject:
   - component: {fileID: 2084937559046048903}
   - component: {fileID: 249272951574460710}
   - component: {fileID: 2828987059778772901}
-  - component: {fileID: 5500053894193498666}
+  - component: {fileID: 3490420141934466232}
   m_Layer: 0
   m_Name: knife
   m_TagString: Untagged
@@ -582,7 +574,7 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &5500053894193498666
+--- !u!114 &3490420141934466232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -594,6 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412cc711185390548aa272745987f07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  spinner: {fileID: 7741238043298341659}
 --- !u!1 &6049803077617759701
 GameObject:
   m_ObjectHideFlags: 0

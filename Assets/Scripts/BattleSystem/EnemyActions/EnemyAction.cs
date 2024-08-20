@@ -32,6 +32,6 @@ public abstract class EnemyAction : Conductable
     {
         IsActive = false;
         Disable();
-        parentPawn.OnActionComplete();
+        //parentPawn.OnActionComplete();
     }
 }

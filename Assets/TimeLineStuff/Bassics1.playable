@@ -718,7 +718,7 @@ MonoBehaviour:
       slashDirection: 3
       isCharged: 0
       staggersParent: 1
-      dmg: 10
+      dmg: 3
       dodgeDirections: 01000000020000000000000004000000
 --- !u!114 &8840916852848953748
 MonoBehaviour:

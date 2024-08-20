@@ -228,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7307596539520488816}
   m_Layer: 0
-  m_Name: battleActions
+  m_Name: enemy_actions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,6 +471,7 @@ GameObject:
   - component: {fileID: 5642884798581242194}
   - component: {fileID: 1337638542897606784}
   - component: {fileID: 6474866951856526127}
+  - component: {fileID: 9217918879987837135}
   - component: {fileID: 4571617470804324977}
   m_Layer: 0
   m_Name: BassicsPawn
@@ -513,11 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
   _currHP: 0
-  _esm: {fileID: 0}
-  _enemyActionSequences:
-  - {fileID: 11400000, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
-  _beatsPerDecision: 2
-  _director: {fileID: 0}
+  <esm>k__BackingField: {fileID: 0}
   <targetFightingLocation>k__BackingField: {fileID: 8599476617418693142}
 --- !u!114 &1337638542897606784
 MonoBehaviour:
@@ -556,6 +553,21 @@ PlayableDirector:
     value: {fileID: 7789150339329146010}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &9217918879987837135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221122890883084785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66097ae241a807a4fa3735abb706837b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _beatsPerDecision: 2
+  _enemyActionSequences:
+  - {fileID: 11400000, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
 --- !u!114 &4571617470804324977
 MonoBehaviour:
   m_ObjectHideFlags: 0

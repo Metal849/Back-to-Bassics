@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,6 +22,12 @@ public class BattlePawn : Conductable
     public bool IsStaggered { get; private set; }
     #endregion
 
+    // events
+    public event Action OnPawnDeath;
+    public event Action OnEnterBattle;
+    public event Action OnExitBattle;
+    public event Action OnDamage;
+
     #region Unity Messages
     protected virtual void Awake()
     {
@@ -35,6 +42,7 @@ public class BattlePawn : Conductable
         if (IsDead) return;
         _currHP -= amount;
         UIManager.Instance.UpdateHP(this);
+        OnDamage?.Invoke();
         if (_currHP <= 0) 
         {
             // Battle Pawn Death
@@ -77,6 +85,7 @@ public class BattlePawn : Conductable
     public virtual void EnterBattle()
     {
         Enable();
+        OnEnterBattle?.Invoke();
         UIManager.Instance.UpdateHP(this);
         //_spriteAnimator.Play("enterbattle");
     }
@@ -84,6 +93,7 @@ public class BattlePawn : Conductable
     {
         // TODO: Play Some Animation that makes the battle pawn leave the battle
         Disable();
+        OnExitBattle?.Invoke();
     }
     #region BattlePawn Messages
     protected virtual void OnStagger()
@@ -93,6 +103,7 @@ public class BattlePawn : Conductable
     protected virtual void OnDeath()
     {
         // TODO: Things that occur on battle pawn death
+        OnPawnDeath?.Invoke();
     }
     protected virtual void OnUnstagger()
     {

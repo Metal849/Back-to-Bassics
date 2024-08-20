@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17548f8b76991874b910b12ef4a0e980, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: f4b5622965f2c0d4e8ca37115d55f0be, type: 3}
+  m_Name: Turtle
   m_EditorClassIdentifier: 
-  _name: Poncho
-  _hp: 20
-  staggerDuration: 4
-  _lore: This is the player :3
+  _name: Turtle
+  _hp: 30
+  staggerDuration: 0
+  _lore: 
   _blockingReduction: 0
   _confuseResistance: 0
   _poisonResistance: 0
+  _bpm: 0
