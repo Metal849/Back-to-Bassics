@@ -1561,6 +1561,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979503855}
   m_CullTransparentMesh: 1
+--- !u!114 &1139347608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5642884798581242194, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
+  m_PrefabInstance: {fileID: 7932641515812509754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32910dd26ce0b24cb9ca362f9a228dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1203156381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,17 +1763,6 @@ MonoBehaviour:
   onExit:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1241831142 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
-  m_PrefabInstance: {fileID: 649128318}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32910dd26ce0b24cb9ca362f9a228dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1253938431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4709798405054347741, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
@@ -1921,7 +1921,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1301522406
 Transform:
   m_ObjectHideFlags: 0
@@ -3075,7 +3075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!320 &1952244405
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -3261,7 +3261,7 @@ MonoBehaviour:
   m_margin: {x: 50.065186, y: 0, z: 50.05481, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &2072114907
@@ -3334,7 +3334,7 @@ MonoBehaviour:
         m_MethodName: EngageEnemy
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1241831142}
+          m_ObjectArgument: {fileID: 1139347608}
           m_ObjectArgumentAssemblyTypeName: EnemyBattlePawn, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

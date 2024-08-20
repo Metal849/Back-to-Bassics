@@ -16,6 +16,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [field: SerializeField] public Transform targetFightingLocation { get; private set; }
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
+
+    // Events
     public event Action OnEnemyActionComplete;
     protected override void Awake()
     {

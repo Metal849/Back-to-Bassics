@@ -49,6 +49,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     private string comboString;
     private Dictionary<string, Combo> comboDict;
     private Coroutine comboStopper;
+    private Coroutine attackingThread;
     protected override void Awake()
     {
         base.Awake();
@@ -126,7 +127,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     /// <param name="slashDirection"></param>
     public void Slash(Vector2 direction)
     {
-        if (IsDead || attacking) return;
+        if (IsDead) return;
         //AnimatorStateInfo animatorState = _pawnSprite.Animator.GetCurrentAnimatorStateInfo(0);
         //if (!animatorState.IsName("idle")) return;
         _pawnSprite.FaceDirection(new Vector3(direction.x, 0, 1));
@@ -137,7 +138,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         SlashDirection = direction;
         SlashDirection.Normalize();
         //UIManager.Instance.PlayerSlash(SlashDirection);
-        StartCoroutine(Attacking());
+        if (attackingThread != null) StopCoroutine(attackingThread);
+        attackingThread = StartCoroutine(Attacking());
+
         //if (_activeAttackRequesters.Count > 0)
         //{
         //    // (Suggestion) Maybe you should process all requests?
@@ -297,23 +300,26 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Third Division is late receive
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
+        deflectionWindow = false;
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = true;
         yield return new WaitForSeconds(2 * divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = false;
-        yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
-        attacking = false;
-        // Direct Attack when no attack requesters
-        // This is where combo strings should be processed
         if (!deflected && _activeAttackRequesters.Count <= 0)
         {
             // Process Combo Strings here if you have enough!
             updateCombo(true);
-            // Merge to one state called Open
-            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);  
-            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
             BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
+            // Merge to one state called Open
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
+
         }
+        yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
+        attacking = false;
+        // Direct Attack when no attack requesters
+        // This is where combo strings should be processed
+        
         deflected = false;
     }
     //protected override void OnStagger()
