@@ -41,18 +41,18 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator IntializeBattle()
     {
         yield return PlayerEngageCurrentEnemy();
-        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
-        Player.EnterBattle();
-        Enemy.EnterBattle();
         for (float i = battleDelay; i > 0; i--)
         {
             UIManager.Instance.UpdateCenterText(i.ToString());
             yield return new WaitForSeconds(1f);
         }
         UIManager.Instance.UpdateCenterText("Battle!");
+        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
+        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
+        Player.EnterBattle();
+        Enemy.EnterBattle();
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");
-        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
         IsBattleActive = true;
     }
     private IEnumerator NextEnemyBattle()

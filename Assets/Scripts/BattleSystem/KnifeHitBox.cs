@@ -5,6 +5,7 @@ using UnityEngine;
 public class KnifeHitBox : MonoBehaviour, IAttackRequester
 {
     [SerializeField] private int damage;
+    [field: SerializeField] public int health { get; private set; }
     [SerializeField] private Spinning spinner;
     private float resetSpeed = 0f;
     private bool hitPlayer;
@@ -18,14 +19,15 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
-        // (TEMP)----------- This is dumb IK---------------------
-        BattleManager.Instance.Enemy.Damage(1);
-        //-------------------------------------------------------
+        health -= 1;
         spinner.ChangeDirection(resetSpeed);
         resetSpeed += 0.2f;
         hitPlayer = false;
         player.CompleteAttackRequest(this);
-        //Destroy();
+        // (TEMP)----------- This is dumb IK---------------------
+        BattleManager.Instance.Enemy.Damage(1);
+        //-------------------------------------------------------
+        if (health <= 0) Destroy(gameObject);   
     }
     public void OnRequestBlock(IAttackReceiver receiver)
     {

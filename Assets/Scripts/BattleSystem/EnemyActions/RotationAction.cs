@@ -5,15 +5,22 @@ using UnityEngine;
 public class RotationAction : EnemyAction
 {
     [SerializeField] private GameObject knifeFab;
-    [SerializeField] private Spinning spinner;
+    [SerializeField] private Spinning[] spinners;
     public override void StartAction()
     {
         base.StartAction();
-        spinner.speed = 8f;
+        foreach (Spinning spinner in spinners)
+        {
+            spinner.speed = 5f;
+        }
+        
     }
     public override void StopAction()
     {
         base.StopAction();
-        spinner.speed = 0f;
+        foreach (Spinning spinner in spinners)
+        {
+            spinner.speed = 0f;
+        }
     }
 }
