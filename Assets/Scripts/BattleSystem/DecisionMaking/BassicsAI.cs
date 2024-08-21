@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EnemyStateMachine;
+using static PositionStateMachine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -36,9 +37,9 @@ public class BassicsAI : Conductable
         _bassics.OnExitBattle += Disable;
         _bassics.OnDamage += delegate
         { 
-            if (_bassics.esm.IsOnState<Idle>())
+            if (_bassics.esm.IsOnState<Idle>() && _bassics.psm.IsOnState<Center>())
             {
-                _bassics.esm.Transition<Block>();
+                _bassics.psm.Transition<Distant>();
             }
         };
     }
@@ -50,15 +51,11 @@ public class BassicsAI : Conductable
         if (Conductor.Instance.Beat < _decisionTime 
             || _director.state == PlayState.Playing 
             || _bassics.IsDead || _bassics.IsStaggered) return;
-        int idx = Random.Range(0, (_enemyActionSequences != null ? _enemyActionSequences.Length : 0) + 2) - 2;
+        int idx = Random.Range(0, (_enemyActionSequences != null ? _enemyActionSequences.Length : 0) + 4) - 4;
         //int idx = UnityEngine.Random.Range(0, 4);
-        if (idx == -2)
+        if (idx < 0)
         {
             _bassics.esm.Transition<Idle>();
-        }
-        else if (idx == -1)
-        {
-            _bassics.esm.Transition<Block>();
         }
         else
         {

@@ -470,9 +470,9 @@ GameObject:
   - component: {fileID: 9019337329852402836}
   - component: {fileID: 5642884798581242194}
   - component: {fileID: 1337638542897606784}
+  - component: {fileID: 8656685712981949945}
   - component: {fileID: 6474866951856526127}
   - component: {fileID: 9217918879987837135}
-  - component: {fileID: 4571617470804324977}
   m_Layer: 0
   m_Name: BassicsPawn
   m_TagString: Untagged
@@ -515,6 +515,7 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
   _currHP: 0
   <esm>k__BackingField: {fileID: 0}
+  <psm>k__BackingField: {fileID: 0}
   <targetFightingLocation>k__BackingField: {fileID: 8599476617418693142}
 --- !u!114 &1337638542897606784
 MonoBehaviour:
@@ -526,6 +527,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a60ea76a81abc0041b6314b68a817cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8656685712981949945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4221122890883084785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33d29cff20dafb47b289da5d51c0eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!320 &6474866951856526127
@@ -568,41 +581,6 @@ MonoBehaviour:
   _beatsPerDecision: 2
   _enemyActionSequences:
   - {fileID: 11400000, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
---- !u!114 &4571617470804324977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4221122890883084785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yarnProject: {fileID: 0}
-  _variableStorage: {fileID: 0}
-  dialogueViews: []
-  startNode: Start
-  startAutomatically: 1
-  runSelectedOptionAsLine: 0
-  lineProvider: {fileID: 0}
-  verboseLogging: 1
-  onNodeStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onNodeComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  onDialogueStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onDialogueComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  onCommand:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4821260692758346821
 GameObject:
   m_ObjectHideFlags: 0

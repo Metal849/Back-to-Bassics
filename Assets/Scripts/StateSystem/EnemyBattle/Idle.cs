@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EnemyStateMachine;
 
 public partial class EnemyStateMachine
 {
@@ -15,13 +16,10 @@ public partial class EnemyStateMachine
                 Input.EnemySprite.Animator?.Play("idle");
             }
         }
-        public override void AttackRequestHandler(IAttackRequester requester)
+        public override bool AttackRequestHandler(IAttackRequester requester)
         {
             //Input.EnemySprite.Animator.Play("take_damage");
-        }
-        public override int OnDamage(int amount)
-        {
-            return (int)(amount);
+            return true;
         }
     }
 }

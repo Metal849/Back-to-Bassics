@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public partial class EnemyStateMachine
 {
     public class Dead : EnemyState
     {
-        public override void AttackRequestHandler(IAttackRequester requester)
+        public override bool AttackRequestHandler(IAttackRequester requester)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         public override void Enter(EnemyStateInput i)
@@ -18,11 +14,6 @@ public partial class EnemyStateMachine
             {
                 Input.EnemySprite.Animator?.Play("dead");
             }   
-        }
-
-        public override int OnDamage(int amount)
-        {
-            return 0;
         }
     }
 }

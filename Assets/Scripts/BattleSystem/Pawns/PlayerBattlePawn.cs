@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using static EnemyStateMachine;
 
 /// <summary>
 /// Playable Battle Pawn
@@ -151,9 +152,9 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     public void updateCombo(bool slash)
     {
-        if (BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Block>() 
-            || !(BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Stagger>()
-            || BattleManager.Instance.Enemy.esm.IsOnState<EnemyStateMachine.Idle>()))
+        if (BattleManager.Instance.Enemy.esm.IsOnState<Block>() 
+            || !(BattleManager.Instance.Enemy.esm.IsOnState<Stagger>()
+            || BattleManager.Instance.Enemy.esm.IsOnState<Idle>()))
         {
             UIManager.Instance.ComboDisplay.HideCombo();
             comboString = "";
@@ -244,7 +245,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     //    if (!blocking && !attacking) base.RecoverSP(amount);
     //}
     #region IAttackReceiver Methods
-    public void ReceiveAttackRequest(IAttackRequester requester)
+    public bool ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
         if (/*!deflected && */ deflectionWindow)
@@ -253,17 +254,14 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
             AudioManager.Instance.PlayOnShotSound(WeaponData.slashHitSound, transform.position);
             requester.OnRequestDeflect(this);
             ComboMeterCurr += 1;
+            return false;
         }
-        //else if (blocking)
-        //{
-        //    // This is old and dying, kill me soon!
-        //    requester.OnRequestBlock(this);
-        //}
-        else if (dodging)
+        if (dodging)
         {
             requester.OnRequestDodge(this);
+            return false;
         }
-         
+        return true;
     }
 
     public void CompleteAttackRequest(IAttackRequester requester)
@@ -309,9 +307,11 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         {
             // Process Combo Strings here if you have enough!
             updateCombo(true);
-            BattleManager.Instance.Enemy.ReceiveAttackRequest(this);
-            // Merge to one state called Open
-            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            if (BattleManager.Instance.Enemy.ReceiveAttackRequest(this))
+            {
+                BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            }
+            
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
 
         }

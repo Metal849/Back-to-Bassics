@@ -24,7 +24,6 @@ public class Spinning : MonoBehaviour
     }
     public void ChangeDirection(float newSpeedUp)
     {
-        Debug.Log("Change Direction");
         speedUp = newSpeedUp;
         ccw = !ccw;
     }

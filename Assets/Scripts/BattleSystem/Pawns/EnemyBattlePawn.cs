@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static EnemyStateMachine;
+using static PositionStateMachine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
@@ -12,6 +13,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
 {
     [field: Header("Enemy References")]
     [field: SerializeField] public EnemyStateMachine esm { get; private set; }
+    [field: SerializeField] public PositionStateMachine psm { get; private set; }
     //[SerializeField] private ParticleSystem _particleSystem;
     [field: SerializeField] public Transform targetFightingLocation { get; private set; }
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
@@ -28,17 +30,16 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
             return;
         }
         esm = GetComponent<EnemyStateMachine>();
-        Transform enemyActionsLocation = transform.Find("enemy_actions");
-        if (enemyActionsLocation == null) 
+        if (esm == null)
         {
-            Debug.LogError($"Enemy Battle Pawn \"{Data.name}\" must have child \"enemy_actions\"");
+            Debug.LogError($"Enemy Battle Pawn \"{Data.name}\" is must have an EnemyStateMachine");
             return;
         }
-        foreach (Transform child in enemyActionsLocation) 
+        psm = GetComponent<PositionStateMachine>();
+        if (psm == null)
         {
-            var ea = child.GetComponent<EnemyAction>();
-            if (ea == null) continue;
-            AddEnemyAction(ea);
+            Debug.LogError($"Enemy Battle Pawn \"{Data.name}\" is must have a PositionStateMachine");
+            return;
         }
     }
     public EA GetEnemyAction<EA>() where EA : EnemyAction
@@ -71,10 +72,10 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     //    _actionIdx = i;
     //}
     #region IAttackReceiver Methods
-    public void ReceiveAttackRequest(IAttackRequester requester)
+    public bool ReceiveAttackRequest(IAttackRequester requester)
     {
-        if (IsDead) return;
-        esm.CurrState.AttackRequestHandler(requester);
+        if (esm.IsOnState<Dead>() || psm.IsOnState<Distant>()) return false;
+        return esm.CurrState.AttackRequestHandler(requester);
     }
     public void CompleteAttackRequest(IAttackRequester requester)
     {
@@ -95,7 +96,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     //}
     protected override void OnStagger()
     {
-        if (IsDead) return;
+        if (esm.IsOnState<Dead>()) return;
         base.OnStagger();
         // Staggered Animation (Paper Crumple)
         esm.Transition<Stagger>();
@@ -103,7 +104,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     }
     protected override void OnUnstagger()
     {
-        if (IsDead) return;
+        if (esm.IsOnState<Dead>()) return;
         base.OnUnstagger();
         // Unstagger Animation transition to idle
         esm.Transition<Idle>();
@@ -119,7 +120,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     public void OnActionComplete()
     {
         //OnEnemyActionComplete.Invoke();
-        //if (IsDead || IsStaggered) return;
+        //if (esm.IsOnState<Dead>() || esm.IsOnState<Stagger>()) return;
         //esm.Transition<Idle>();
     }
     #endregion

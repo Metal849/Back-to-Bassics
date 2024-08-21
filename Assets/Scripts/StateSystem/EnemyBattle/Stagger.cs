@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class EnemyStateMachine
@@ -16,13 +14,10 @@ public partial class EnemyStateMachine
             base.Exit(i);
             Debug.Log("UnStaggered");
         }
-        public override void AttackRequestHandler(IAttackRequester requester)
+        public override bool AttackRequestHandler(IAttackRequester requester)
         {
             //Input.EnemySprite.Animator.Play("take_damage");
-        }
-        public override int OnDamage(int amount)
-        {
-            return amount;
+            return true;
         }
     }
 }

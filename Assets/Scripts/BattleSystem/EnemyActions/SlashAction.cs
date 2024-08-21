@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.Events;
+using static PositionStateMachine;
+
 
 /// <summary>
 /// DOES NOT HANDLE SEQUENCES ANYMORE!
@@ -20,8 +17,6 @@ public class SlashAction : EnemyAction, IAttackRequester
     [SerializeField] private AnimationClip broadcastClip;
     public float preHitClipLengthInBeats => preHitClip.length / parentPawn.EnemyData.SPB;
     public float broadcastClipLengthInBeats => broadcastClip.length / parentPawn.EnemyData.SPB;
-    // technical
-    private bool _slashing;
     private SlashNode _currNode;
     public void Broadcast(Direction direction)
     {
@@ -32,9 +27,14 @@ public class SlashAction : EnemyAction, IAttackRequester
         parentPawnSprite.Animator.SetFloat("x_slashDir", slashDirection.x);
         parentPawnSprite.Animator.SetFloat("y_slashDir", slashDirection.y);
         parentPawnSprite.Animator.Play($"{animationName}_broadcast");
+
+        // (Ryan) Maybe it shouldn't be here
+        parentPawn.psm.Transition<Center>();
     }
     public void Slash(SlashNode node)
     {
+        // (Ryan) Nor here :p
+        parentPawn.psm.Transition<Center>();
         StartCoroutine(SlashThread(node));
     }
     private IEnumerator SlashThread(SlashNode node)
@@ -56,11 +56,10 @@ public class SlashAction : EnemyAction, IAttackRequester
         parentPawnSprite.Animator.Play($"{animationName}_perform");
         yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
         // Hit Moment
-        _slashing = true;
-        BattleManager.Instance.Player.ReceiveAttackRequest(this);
-        if (_slashing)
+        if (BattleManager.Instance.Player.ReceiveAttackRequest(this))
         {
             PerformSlashOnPlayer();
+            BattleManager.Instance.Player.CompleteAttackRequest(this);
         }
         yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_success") ||
         parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{animationName}_deflected"));
@@ -76,7 +75,6 @@ public class SlashAction : EnemyAction, IAttackRequester
 
         parentPawnSprite.Animator.SetTrigger("blocked");
 
-        _slashing = false;
         player.CompleteAttackRequest(this);
     }
     public void OnRequestDeflect(IAttackReceiver receiver)
@@ -94,7 +92,6 @@ public class SlashAction : EnemyAction, IAttackRequester
                 parentPawn.Stagger();
             }
 
-            _slashing = false;
             player.CompleteAttackRequest(this);
         }
     }
@@ -105,7 +102,6 @@ public class SlashAction : EnemyAction, IAttackRequester
         {
             parentPawnSprite.Animator.SetTrigger("performed");
 
-            _slashing = false;
             player.CompleteAttackRequest(this);
         }
 
@@ -118,9 +114,6 @@ public class SlashAction : EnemyAction, IAttackRequester
 
         parentPawnSprite.Animator.SetTrigger("performed");
         BattleManager.Instance.Player.Damage(_currNode.dmg);
-
-        _slashing = false;
-        BattleManager.Instance.Player.CompleteAttackRequest(this);
     }
 }
 

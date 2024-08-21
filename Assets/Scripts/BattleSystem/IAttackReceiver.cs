@@ -1,6 +1,12 @@
 public interface IAttackReceiver
 {
-    public abstract void ReceiveAttackRequest(IAttackRequester requester);
+    /// <summary>
+    /// This method is called by a requester, and the receiver can return whether or not the requester
+    /// is allowed to attack or not.
+    /// </summary>
+    /// <param name="requester"></param>
+    /// <returns> Whether or not the requester is allowed to attack</returns>
+    public abstract bool ReceiveAttackRequest(IAttackRequester requester);
     /// <summary>
     /// Use this method when there is a timing between receiving the attack and completing the attack
     /// </summary>
