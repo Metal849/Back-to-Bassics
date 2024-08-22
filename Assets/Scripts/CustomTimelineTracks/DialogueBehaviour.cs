@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
-public class DialogueBehaviour : MonoBehaviour
+[Serializable]
+public class DialogueBehaviour : PlayableBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public string startNode;
+    public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        base.OnBehaviourPlay(playable, info);
         
     }
 }
