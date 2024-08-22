@@ -1011,6 +1011,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turtle
       objectReference: {fileID: 0}
+    - target: {fileID: 4095286020021042877, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8514043373142664286, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 306.08
@@ -1699,7 +1703,7 @@ MonoBehaviour:
   m_margin: {x: 50.065186, y: 0, z: 50.05481, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &979503859
@@ -2033,6 +2037,8 @@ PlayableDirector:
     value: {fileID: 1838658729}
   - key: {fileID: -3915014800414136409, guid: b2f5303ebaab86e4f8c8eb1333035cd9, type: 2}
     value: {fileID: 979503857}
+  - key: {fileID: 2330336054758688495, guid: b2f5303ebaab86e4f8c8eb1333035cd9, type: 2}
+    value: {fileID: 2083524343}
   m_ExposedReferences:
     m_References:
     - c060e3db3c0810e4d815fee5f7c00fe6: {fileID: 1283012745}
@@ -2070,7 +2076,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1301522406
 Transform:
   m_ObjectHideFlags: 0
@@ -3224,7 +3230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!320 &1952244405
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -3456,12 +3462,12 @@ GameObject:
   - component: {fileID: 2083524345}
   - component: {fileID: 2083524344}
   m_Layer: 0
-  m_Name: JoinSpinner
+  m_Name: FightBassics
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2083524344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3573,7 +3579,7 @@ Transform:
   m_GameObject: {fileID: 2083524343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 305.85, y: 20, z: 97.21}
+  m_LocalPosition: {x: 303.54, y: 20, z: 127.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3762,29 +3768,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalPosition.x
+    - target: {fileID: 293176453463930542, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
+      propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10.300003
-      objectReference: {fileID: 0}
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9998904
-      objectReference: {fileID: 0}
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.014805596
-      objectReference: {fileID: 0}
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 193135509419532414, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1934201246035880147, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3829,6 +3815,10 @@ PrefabInstance:
     - target: {fileID: 6803804120934381642, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
       propertyPath: m_Name
       value: PlayerPoncho
+      objectReference: {fileID: 0}
+    - target: {fileID: 7089878858890451242, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

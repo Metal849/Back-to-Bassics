@@ -60,11 +60,11 @@ public class BattleManager : Singleton<BattleManager>
         // The problem with this is that the player can still input stuff while transitioning.
         yield return PlayerEngageCurrentEnemy();
         Enemy.EnterBattle();
-        for (float i = battleDelay; i > 0; i--)
-        {
-            UIManager.Instance.UpdateCenterText(i.ToString());
-            yield return new WaitForSeconds(1f);
-        }
+        //for (float i = battleDelay; i > 0; i--)
+        //{
+        //    UIManager.Instance.UpdateCenterText(i.ToString());
+        //    yield return new WaitForSeconds(1f);
+        //}
         UIManager.Instance.UpdateCenterText("Battle!");
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");

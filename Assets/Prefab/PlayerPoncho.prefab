@@ -5207,8 +5207,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6292754098507325895}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.014805617, y: 0.000000029802322, z: -2.3283064e-10, w: 0.9998904}
-  m_LocalPosition: {x: 0.0000009536743, y: 4.66, z: -10.300001}
+  m_LocalRotation: {x: -0.014805596, y: -0, z: -0, w: 0.9998904}
+  m_LocalPosition: {x: 0, y: 4.66, z: -10.300003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5411,7 +5411,7 @@ MonoBehaviour:
       Data2: 1162028685
       Data3: 1503919773
       Data4: -1358691694
-    Path: event:/PlayerFootsteps
+    Path: event:/SFX/Player/PlayerFootsteps
   _slashEffect: {fileID: 8402795061273862082}
   <slashSoundReference>k__BackingField:
     Guid:
@@ -5419,7 +5419,7 @@ MonoBehaviour:
       Data2: 1297913944
       Data3: -1079367544
       Data4: 1437121827
-    Path: event:/SlashAir
+    Path: event:/SFX/Player/SlashAir
 --- !u!54 &2940784301700036450
 Rigidbody:
   m_ObjectHideFlags: 0
