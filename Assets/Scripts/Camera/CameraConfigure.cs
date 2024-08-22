@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CameraConfigure : MonoBehaviour
+public class CameraConfigure : Singleton<CameraConfigure>
 {
     private CinemachineVirtualCamera prev;
+    #region Unity Messages
+    private void Awake()
+    {
+        InitializeSingleton();
+    }
+    #endregion
     public void SwitchToCamera(CinemachineVirtualCamera targetCamera)
     {
         prev = CinemachineBrain.SoloCamera as CinemachineVirtualCamera;

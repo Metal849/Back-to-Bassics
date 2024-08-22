@@ -8,7 +8,6 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
     [field: SerializeField] public int health { get; private set; }
     [SerializeField] private Spinning spinner;
     private float resetSpeed = 0f;
-    private bool hitPlayer;
     public void OnRequestDeflect(IAttackReceiver receiver)
     {
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
@@ -20,9 +19,8 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
         health -= 1;
-        spinner.ChangeDirection(resetSpeed);
+        spinner.ChangeDirectionRandomSpeed();
         resetSpeed += 0.2f;
-        hitPlayer = false;
         player.CompleteAttackRequest(this);
         // (TEMP)----------- This is dumb IK---------------------
         BattleManager.Instance.Enemy.Damage(1);
@@ -47,11 +45,10 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
     {
         if (other.gameObject.TryGetComponent(out PlayerBattlePawn pawn))
         {
-            hitPlayer = true;
-            pawn.ReceiveAttackRequest(this);
-            if (hitPlayer)
+            if (pawn.ReceiveAttackRequest(this))
             {
                 pawn.Damage(damage);
+                pawn.CompleteAttackRequest(this);
             }
         }
     }

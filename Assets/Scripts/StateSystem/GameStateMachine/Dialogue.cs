@@ -4,12 +4,16 @@ using UnityEngine;
 
 public partial class GameStateMachine
 {
-    public class WorldTraversal : GameState
+    public class Dialogue : GameState
     {
         public override void Enter(GameStateInput i)
         {
-            GameManager.Instance.PC.SwitchToTraversalActions();
-            //CameraConfigure.Instance.SwitchToCamera(Input.PonchoCam);
+            GameManager.Instance.PC.SwitchToDialogueActions();
+            
+        }
+        public override void Exit(GameStateInput i)
+        {
+            
         }
     }
 }

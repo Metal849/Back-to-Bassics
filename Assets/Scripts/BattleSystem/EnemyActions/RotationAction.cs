@@ -11,7 +11,7 @@ public class RotationAction : EnemyAction
         base.StartAction();
         foreach (Spinning spinner in spinners)
         {
-            spinner.speed = 5f;
+            spinner?.ChangeDirectionRandomSpeed();
         }
         
     }
@@ -20,7 +20,7 @@ public class RotationAction : EnemyAction
         base.StopAction();
         foreach (Spinning spinner in spinners)
         {
-            spinner.speed = 0f;
+            if (spinner != null) spinner.speed = 0f;
         }
     }
 }

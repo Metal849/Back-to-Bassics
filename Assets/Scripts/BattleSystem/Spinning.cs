@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Spinning : MonoBehaviour
 {
+    public float maxSpeed;
     public float speed;
     public bool ccw;
     private float speedUp;
     private const float accelerate = 0.05f;
+    private float halfMaxSpeed;
+
+    private void Start()
+    {
+        halfMaxSpeed = maxSpeed / 2f;
+    }
 
     private void FixedUpdate()
     {
@@ -25,6 +32,13 @@ public class Spinning : MonoBehaviour
     public void ChangeDirection(float newSpeedUp)
     {
         speedUp = newSpeedUp;
+        ccw = !ccw;
+    }
+
+    public void ChangeDirectionRandomSpeed()
+    {
+        speedUp = Random.Range(0f, halfMaxSpeed);
+        speed = Random.Range(halfMaxSpeed, maxSpeed);
         ccw = !ccw;
     }
 }

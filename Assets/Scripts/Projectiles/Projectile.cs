@@ -49,8 +49,7 @@ public class Projectile : MonoBehaviour, IAttackRequester
         _hitPlayerPawn = collision.GetComponent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
-        _hitPlayerPawn.ReceiveAttackRequest(this);
-        if (!isDestroyed)
+        if (_hitPlayerPawn.ReceiveAttackRequest(this))
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementMissTracker();

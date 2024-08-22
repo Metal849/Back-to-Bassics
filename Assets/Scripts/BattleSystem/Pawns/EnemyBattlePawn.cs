@@ -5,6 +5,7 @@ using static EnemyStateMachine;
 using static PositionStateMachine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using Cinemachine;
 
 /// <summary>
 /// Manipulate by an external class, not within the class!!
@@ -16,6 +17,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [field: SerializeField] public PositionStateMachine psm { get; private set; }
     //[SerializeField] private ParticleSystem _particleSystem;
     [field: SerializeField] public Transform targetFightingLocation { get; private set; }
+    [field: SerializeField] public CinemachineVirtualCamera battleCam { get; private set; }
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
 

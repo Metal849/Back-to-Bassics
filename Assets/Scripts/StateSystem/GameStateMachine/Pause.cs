@@ -8,7 +8,7 @@ public partial class GameStateMachine
     {
         public override void Enter(GameStateInput i)
         {
-            
+            GameManager.Instance.PC.SwitchToUIActions();
         }
         public override void Exit(GameStateInput i)
         {

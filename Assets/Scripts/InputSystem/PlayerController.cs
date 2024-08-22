@@ -18,15 +18,29 @@ public class PlayerController : MonoBehaviour
         _playerinput.SwitchCurrentActionMap("PlayerBattlePawn");
         _playerinput.actions["Dodge"].performed += OnDodge;
         _playerinput.actions["Jump"].performed += OnDodge;
-        //_playerinput.actions["Block"].performed += OnBlock;
-        //_playerinput.actions["Block"].canceled += OnBlock;
         _playerinput.actions["Slash"].performed += OnBattleSlash;
 
         // Input World Traversal Actions
         // This might just have to keep updating on fixed update tbh
         _playerinput.SwitchCurrentActionMap("PlayerTraversalPawn");
-        //_playerinput.actions["Move"].performed += OnMove;
         _playerinput.actions["Slash"].performed += OnTraversalSlash;
+
+        // Input UI
+        //_playerinput.SwitchCurrentActionMap("UI");
+
+        // Input Dialogue
+        //_playerinput.SwitchCurrentActionMap("Dialogue");
+
+        // Input Cutscene
+        //_playerinput.SwitchCurrentActionMap("Cutscene");
+    }
+    public void DisableControl()
+    {
+        _playerinput.currentActionMap.Disable();
+    }
+    public void EnableControl()
+    {
+        _playerinput.currentActionMap.Enable();
     }
     public void SwitchToBattleActions()
     {
@@ -40,22 +54,29 @@ public class PlayerController : MonoBehaviour
         _playerinput.SwitchCurrentActionMap("PlayerTraversalPawn");
         _playerinput.currentActionMap.Enable();
     }
+    public void SwitchToDialogueActions()
+    {
+        _playerinput.currentActionMap.Disable();
+        _playerinput.SwitchCurrentActionMap("Dialogue");
+        _playerinput.currentActionMap.Enable();
+    }
+    public void SwitchToCutsceneActions()
+    {
+        _playerinput.currentActionMap.Disable();
+        _playerinput.SwitchCurrentActionMap("Cutscene");
+        _playerinput.currentActionMap.Enable();
+    }
+    public void SwitchToUIActions()
+    {
+        _playerinput.currentActionMap.Disable();
+        _playerinput.SwitchCurrentActionMap("UI");
+        _playerinput.currentActionMap.Enable();
+    }
     #region Battle Pawn Actions
     public void OnDodge(InputAction.CallbackContext context)
     {
         _battlepawn.Dodge(context.ReadValue<Vector2>());
     }
-    //public void OnBlock(InputAction.CallbackContext context)
-    //{
-    //    if (context.performed)
-    //    {
-    //        _battlepawn.Block();
-    //    }
-    //    if (context.canceled)
-    //    {
-    //        _battlepawn.Unblock();
-    //    }
-    //}
     public void OnBattleSlash(InputAction.CallbackContext context)
     {
         _battlepawn.Slash(context.ReadValue<Vector2>());
@@ -66,14 +87,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 direction = _playerinput.actions["Move"].ReadValue<Vector2>();
         _traversalpawn.Move(new Vector3(direction.x, 0, direction.y));
-    }
-    //public void OnMove(InputAction.CallbackContext context)
-    //{
-        
-    //}
-    public void OnJump(InputAction.CallbackContext context)
-    {
-
     }
     public void OnTraversalSlash(InputAction.CallbackContext context)
     {
