@@ -4442,6 +4442,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8896183428122786831, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
+      propertyPath: typewriterEffectSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896183428122786831, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
       propertyPath: onCharacterTyped.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
