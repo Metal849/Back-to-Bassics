@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 [DisallowMultipleComponent]
 public class BattlePawn : Conductable
 {
@@ -23,6 +24,7 @@ public class BattlePawn : Conductable
     #endregion
 
     // events
+    [SerializeField] private UnityEvent onPawnDefeat;
     public event Action OnPawnDeath;
     public event Action OnEnterBattle;
     public event Action OnExitBattle;
@@ -50,6 +52,8 @@ public class BattlePawn : Conductable
             IsDead = true;
             // Handling of Death animation and battlemanger Broadcast happen in OnDeath()
             BattleManager.Instance.OnPawnDeath(this);
+            OnPawnDeath?.Invoke();
+            onPawnDefeat?.Invoke();
             OnDeath();
         }
     }
@@ -103,7 +107,6 @@ public class BattlePawn : Conductable
     protected virtual void OnDeath()
     {
         // TODO: Things that occur on battle pawn death
-        OnPawnDeath?.Invoke();
     }
     protected virtual void OnUnstagger()
     {

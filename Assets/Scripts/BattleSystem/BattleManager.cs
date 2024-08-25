@@ -98,7 +98,9 @@ public class BattleManager : Singleton<BattleManager>
             return;
         }
         EndBattle();
-        StartCoroutine(EnemyDefeatTemp());
+
+        // For now we won't use this
+        // StartCoroutine(EnemyDefeatTemp());
     } 
 
     private IEnumerator EnemyDefeatTemp()

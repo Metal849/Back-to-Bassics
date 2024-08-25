@@ -152,14 +152,6 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     public void updateCombo(bool slash)
     {
-        if (BattleManager.Instance.Enemy.esm.IsOnState<Block>() 
-            || !(BattleManager.Instance.Enemy.esm.IsOnState<Stagger>()
-            || BattleManager.Instance.Enemy.esm.IsOnState<Idle>()))
-        {
-            UIManager.Instance.ComboDisplay.HideCombo();
-            comboString = "";
-            return;
-        }
         if (comboString.Length >= 4)
         {
             comboString = "";
@@ -248,17 +240,15 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     public bool ReceiveAttackRequest(IAttackRequester requester)
     {
         _activeAttackRequesters.Enqueue(requester);
-        if (/*!deflected && */ deflectionWindow)
+        if (/*!deflected && */ deflectionWindow && requester.OnRequestDeflect(this))
         {
             deflected = true;
             AudioManager.Instance.PlayOnShotSound(WeaponData.slashHitSound, transform.position);
-            requester.OnRequestDeflect(this);
             ComboMeterCurr += 1;
             return false;
         }
-        if (dodging)
+        if (dodging && requester.OnRequestDodge(this))
         {
-            requester.OnRequestDodge(this);
             return false;
         }
         return true;
@@ -274,20 +264,22 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         _activeAttackRequesters.Dequeue();
     }
     #endregion
-
-    public void OnRequestDeflect(IAttackReceiver receiver)
+    #region IAttackRequester Methods
+    public bool OnRequestDeflect(IAttackReceiver receiver)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
-    public void OnRequestBlock(IAttackReceiver receiver)
+    public bool OnRequestBlock(IAttackReceiver receiver)
     {
         _pawnSprite.Animator.Play("attack_blocked");
+        return true;
     }
 
-    public void OnRequestDodge(IAttackReceiver receiver)
+    public bool OnRequestDodge(IAttackReceiver receiver)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
+    #endregion
     private IEnumerator Attacking()
     {
         //if (attacking && BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Attacking>()) Lurch(2f);
@@ -306,10 +298,10 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (!deflected && _activeAttackRequesters.Count <= 0)
         {
             // Process Combo Strings here if you have enough!
-            updateCombo(true);
             if (BattleManager.Instance.Enemy.ReceiveAttackRequest(this))
             {
                 BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+                updateCombo(true);
             }
             
             // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
@@ -322,15 +314,4 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         
         deflected = false;
     }
-    //protected override void OnStagger()
-    //{
-    //    base.OnStagger();
-    //    Unblock();
-    //    _particleSystem.Play();
-    //}
-    //protected override void OnUnstagger()
-    //{
-    //    base.OnUnstagger();
-    //    _particleSystem.Stop();
-    //}
 }

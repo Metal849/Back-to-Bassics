@@ -22,9 +22,13 @@ public class Spinning : MonoBehaviour
         {
             speedUp += accelerate;
         }
-        else
+        else if (speed < maxSpeed)
         {
             speedUp = speed;
+        }
+        else
+        {
+            speedUp = maxSpeed;
         }
         Quaternion rotateTo = transform.rotation * Quaternion.AngleAxis((ccw ? -1 : 1) * 90, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, Time.deltaTime * speedUp);

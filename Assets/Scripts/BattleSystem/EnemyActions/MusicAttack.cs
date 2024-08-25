@@ -12,9 +12,8 @@ public class MusicAttack : EnemyAction
     {
         Pooler.Instance.PoolGameObject(musicNoteRef, 20);
     }
-    public override void StartAction()
+    protected override void OnStartAction()
     {
-        base.StartAction();
         currIdx = 0;
         parentPawnSprite.Animator.Play("music");
     }

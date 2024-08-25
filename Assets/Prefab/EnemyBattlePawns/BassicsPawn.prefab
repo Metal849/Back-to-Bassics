@@ -514,6 +514,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: dc1abe4cb24957745b2f696f4f064b51, type: 2}
   _currHP: 0
+  onPawnDefeat:
+    m_PersistentCalls:
+      m_Calls: []
   <esm>k__BackingField: {fileID: 0}
   <psm>k__BackingField: {fileID: 0}
   <targetFightingLocation>k__BackingField: {fileID: 8599476617418693142}
@@ -864,9 +867,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentPawn: {fileID: 5642884798581242194}
   parentPawnSprite: {fileID: 0}
-  animationName: slash
-  preHitClip: {fileID: 7400000, guid: 3f315a64912e07645a97916c5d7603dc, type: 2}
+  slashAnimationName: slash
   broadcastClip: {fileID: 7400000, guid: 8ba2ca4d74de4d34c959b793bfa87b6e, type: 2}
+  preHitClip: {fileID: 7400000, guid: 3f315a64912e07645a97916c5d7603dc, type: 2}
+  postHitClip: {fileID: 7400000, guid: d00332dc08ccf324d9b8a66e7d57a17e, type: 2}
+  deflectedHitClip: {fileID: 7400000, guid: 8b2be34e5f4e4ea4c90bbf765b86c058, type: 2}
 --- !u!1 &7685685512346909669
 GameObject:
   m_ObjectHideFlags: 0

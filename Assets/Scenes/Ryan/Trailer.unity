@@ -459,6 +459,11 @@ MonoBehaviour:
   onExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &201315703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3061814238549577415, guid: b2454462b606f34428189b8de7b9092e, type: 3}
+  m_PrefabInstance: {fileID: 2559819175425735982}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &211015888
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300405667}
   m_Layer: 0
-  m_Name: ==Colored Rivers==
+  m_Name: ==========Colored Rivers=============
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -893,12 +898,12 @@ GameObject:
   - component: {fileID: 485622525}
   - component: {fileID: 485622524}
   m_Layer: 0
-  m_Name: FightTurtle
+  m_Name: FightBassics
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &485622523
 Transform:
   m_ObjectHideFlags: 0
@@ -908,7 +913,7 @@ Transform:
   m_GameObject: {fileID: 485622522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 303.54, y: 20, z: 144.41}
+  m_LocalPosition: {x: 303.54, y: 20, z: 115.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -935,7 +940,7 @@ MonoBehaviour:
         m_MethodName: EngageEnemy
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 405451804}
+          m_ObjectArgument: {fileID: 2035416404}
           m_ObjectArgumentAssemblyTypeName: EnemyBattlePawn, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1143,6 +1148,61 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
+--- !u!1 &574953093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 574953094}
+  - component: {fileID: 574953095}
+  m_Layer: 0
+  m_Name: FinalCutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &574953094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574953093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1905698971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &574953095
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574953093}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 41444ad323301a64dbee1e535d9caa8c, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 1973949682566750625, guid: 41444ad323301a64dbee1e535d9caa8c, type: 2}
+    value: {fileID: 272331219}
+  - key: {fileID: -5151578771410380546, guid: 41444ad323301a64dbee1e535d9caa8c, type: 2}
+    value: {fileID: 2559819175425735983}
+  m_ExposedReferences:
+    m_References:
+    - c6366cfa0037f5b498aebe6429346bcf: {fileID: 1283012745}
+    - 923ef0eb4a8e62a43a109c01cd1dce7a: {fileID: 364107841}
 --- !u!4 &631054068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1934201246035880147, guid: 1f84781cf1040f3419d55fcd36e492f7, type: 3}
@@ -1184,9 +1244,65 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5837939568742862894}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 574953095}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartDialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Yarn.Unity.DialogueRunner, YarnSpinner.Unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.Playables.PlayableDirector, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Bassics_proud
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4120296559865554346, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
+      propertyPath: onPawnDefeat.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8514043373142664286, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 301.89
+      value: 299.08
       objectReference: {fileID: 0}
     - target: {fileID: 8514043373142664286, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1194,7 +1310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8514043373142664286, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 141.9
+      value: 126.27
       objectReference: {fileID: 0}
     - target: {fileID: 8514043373142664286, guid: 8ed2fc1cf06a2e54082475a8acdfc35e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2176,14 +2292,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284326658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 287.96143, y: -85.22784, z: 308.53644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1283012744}
   - {fileID: 1838658730}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1905698971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!320 &1284326660
 PlayableDirector:
@@ -2215,17 +2331,6 @@ PlayableDirector:
     - 1122afa3d1af1d6408cc60d13a1c425a: {fileID: 0}
     - 1f029716dcf1359459e579548dd831bb: {fileID: 5837939568742862895}
     - 018a6a48fd9e3cf49a7c7adcc842bc9c: {fileID: 364107841}
---- !u!114 &1288579825 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5642884798581242194, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
-  m_PrefabInstance: {fileID: 7932641515812509754}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32910dd26ce0b24cb9ca362f9a228dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1301522405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,6 +3304,40 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1439842695}
+--- !u!1 &1905698970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905698971}
+  m_Layer: 0
+  m_Name: Cutscenes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1905698971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905698970}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1952244406}
+  - {fileID: 1284326659}
+  - {fileID: 574953094}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1911879094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3454,13 +3593,45 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 36225963}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1905698971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2028095287 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8719927375268046652, guid: b2454462b606f34428189b8de7b9092e, type: 3}
   m_PrefabInstance: {fileID: 2559819175425735982}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &2028095292
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201315703}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2035416404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5642884798581242194, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
+  m_PrefabInstance: {fileID: 7932641515812509754}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32910dd26ce0b24cb9ca362f9a228dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2072114904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3631,7 +3802,7 @@ GameObject:
   - component: {fileID: 2083524345}
   - component: {fileID: 2083524344}
   m_Layer: 0
-  m_Name: FightBassics
+  m_Name: FightWheel
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3658,7 +3829,7 @@ MonoBehaviour:
         m_MethodName: EngageEnemy
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1288579825}
+          m_ObjectArgument: {fileID: 405451804}
           m_ObjectArgumentAssemblyTypeName: EnemyBattlePawn, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3922,7 +4093,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3061814238549577415, guid: b2454462b606f34428189b8de7b9092e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2028095292}
   m_SourcePrefab: {fileID: 100100000, guid: b2454462b606f34428189b8de7b9092e, type: 3}
 --- !u!95 &2559819175425735983 stripped
 Animator:
@@ -4459,7 +4633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9019337329852402836, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 303.71
+      value: 304.26
       objectReference: {fileID: 0}
     - target: {fileID: 9019337329852402836, guid: 7b97d5f2a17c0fd47bf2284508e93a29, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4529,8 +4703,7 @@ SceneRoots:
   - {fileID: 7932641515812509754}
   - {fileID: 649128318}
   - {fileID: 906136443}
-  - {fileID: 1952244406}
-  - {fileID: 1284326659}
+  - {fileID: 1905698971}
   - {fileID: 300405667}
   - {fileID: 894838770}
   - {fileID: 1650712245}

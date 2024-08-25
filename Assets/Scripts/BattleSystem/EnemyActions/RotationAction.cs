@@ -6,18 +6,16 @@ public class RotationAction : EnemyAction
 {
     [SerializeField] private GameObject knifeFab;
     [SerializeField] private Spinning[] spinners;
-    public override void StartAction()
+    protected override void OnStartAction()
     {
-        base.StartAction();
         foreach (Spinning spinner in spinners)
         {
-            spinner?.ChangeDirectionRandomSpeed();
+            if (spinner != null) spinner.speed = 2f;
         }
         
     }
-    public override void StopAction()
+    protected override void OnStopAction()
     {
-        base.StopAction();
         foreach (Spinning spinner in spinners)
         {
             if (spinner != null) spinner.speed = 0f;

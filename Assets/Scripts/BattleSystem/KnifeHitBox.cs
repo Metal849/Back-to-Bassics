@@ -8,26 +8,36 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
     [field: SerializeField] public int health { get; private set; }
     [SerializeField] private Spinning spinner;
     private float resetSpeed = 0f;
-    public void OnRequestDeflect(IAttackReceiver receiver)
+    public bool OnRequestDeflect(IAttackReceiver receiver)
     {
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
-        if (player == null) return;
-        //// Did receiver deflect in correct direction?
-        if (!DirectionHelper.MaxAngleBetweenVectors(spinner.ccw ? Vector2.left : Vector2.right, player.SlashDirection, 5f)) return;
+
+        // Did player deflect in correct direction?
+        if (player == null 
+            || !DirectionHelper.MaxAngleBetweenVectors(spinner.ccw ? Vector2.left : Vector2.right, player.SlashDirection, 5f)) 
+            return false;
 
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
         health -= 1;
-        spinner.ChangeDirectionRandomSpeed();
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            spinner.speed += resetSpeed;
+            spinner.ChangeDirection(resetSpeed);
+        }
         resetSpeed += 0.2f;
-        player.CompleteAttackRequest(this);
         // (TEMP)----------- This is dumb IK---------------------
         BattleManager.Instance.Enemy.Damage(1);
         //-------------------------------------------------------
-        if (health <= 0) Destroy(gameObject);   
+        player.CompleteAttackRequest(this);
+        return true;
     }
-    public void OnRequestBlock(IAttackReceiver receiver)
+    public bool OnRequestBlock(IAttackReceiver receiver)
     {
         //// (TEMP) Manual DEBUG UI Tracker -------
         //UIManager.Instance.IncrementBlockTracker();
@@ -35,10 +45,12 @@ public class KnifeHitBox : MonoBehaviour, IAttackRequester
         ////_hitPlayerPawn.Lurch(_dmg);
         //_hitPlayerPawn.CompleteAttackRequest(this);
         //Destroy();
+        return true;
     }
-    public void OnRequestDodge(IAttackReceiver receiver)
+    public bool OnRequestDodge(IAttackReceiver receiver)
     {
         // Nothing Happens Here :o
+        return true;
     }
 
     private void OnTriggerEnter(Collider other)

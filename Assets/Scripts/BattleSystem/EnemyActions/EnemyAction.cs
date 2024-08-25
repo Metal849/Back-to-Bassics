@@ -23,15 +23,18 @@ public abstract class EnemyAction : Conductable
         parentPawn.AddEnemyAction(this);
         //Debug.Log($"Enemy Action \"{gameObject.name}\" is type: {GetType()}");
     }
-    public virtual void StartAction()
+    public void StartAction()
     {
         IsActive = true;
         Enable();
+        OnStartAction();
     }
-    public virtual void StopAction()
+    public void StopAction()
     {
         IsActive = false;
         Disable();
-        //parentPawn.OnActionComplete();
+        OnStopAction();
     }
+    protected virtual void OnStartAction() { }
+    protected virtual void OnStopAction() { }
 }
