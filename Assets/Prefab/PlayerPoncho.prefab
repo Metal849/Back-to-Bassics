@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 954eb3cf1c714e347abbf91ff3abff79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5fb5d37e1f35cda4e9256e75661c8b36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -191,8 +191,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.54, y: 1.1045189, z: 0.29388046}
-  m_Center: {x: 0, y: 0.003525734, z: -0.030237198}
+  m_Size: {x: 0.8057251, y: 2.5661278, z: 0.29388046}
+  m_Center: {x: -0.011077881, y: -0.10720062, z: -0.030237198}
 --- !u!95 &1593425890846368242
 Animator:
   serializedVersion: 5
@@ -5381,6 +5381,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 615d985bad138be4eb9f15eac06a1261, type: 2}
   _currHP: 20
+  onPawnDefeat:
+    m_PersistentCalls:
+      m_Calls: []
   _weaponData: {fileID: 11400000, guid: a9fbfbcb976477e4e84d47f073bf3134, type: 2}
   _particleSystem: {fileID: 1032800211107346903}
   _slashEffect: {fileID: 8402795061273862082}
@@ -5466,10 +5469,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.38
-  m_Height: 1.143054
+  m_Radius: 0.41600037
+  m_Height: 2.704317
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5746951, z: 0}
+  m_Center: {x: -0.0027618408, y: 1.3553267, z: 0}
 --- !u!95 &6461832632852835835
 Animator:
   serializedVersion: 5
@@ -5663,7 +5666,7 @@ Transform:
   m_GameObject: {fileID: 8747435454642201029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.559, z: 0}
+  m_LocalPosition: {x: 0, y: 1.396, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
