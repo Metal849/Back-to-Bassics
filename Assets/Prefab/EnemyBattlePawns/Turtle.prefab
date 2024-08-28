@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 62479423885629352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.70710677, z: -0.70710677, w: 0}
-  m_LocalPosition: {x: 0, y: 2.8, z: 1.2060003}
-  m_LocalScale: {x: 4.8484, y: 0.061851516, z: 4.851309}
+  m_LocalPosition: {x: 0, y: 3.66, z: 1.2060003}
+  m_LocalScale: {x: 6.2773156, y: 0.08008033, z: 6.2810817}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 126267719918054794}
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5ac06ce6e61473748ab43da52285f959, type: 2}
+  - {fileID: 2100000, guid: d95aeea8bcd656440b467efae10d5311, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 2875592871770529580}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.36}
+  m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,9 +382,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 3e5796343f9c8ad4daeb1f5a1cb850ae, type: 2}
   _currHP: 0
+  onPawnDefeat:
+    m_PersistentCalls:
+      m_Calls: []
   <esm>k__BackingField: {fileID: 0}
   <psm>k__BackingField: {fileID: 0}
   <targetFightingLocation>k__BackingField: {fileID: 7955827430294983148}
+  <battleCam>k__BackingField: {fileID: 0}
 --- !u!114 &6757703160721079755
 MonoBehaviour:
   m_ObjectHideFlags: 0
