@@ -49,8 +49,7 @@ public class Projectile : MonoBehaviour, IAttackRequester
         _hitPlayerPawn = collision.GetComponent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) _hitPlayerPawn = collision.GetComponentInParent<PlayerBattlePawn>();
         if (_hitPlayerPawn == null) return;
-        _hitPlayerPawn.ReceiveAttackRequest(this);
-        if (!isDestroyed)
+        if (_hitPlayerPawn.ReceiveAttackRequest(this))
         {
             // (TEMP) Manual DEBUG UI Tracker -------
             UIManager.Instance.IncrementMissTracker();
@@ -63,31 +62,34 @@ public class Projectile : MonoBehaviour, IAttackRequester
         }
 
     }
-    public void OnRequestDeflect(IAttackReceiver receiver)
+    public bool OnRequestDeflect(IAttackReceiver receiver)
     {
         PlayerBattlePawn player = receiver as PlayerBattlePawn;
-        if (player == null) return;
         // Did receiver deflect in correct direction?
-        if (!DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, player.SlashDirection, 5f)) return;
+        if (player == null 
+            ||!DirectionHelper.MaxAngleBetweenVectors(-_rb.velocity, player.SlashDirection, 5f)) 
+                return false;
 
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
-        _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
+        receiver.CompleteAttackRequest(this);
+        return true;
     }
-    public void OnRequestBlock(IAttackReceiver receiver)
+    public bool OnRequestBlock(IAttackReceiver receiver)
     {
         // (TEMP) Manual DEBUG UI Tracker -------
         UIManager.Instance.IncrementBlockTracker();
         //---------------------------------------
         //_hitPlayerPawn.Lurch(_dmg);
-        _hitPlayerPawn.CompleteAttackRequest(this);
         Destroy();
+        receiver.CompleteAttackRequest(this);
+        return true;
     }
-    public void OnRequestDodge(IAttackReceiver receiver) 
-    { 
-        // Nothing Happens Here :o
+    public bool OnRequestDodge(IAttackReceiver receiver) 
+    {
+        return true;
     }
     public void Destroy()
     {

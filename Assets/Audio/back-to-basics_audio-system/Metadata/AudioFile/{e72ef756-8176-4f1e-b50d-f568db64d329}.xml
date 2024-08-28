@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e72ef756-8176-4f1e-b50d-f568db64d329}">
+		<property name="assetPath">
+			<value>rkkfFinal.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>32</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>391.60971875000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8037b503-1fdb-4225-8bf1-0c9d0bc24f7a}</destination>
+		</relationship>
+	</object>
+</objects>

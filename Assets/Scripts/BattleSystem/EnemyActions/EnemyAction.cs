@@ -8,11 +8,13 @@ using UnityEngine;
 public abstract class EnemyAction : Conductable
 {
     [SerializeField] protected EnemyBattlePawn parentPawn;
+    [SerializeField] protected PawnSprite parentPawnSprite;
     public bool IsActive { get; protected set; }
     private void Awake()
     {
         IsActive = false;
         parentPawn = GetComponentInParent<EnemyBattlePawn>();
+        parentPawnSprite = parentPawn.GetComponentInChildren<PawnSprite>();
         if (parentPawn == null) 
         {
             Debug.LogError($"Enemy Action \"{gameObject.name}\" could not find Enemy Pawn Parent");
@@ -21,15 +23,18 @@ public abstract class EnemyAction : Conductable
         parentPawn.AddEnemyAction(this);
         //Debug.Log($"Enemy Action \"{gameObject.name}\" is type: {GetType()}");
     }
-    public virtual void StartAction()
+    public void StartAction()
     {
         IsActive = true;
         Enable();
+        OnStartAction();
     }
-    public virtual void StopAction()
+    public void StopAction()
     {
         IsActive = false;
         Disable();
-        parentPawn.OnActionComplete();
+        OnStopAction();
     }
+    protected virtual void OnStartAction() { }
+    protected virtual void OnStopAction() { }
 }

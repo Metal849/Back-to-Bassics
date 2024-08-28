@@ -20,7 +20,6 @@ public class BattleManager : Singleton<BattleManager>
     }
     public void StartBattle(EnemyBattlePawn[] pawns)
     {
-        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
         enemyBattlePawns = new Queue<EnemyBattlePawn>(pawns);
         Enemy = enemyBattlePawns?.Dequeue();
         if (Enemy == null)
@@ -42,17 +41,18 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator IntializeBattle()
     {
         yield return PlayerEngageCurrentEnemy();
-        Player.EnterBattle();
-        Enemy.EnterBattle();
         for (float i = battleDelay; i > 0; i--)
         {
             UIManager.Instance.UpdateCenterText(i.ToString());
             yield return new WaitForSeconds(1f);
         }
         UIManager.Instance.UpdateCenterText("Battle!");
+        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
+        GameManager.Instance.GSM.Transition<GameStateMachine.Battle>();
+        Player.EnterBattle();
+        Enemy.EnterBattle();
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");
-        Conductor.Instance.BeginConducting(Enemy.EnemyData.SPB);
         IsBattleActive = true;
     }
     private IEnumerator NextEnemyBattle()
@@ -60,11 +60,11 @@ public class BattleManager : Singleton<BattleManager>
         // The problem with this is that the player can still input stuff while transitioning.
         yield return PlayerEngageCurrentEnemy();
         Enemy.EnterBattle();
-        for (float i = battleDelay; i > 0; i--)
-        {
-            UIManager.Instance.UpdateCenterText(i.ToString());
-            yield return new WaitForSeconds(1f);
-        }
+        //for (float i = battleDelay; i > 0; i--)
+        //{
+        //    UIManager.Instance.UpdateCenterText(i.ToString());
+        //    yield return new WaitForSeconds(1f);
+        //}
         UIManager.Instance.UpdateCenterText("Battle!");
         yield return new WaitForSeconds(1f);
         UIManager.Instance.UpdateCenterText("");
@@ -98,7 +98,9 @@ public class BattleManager : Singleton<BattleManager>
             return;
         }
         EndBattle();
-        StartCoroutine(EnemyDefeatTemp());
+
+        // For now we won't use this
+        // StartCoroutine(EnemyDefeatTemp());
     } 
 
     private IEnumerator EnemyDefeatTemp()
@@ -110,7 +112,7 @@ public class BattleManager : Singleton<BattleManager>
     private IEnumerator PlayerEngageCurrentEnemy()
     {
         TraversalPawn traversalPawn = Player.GetComponent<TraversalPawn>();
-        traversalPawn.MoveToDestination(Enemy.transform.position + Enemy.EnemyData.RelativeBattleDistance);
+        traversalPawn.MoveToDestination(Enemy.targetFightingLocation.position);
         yield return new WaitUntil(() => !traversalPawn.movingToDestination);
     }
 }
