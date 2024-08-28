@@ -73,10 +73,11 @@ public class FireProjectileAction : EnemyAction
         Projectile proj = objRef.GetComponent<Projectile>();
         proj.transform.position = BattleManager.Instance.Player.playerCollider.position + node.relativeSpawnPosition;
         proj.Fire((BattleManager.Instance.Player.playerCollider.position - proj.transform.position) / (node.speed * Conductor.Instance.spb));
-        
+
         // This Only talors to bassics, not in general
-        parentPawn.SpriteAnimator.SetFloat("xdir", -node.relativeSpawnPosition.x);
-        parentPawn.SpriteAnimator.Play(animationName);  
+        parentPawnSprite.FaceDirection(new Vector3(-node.relativeSpawnPosition.x, 0, -1));
+        //parentPawnSprite.Animator.SetFloat("x_slashDir", -node.relativeSpawnPosition.x);
+        parentPawnSprite.Animator.Play(animationName);  
     }
 }
 

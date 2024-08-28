@@ -9,6 +9,7 @@ public partial class GameStateMachine
         public override void Enter(GameStateInput i)
         {
             GameManager.Instance.PC.SwitchToTraversalActions();
+            //CameraConfigure.Instance.SwitchToCamera(Input.PonchoCam);
         }
     }
 }

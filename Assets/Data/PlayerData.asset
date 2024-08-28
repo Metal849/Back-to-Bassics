@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _name: Poncho
-  _hp: 200
+  _hp: 20
+  staggerDuration: 4
   _lore: This is the player :3
   _blockingReduction: 0
   _confuseResistance: 0

@@ -9,6 +9,7 @@ public partial class EnemyStateMachine : StateMachine<EnemyStateMachine, EnemySt
     protected override void SetInitialState()
     {
         CurrInput.Enemy = GetComponent<EnemyBattlePawn>();
+        CurrInput.EnemySprite = GetComponentInChildren<PawnSprite>();
         Transition<Idle>();   
     }
 }

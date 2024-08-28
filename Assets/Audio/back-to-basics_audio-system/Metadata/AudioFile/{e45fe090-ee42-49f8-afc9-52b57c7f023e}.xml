@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e45fe090-ee42-49f8-afc9-52b57c7f023e}">
+		<property name="assetPath">
+			<value>forest-wind-and-birds-6881.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>196.10400000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{8037b503-1fdb-4225-8bf1-0c9d0bc24f7a}</destination>
+		</relationship>
+	</object>
+</objects>

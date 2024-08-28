@@ -264,61 +264,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "IJKL",
-                    "id": "f4826d2f-221b-4372-848b-380f01e15b4e",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Slash",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "19340a3a-7143-428e-9af3-0f0655509b17",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Slash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "a936a7c1-e2b6-4482-81ad-a6462504aa9c",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Slash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "0f23dd07-7eae-47bc-ac54-3832a71c203a",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Slash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "2311db4f-e5bc-4652-ab39-1c5dba3e398b",
-                    "path": "<Keyboard>/l",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Slash",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "RightJoyStick",
                     "id": "f7b17d4d-405f-42cb-b767-1268316f2445",
                     "path": "2DVector",

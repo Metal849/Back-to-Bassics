@@ -1,25 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public partial class EnemyStateMachine
 {
     public class Dead : EnemyState
     {
-        public override void AttackRequestHandler(IAttackRequester requester)
+        public override bool AttackRequestHandler(IAttackRequester requester)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         public override void Enter(EnemyStateInput i)
         {
             base.Enter(i);
-            Input.Enemy.SpriteAnimator.Play("dead");
-        }
-
-        public override int OnDamage(int amount)
-        {
-            return 0;
+            if (Input.EnemySprite != null)
+            {
+                Input.EnemySprite.Animator?.Play("dead");
+            }   
         }
     }
 }

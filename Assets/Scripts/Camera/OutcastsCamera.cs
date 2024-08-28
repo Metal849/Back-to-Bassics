@@ -8,7 +8,7 @@ public class OutcastsCamera : Singleton<OutcastsCamera>
 {
 
     [Header("Modifiers")]
-    [SerializeField, Range(1f, 30f)] private float m_moveSpeed = 1f;
+    [SerializeField] private float m_moveSpeed = 1f;
     [SerializeField] private Transform target;
     [SerializeField] public bool m_followEnabled = false;
     [SerializeField] public bool m_smooth = false;

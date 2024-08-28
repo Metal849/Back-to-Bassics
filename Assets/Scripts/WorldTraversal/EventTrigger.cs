@@ -1,17 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class EventTrigger : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnTrigger;
+    [Header("Configuration")]
+    [SerializeField] private bool destroyOnEnter;
+    [Header("Events")]
+    [SerializeField] private UnityEvent onEnter;
+    [SerializeField] private UnityEvent onExit; 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<PlayerTraversalPawn>())
+        if (other.GetComponent<PlayerTraversalPawn>())
         {
-            OnTrigger.Invoke();
-            Destroy(gameObject);
+            Debug.Log("Double enter?");
+            onEnter.Invoke();
+            if (destroyOnEnter) Destroy(gameObject);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<PlayerTraversalPawn>())
+        {
+            onExit.Invoke();
         }
     }
 }
+
+//#if UNITY_EDITOR
+//[CustomEditor(typeof(EventTrigger))]
+//public class EventTriggerEditor : Editor
+//{
+//    private readonly string[] directions = { "North", "South", "East", "West" };
+//    public override void OnInspectorGUI()
+//    {
+//        EventTrigger et = target as EventTrigger;
+//    }
+//}
+//#endif

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{42591546-d413-44aa-957d-114f50c47315}">
+		<property name="name">
+			<value>beach_intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{915f8dd5-10b2-430a-9448-3e9fc557559e}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cc9d41fb-c9a0-4de2-9988-acb875a10d26}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cc9d41fb-c9a0-4de2-9988-acb875a10d26}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.35999998450279236</value>
+		</property>
+	</object>
+</objects>

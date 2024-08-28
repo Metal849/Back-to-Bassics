@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Spinning : MonoBehaviour
 {
+    public float maxSpeed;
     public float speed;
-    private bool left;
+    public bool ccw;
     private float speedUp;
     private const float accelerate = 0.05f;
+    private float halfMaxSpeed;
+
+    private void Start()
+    {
+        halfMaxSpeed = maxSpeed / 2f;
+    }
 
     private void FixedUpdate()
     {
@@ -15,16 +22,27 @@ public class Spinning : MonoBehaviour
         {
             speedUp += accelerate;
         }
-        else
+        else if (speed < maxSpeed)
         {
             speedUp = speed;
         }
-        Quaternion rotateTo = transform.rotation * Quaternion.AngleAxis((left ? -1 : 1) * 90, Vector3.up);
+        else
+        {
+            speedUp = maxSpeed;
+        }
+        Quaternion rotateTo = transform.rotation * Quaternion.AngleAxis((ccw ? -1 : 1) * 90, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotateTo, Time.deltaTime * speedUp);
     }
-    public void ChangeDirection()
+    public void ChangeDirection(float newSpeedUp)
     {
-        speedUp = 0f;
-        left = !left;
+        speedUp = newSpeedUp;
+        ccw = !ccw;
+    }
+
+    public void ChangeDirectionRandomSpeed()
+    {
+        speedUp = Random.Range(0f, halfMaxSpeed);
+        speed = Random.Range(halfMaxSpeed, maxSpeed);
+        ccw = !ccw;
     }
 }

@@ -4,15 +4,15 @@ public interface IAttackRequester
     /// When the attack requested is challenged by the receiver
     /// </summary>
     /// <param name="receiver"></param>
-    public void OnRequestDeflect(IAttackReceiver receiver);
+    public bool OnRequestDeflect(IAttackReceiver receiver);
     /// <summary>
     /// When the attack requeseted is denied by the receiver
     /// </summary>
     /// <param name="receiver"></param>
-    public void OnRequestBlock(IAttackReceiver receiver);
+    public bool OnRequestBlock(IAttackReceiver receiver);
     /// <summary>
     /// When the attack requested is avoided by the receiver
     /// </summary>
     /// <param name="receiver"></param>
-    public void OnRequestDodge(IAttackReceiver receiver);
+    public bool OnRequestDodge(IAttackReceiver receiver);
 }
