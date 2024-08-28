@@ -22,7 +22,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
 
     // Events
-    public event Action OnEnemyActionComplete;
+    //public event Action OnEnemyActionComplete; --> Hiding for now
     protected override void Awake()
     {
         base.Awake();
@@ -118,12 +118,12 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         esm.Transition<Dead>();
         //_particleSystem?.Stop();
     }
-    // This could get used or not, was intended for ranom choices :p
-    public void OnActionComplete()
-    {
-        //OnEnemyActionComplete.Invoke();
-        //if (esm.IsOnState<Dead>() || esm.IsOnState<Stagger>()) return;
-        //esm.Transition<Idle>();
-    }
+    // This could get used or not, was intended for random choices :p
+    //public void OnActionComplete()
+    //{
+    //    OnEnemyActionComplete?.Invoke();
+    //    if (esm.IsOnState<Dead>() || esm.IsOnState<Stagger>()) return;
+    //    esm.Transition<Idle>();
+    //}
     #endregion
 }

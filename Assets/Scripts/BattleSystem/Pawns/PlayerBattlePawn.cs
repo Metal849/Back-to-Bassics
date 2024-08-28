@@ -295,6 +295,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         deflectionWindow = true;
         yield return new WaitForSeconds(2 * divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         deflectionWindow = false;
+        // Direct Attack when no attack requesters
+        // This is where combo strings should be processed
         if (!deflected && _activeAttackRequesters.Count <= 0)
         {
             // Process Combo Strings here if you have enough!
@@ -309,9 +311,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         }
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         attacking = false;
-        // Direct Attack when no attack requesters
-        // This is where combo strings should be processed
-        
+        _pawnAnimator.Play($"SlashEnd");
         deflected = false;
     }
 }

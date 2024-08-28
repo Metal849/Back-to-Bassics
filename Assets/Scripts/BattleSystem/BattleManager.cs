@@ -40,6 +40,7 @@ public class BattleManager : Singleton<BattleManager>
     }
     private IEnumerator IntializeBattle()
     {
+        GameManager.Instance.PC.DisableControl();
         yield return PlayerEngageCurrentEnemy();
         for (float i = battleDelay; i > 0; i--)
         {

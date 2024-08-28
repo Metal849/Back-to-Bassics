@@ -15,7 +15,6 @@ public class EventTrigger : MonoBehaviour
     {
         if (other.GetComponent<PlayerTraversalPawn>())
         {
-            Debug.Log("Double enter?");
             onEnter.Invoke();
             if (destroyOnEnter) Destroy(gameObject);
         }
