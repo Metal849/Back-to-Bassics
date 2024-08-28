@@ -29,10 +29,10 @@ public class BassicsAI : Conductable
     private void Start()
     {
         _bassics.OnPawnDeath += _director.Stop;
-        _bassics.OnEnemyActionComplete += delegate 
-        { 
-            _decisionTime = Conductor.Instance.Beat + _beatsPerDecision; 
-        };
+        //_bassics.OnEnemyActionComplete += delegate 
+        //{ 
+        //    _decisionTime = Conductor.Instance.Beat + _beatsPerDecision; 
+        //};
         _bassics.OnEnterBattle += Enable;
         _bassics.OnExitBattle += Disable;
         _bassics.OnDamage += delegate

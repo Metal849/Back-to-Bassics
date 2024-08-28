@@ -13,7 +13,6 @@ public class CameraConfigure : Singleton<CameraConfigure>
     private void Awake()
     {
         InitializeSingleton();
-        Debug.Log(firstVirtualCamera);
         curr = firstVirtualCamera;
         prev = curr;
         curr.Priority = 10;

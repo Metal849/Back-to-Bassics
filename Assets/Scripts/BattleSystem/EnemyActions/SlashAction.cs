@@ -11,7 +11,7 @@ public class SlashAction : EnemyAction, IAttackRequester
     [SerializeField] private AnimationClip broadcastClip;
     [SerializeField] private AnimationClip preHitClip;
     [SerializeField] private AnimationClip postHitClip;
-    [SerializeField] private AnimationClip deflectedHitClip;
+    [SerializeField] private AnimationClip deflectedClip;
     public float minSlashTillHitDuration => (preHitClip.length + broadcastClip.length);
     public float minSlashTillHitInBeats => minSlashTillHitDuration / parentPawn.EnemyData.SPB;
     private SlashNode _currNode;
@@ -66,14 +66,14 @@ public class SlashAction : EnemyAction, IAttackRequester
             BattleManager.Instance.Player.CompleteAttackRequest(this);
         }
         yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{slashAnimationName}_posthit") ||
-        parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{slashAnimationName}_deflectedhit"));
+        parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{slashAnimationName}_deflected"));
         if (parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).IsName($"{slashAnimationName}_posthit"))
         {
             yield return new WaitForSeconds(postHitClip.length);
         }
         else
         {
-            yield return new WaitForSeconds(deflectedHitClip.length);
+            yield return new WaitForSeconds(deflectedClip.length);
         }
         Debug.Log("SLASH COMPLETE");
         //yield return new WaitUntil(() => parentPawnSprite.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1f);
@@ -102,7 +102,7 @@ public class SlashAction : EnemyAction, IAttackRequester
         UIManager.Instance.IncrementParryTracker();
         //---------------------------------------
 
-        parentPawnSprite.Animator.Play($"{slashAnimationName}_deflectedhit");
+        parentPawnSprite.Animator.Play($"{slashAnimationName}_deflected");
         if (_currNode.staggersParent)
         {
             parentPawn.Stagger();
