@@ -13,15 +13,16 @@ public class EventTrigger : MonoBehaviour
     [SerializeField] private UnityEvent onExit; 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<PlayerTraversalPawn>())
+        if (other.GetComponent<PlayerTraversalPawn>())
         {
+            Debug.Log("Double enter?");
             onEnter.Invoke();
             if (destroyOnEnter) Destroy(gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponentInParent<PlayerTraversalPawn>())
+        if (other.GetComponent<PlayerTraversalPawn>())
         {
             onExit.Invoke();
         }

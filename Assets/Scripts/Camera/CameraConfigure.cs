@@ -5,37 +5,32 @@ using Cinemachine;
 
 public class CameraConfigure : Singleton<CameraConfigure>
 {
-    private CinemachineVirtualCamera[] prev;
+    [SerializeField] private CinemachineVirtualCamera firstVirtualCamera;
     private CinemachineVirtualCamera curr;
-    private int[] prevPriority;
-    private int currOgPriority;
+    private int savedPriority;
+    private CinemachineVirtualCamera prev;
     #region Unity Messages
     private void Awake()
     {
         InitializeSingleton();
-        curr = CinemachineBrain.SoloCamera as CinemachineVirtualCamera;
-        prevPriority = new int[2];
-        prev = new CinemachineVirtualCamera[] { curr, curr };
+        Debug.Log(firstVirtualCamera);
+        curr = firstVirtualCamera;
+        prev = curr;
+        curr.Priority = 10;
     }
     #endregion
     public void SwitchToCamera(CinemachineVirtualCamera targetCamera)
     {
-        prevPriority[1] = prev[0].Priority;
-        prev[1] = prev[0];
-        prev[1].Priority = 0;
-
-        prevPriority[0] = curr.Priority;
-        prev[0] = curr;
-        prev[0].Priority = 0;
-
+        //curr.Priority = savedPriority;
+        curr.Priority = 1;
+        prev = curr;
         curr = targetCamera;
-        currOgPriority = curr.Priority;
-        curr.Priority = 100;   
+        //savedPriority = curr.Priority;
+        curr.Priority = 10;
+        Debug.Log($"Curr: {curr}, Prev: {prev}");
     }
     public void SwitchBackToPrev()
     {
-        prev[1].Priority = prevPriority[1];
-        prev[0].Priority = prevPriority[0];
-        prev[]
+        SwitchToCamera(prev);
     }
 }
