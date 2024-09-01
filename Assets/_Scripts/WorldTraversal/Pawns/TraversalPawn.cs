@@ -40,7 +40,7 @@ public abstract class TraversalPawn : MonoBehaviour
     {
         UpdateSound();
         // Rotation and Movement Correction
-        transform.rotation = Quaternion.Slerp(transform.rotation, pawnFaceRotation, Time.fixedDeltaTime * 0.5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, pawnFaceRotation, Time.fixedDeltaTime * 10f);
 
         // Movement operation under fixedUpdate
         // *Could be removed to be its own corutine*
@@ -75,6 +75,10 @@ public abstract class TraversalPawn : MonoBehaviour
     public void RotateOnYAxis(float y)
     {
         pawnFaceRotation = Quaternion.Euler(0, y, 0);
+    }
+    public void AddToRotationOnYAxis(float y)
+    {
+        pawnFaceRotation.eulerAngles += new Vector3(0, y, 0);
     }
     private void UpdateSound()
     {

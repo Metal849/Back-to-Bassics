@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     private PlayerInput _playerinput;
     private PlayerBattlePawn _battlepawn;
     private PlayerTraversalPawn _traversalpawn;
+    public PlayerTraversalPawn TraversalPawn => _traversalpawn;
+    public PlayerBattlePawn BattlePawn => _battlepawn;
     private void Awake()
     {
         // References
