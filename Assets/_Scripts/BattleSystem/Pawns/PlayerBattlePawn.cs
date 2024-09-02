@@ -108,8 +108,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         // Check a file called OnDodgeEnd.cs
         // (Ryan) This really sucky
         // Merge to one state called Open
-        updateCombo(false);
         DodgeDirection = DirectionHelper.GetVectorDirection(direction);
+        updateCombo(false);
         StartCoroutine(DodgeThread(DodgeDirection.ToString().ToLower()));
     }
     private IEnumerator DodgeThread(string directionAnimation)
