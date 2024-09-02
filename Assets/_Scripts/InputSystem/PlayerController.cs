@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
         // This might just have to keep updating on fixed update tbh
         _playerinput.SwitchCurrentActionMap("PlayerTraversalPawn");
         _playerinput.actions["Slash"].performed += OnTraversalSlash;
+        _playerinput.actions["Interact"].performed += OnInteractAction;
 
         // Input UI
         //_playerinput.SwitchCurrentActionMap("UI");
@@ -93,6 +94,10 @@ public class PlayerController : MonoBehaviour
     public void OnTraversalSlash(InputAction.CallbackContext context)
     {
         _traversalpawn.Slash(context.ReadValue<Vector2>());
+    }
+    public void OnInteractAction(InputAction.CallbackContext context)
+    {
+        _traversalpawn.Interact();
     }
     #endregion
 }

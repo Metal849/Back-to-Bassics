@@ -8,7 +8,6 @@ using UnityEngine.Timeline;
 
 public class SlashAsset : PlayableAsset
 {
-    //public override double duration => GetComopn
     public SlashBehaviour template;
 
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)

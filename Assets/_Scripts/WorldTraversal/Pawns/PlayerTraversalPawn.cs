@@ -12,6 +12,7 @@ public class PlayerTraversalPawn : TraversalPawn
     [field: SerializeField] public EventReference slashSoundReference { get; private set; }
     private PlayerBattlePawn _battlePawn;
     private bool attacking;
+    private Interactable currInteractable;
     protected override void Awake()
     {
         base.Awake();
@@ -35,10 +36,30 @@ public class PlayerTraversalPawn : TraversalPawn
         //UIManager.Instance.PlayerSlash(SlashDirection);
         StartCoroutine(Attacking());
     }
+    public void Interact()
+    {
+        currInteractable?.Interact();
+    }
     private IEnumerator Attacking()
     {
         attacking = true;
         yield return new WaitForSeconds(_battlePawn.WeaponData.AttackDuration /* * Conductor.quarter * Conductor.Instance.spb*/);
         attacking = false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Interactable interactable))
+        {
+            // TODO: Display some pop up UI here for interaction
+            currInteractable = interactable;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Interactable interactable) && currInteractable == interactable)
+        {
+            // TODO: Hide the UI after poncho is away from interactable
+            currInteractable = null;
+        }
     }
 }

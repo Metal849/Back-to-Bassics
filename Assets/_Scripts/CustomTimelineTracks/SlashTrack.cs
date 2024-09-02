@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 [TrackClipType(typeof(SlashAsset))]
-[TrackClipType(typeof(BroadcastAsset))]
+//[TrackClipType(typeof(BroadcastAsset))] --> no need anymore
 [TrackBindingType(typeof(SlashAction))]
 public class SlashTrack : TrackAsset
 {
