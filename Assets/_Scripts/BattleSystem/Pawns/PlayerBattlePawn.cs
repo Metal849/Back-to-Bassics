@@ -150,7 +150,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //}
         //else   
     }
-    public void updateCombo(bool slash)
+    private void updateCombo(bool slash)
     {
         if (comboString.Length >= 4)
         {
