@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4b5622965f2c0d4e8ca37115d55f0be, type: 3}
-  m_Name: Turtle
+  m_Name: DummyEnemy
   m_EditorClassIdentifier: 
-  _name: Turtle
-  _hp: 48
-  staggerDuration: 0
+  _name: Dummy
+  _hp: 1000
+  staggerDuration: 4
   _lore: 
   _blockingReduction: 0
   _confuseResistance: 0
   _poisonResistance: 0
-  _bpm: 0
+  _bpm: 120

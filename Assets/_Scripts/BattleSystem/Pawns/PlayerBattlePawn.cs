@@ -150,7 +150,7 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //}
         //else   
     }
-    public void updateCombo(bool slash)
+    private void updateCombo(bool slash)
     {
         if (comboString.Length >= 4)
         {
@@ -221,7 +221,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     private IEnumerator TimeToResetCombo()
     {
-        yield return new WaitForSeconds(1f);
+        // Give the player 2 beat of time
+        yield return new WaitForSeconds(BattleManager.Instance.Enemy.EnemyData.SPB * 2);
         UIManager.Instance.ComboDisplay.HideCombo();
         comboString = "";
     }
@@ -285,9 +286,19 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         //if (attacking && BattleManager.Instance.Enemy.ESM.IsOnState<EnemyStateMachine.Attacking>()) Lurch(2f);
         //StopAllCoroutines();
         // Divides duration beats into four sections!
-        // First Divsion is early reveive
+        // First Divsion is early receive
         // second divsion is deflection window
         // Third Division is late receive
+        if (BattleManager.Instance.Enemy.ReceiveAttackRequest(this))
+        {
+            BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            // Uncomment below when Status Ailments have been defined
+            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments);
+
+            updateCombo(true);
+
+            BattleManager.Instance.Enemy.CompleteAttackRequest(this);
+        }
         float divisionTime = _weaponData.AttackDuration / 4f;
         attacking = true;
         deflectionWindow = false;
@@ -300,14 +311,16 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
         if (!deflected && _activeAttackRequesters.Count <= 0)
         {
             // Process Combo Strings here if you have enough!
-            if (BattleManager.Instance.Enemy.ReceiveAttackRequest(this))
-            {
-                BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
-                updateCombo(true);
-            }
-            
-            // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments); -> uncomment when you have defined this
+            //if (BattleManager.Instance.Enemy.ReceiveAttackRequest(this))
+            //{
+            //    BattleManager.Instance.Enemy.Damage(_weaponData.Dmg);
+            //    // Uncomment below when Status Ailments have been defined
+            //    // BattleManager.Instance.Enemy.ApplyStatusAilments(_weaponData.ailments);
 
+            //    updateCombo(true);
+
+            //    BattleManager.Instance.Enemy.CompleteAttackRequest(this);
+            //}
         }
         yield return new WaitForSeconds(divisionTime /* * Conductor.quarter * Conductor.Instance.spb*/);
         attacking = false;
