@@ -33,7 +33,7 @@ public class PlayerTraversalPawn : TraversalPawn
         // Set the Slash Direction
         //SlashDirection = direction;
         //SlashDirection.Normalize();
-        //UIManager.Instance.PlayerSlash(SlashDirection);
+        DestructibleObject.PlayerSlash(slashDirection);
         StartCoroutine(Attacking());
     }
     public void Interact()
@@ -44,6 +44,7 @@ public class PlayerTraversalPawn : TraversalPawn
     {
         attacking = true;
         yield return new WaitForSeconds(_battlePawn.WeaponData.AttackDuration /* * Conductor.quarter * Conductor.Instance.spb*/);
+        DestructibleObject.PlayerSlashDone();
         attacking = false;
     }
     private void OnTriggerEnter(Collider other)
