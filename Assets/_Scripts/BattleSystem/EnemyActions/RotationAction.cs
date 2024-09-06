@@ -10,7 +10,7 @@ public class RotationAction : EnemyAction
     {
         foreach (Spinning spinner in spinners)
         {
-            if (spinner != null) spinner.speed = 2f;
+            if (spinner != null) spinner.speed = spinner.minSpeed;
         }
         
     }
