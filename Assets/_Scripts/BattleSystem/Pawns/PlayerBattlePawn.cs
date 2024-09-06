@@ -221,8 +221,8 @@ public class PlayerBattlePawn : BattlePawn, IAttackRequester, IAttackReceiver
     }
     private IEnumerator TimeToResetCombo()
     {
-        // Give the player 1 beat of time
-        yield return new WaitForSeconds(BattleManager.Instance.Enemy.EnemyData.SPB);
+        // Give the player 2 beat of time
+        yield return new WaitForSeconds(BattleManager.Instance.Enemy.EnemyData.SPB * 2);
         UIManager.Instance.ComboDisplay.HideCombo();
         comboString = "";
     }
