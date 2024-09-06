@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Turtle
   m_EditorClassIdentifier: 
   _name: Turtle
-  _hp: 48
+  _hp: 50
   staggerDuration: 0
   _lore: 
   _blockingReduction: 0

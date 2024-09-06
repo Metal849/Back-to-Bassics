@@ -81,7 +81,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     }
     public virtual void CompleteAttackRequest(IAttackRequester requester)
     {
-        throw new System.NotImplementedException();
+        // Does nothing for now, not waranted an exception!
     }
     #endregion
     #region BattlePawn Overrides
