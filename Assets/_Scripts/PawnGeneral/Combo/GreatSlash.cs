@@ -7,8 +7,12 @@ public class GreatSlash : Combo
 {
     [SerializeField] private int damage;
     public int Damage => damage;
-    public override void StartComboAttack()
+    public override void InBattle()
     {
         BattleManager.Instance.Enemy.Damage(damage);
+    }
+    public override void InTraversal()
+    {
+        // Nothing Yet
     }
 }
