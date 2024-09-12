@@ -553,7 +553,7 @@ PlayableDirector:
   m_GameObject: {fileID: 4221122890883084785}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 11d4efc082ecd284fb4f1b6d30b1b11e, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 878f6ef31a2a8bc43aeb43a43d502ba2, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -570,6 +570,14 @@ PlayableDirector:
   - key: {fileID: 8067884480808116438, guid: 1e54ae3e0b94e6f41990f7ed2546bc55, type: 2}
     value: {fileID: 1961778708237596147}
   - key: {fileID: 7993128218519378286, guid: 1e54ae3e0b94e6f41990f7ed2546bc55, type: 2}
+    value: {fileID: 7789150339329146010}
+  - key: {fileID: -2169107463020495374, guid: d79574ff93d181d44b730d1dffe5531a, type: 2}
+    value: {fileID: 1961778708237596147}
+  - key: {fileID: 5312430939684831415, guid: d79574ff93d181d44b730d1dffe5531a, type: 2}
+    value: {fileID: 7789150339329146010}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 5312430939684831415, guid: 878f6ef31a2a8bc43aeb43a43d502ba2, type: 2}
     value: {fileID: 7789150339329146010}
   m_ExposedReferences:
     m_References: []
@@ -588,7 +596,11 @@ MonoBehaviour:
   _beatsPerDecision: 2
   _enemyActionSequences:
   - {fileID: 11400000, guid: 0995f9fefe54b534f85a121bc1bde168, type: 2}
-  - {fileID: 11400000, guid: 1e54ae3e0b94e6f41990f7ed2546bc55, type: 2}
+  - {fileID: 11400000, guid: d79574ff93d181d44b730d1dffe5531a, type: 2}
+  - {fileID: 11400000, guid: 878f6ef31a2a8bc43aeb43a43d502ba2, type: 2}
+  _enemyStages:
+  - {fileID: 11400000, guid: b20da1e55bbff9249b505ca8e9ddb9b6, type: 2}
+  - {fileID: 11400000, guid: a6b1bc212cb8c214f9927bcedc3cf890, type: 2}
 --- !u!210 &8694757469888071649
 SortingGroup:
   m_ObjectHideFlags: 0
