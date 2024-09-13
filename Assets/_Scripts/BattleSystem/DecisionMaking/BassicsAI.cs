@@ -53,6 +53,7 @@ public class BassicsAI : Conductable
             if (_bassics.esm.IsOnState<Idle>() && _bassics.psm.IsOnState<Center>())
             {
                 _bassics.psm.Transition<Distant>();
+                Debug.Log("Changed to distant state!");
             }
         };
     }
@@ -64,7 +65,6 @@ public class BassicsAI : Conductable
         if (Conductor.Instance.Beat < _decisionTime 
             || _director.state == PlayState.Playing 
             || _bassics.IsDead || _bassics.IsStaggered) return;
-
         if (_currentStage+1 < _enemyStages.Length && 
             _enemyStages[_currentStage+1].HealthThreshold > (float)_bassics.HP/_bassics.MaxHP) {
                 _currentStage++;
@@ -72,7 +72,7 @@ public class BassicsAI : Conductable
             }
             
         TimelineAsset[] actions = _enemyStages[_currentStage].EnemyActionSequences;
-
+        
         int idx = Random.Range(0, (actions != null ? actions.Length : 0) + 4) - 4;
         // int idx = Random.Range(0, actions != null ? actions.Length : 0);
         if (idx == _lastAction)
@@ -84,7 +84,7 @@ public class BassicsAI : Conductable
             _bassics.esm.Transition<Idle>();
         }
         else
-        {
+        { 
             _bassics.esm.Transition<Attacking>();
             _director.playableAsset = actions[idx];
             _director.Play();
