@@ -18,6 +18,7 @@ public class BassicsAI : Conductable
     [SerializeField] private EnemyStageData[] _enemyStages;
     private int _lastAction; // prevents using same attack twice in a row
     private int _currentStage;
+    public static event System.Action OnEnemyStageTransition;
 
     
     // references
@@ -65,12 +66,18 @@ public class BassicsAI : Conductable
             || _bassics.IsDead || _bassics.IsStaggered) return;
 
         if (_currentStage+1 < _enemyStages.Length && 
-            _enemyStages[_currentStage+1].HealthThreshold > (float)_bassics.HP/_bassics.MaxHP)
-                _currentStage += 1;
+            _enemyStages[_currentStage+1].HealthThreshold > (float)_bassics.HP/_bassics.MaxHP) {
+                _currentStage++;
+                OnEnemyStageTransition?.Invoke();
+            }
             
         TimelineAsset[] actions = _enemyStages[_currentStage].EnemyActionSequences;
 
         int idx = Random.Range(0, (actions != null ? actions.Length : 0) + 4) - 4;
+        // int idx = Random.Range(0, actions != null ? actions.Length : 0);
+        if (idx == _lastAction)
+            idx = (idx + 1) % actions.Length;
+        _lastAction = idx;
         //int idx = UnityEngine.Random.Range(0, 4);
         if (idx < 0)
         {
