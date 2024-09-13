@@ -21,6 +21,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
 
+    public static event Action OnEnemyStaggerEvent;
+
     // Events
     //public event Action OnEnemyActionComplete; --> Hiding for now
     protected override void Awake()
@@ -102,6 +104,7 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
         base.OnStagger();
         // Staggered Animation (Paper Crumple)
         esm.Transition<Stagger>();
+        OnEnemyStaggerEvent?.Invoke();
         //_particleSystem?.Play();
     }
     protected override void OnUnstagger()

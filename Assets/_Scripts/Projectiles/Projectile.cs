@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour, IAttackRequester
     {
         _rb = GetComponent<Rigidbody>();
         Destroy();
+        EnemyBattlePawn.OnEnemyStaggerEvent += Destroy;
     }
     #endregion
     /// <summary>
