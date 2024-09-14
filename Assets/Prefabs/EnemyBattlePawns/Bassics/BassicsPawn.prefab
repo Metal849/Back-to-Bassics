@@ -520,6 +520,7 @@ MonoBehaviour:
   <psm>k__BackingField: {fileID: 0}
   <targetFightingLocation>k__BackingField: {fileID: 8599476617418693142}
   <battleCam>k__BackingField: {fileID: 0}
+  <_director>k__BackingField: {fileID: 0}
 --- !u!114 &1337638542897606784
 MonoBehaviour:
   m_ObjectHideFlags: 0

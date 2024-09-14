@@ -29,6 +29,7 @@ public class BassicsAI : Conductable
     {
         _bassics = GetComponent<EnemyBattlePawn>();
         _director = GetComponent<PlayableDirector>();
+        EnemyBattlePawn.OnEnemyStaggerEvent += _director.Stop;
         
         if (_director == null)
         {
@@ -53,7 +54,6 @@ public class BassicsAI : Conductable
             if (_bassics.esm.IsOnState<Idle>() && _bassics.psm.IsOnState<Center>())
             {
                 _bassics.psm.Transition<Distant>();
-                Debug.Log("Changed to distant state!");
             }
         };
     }

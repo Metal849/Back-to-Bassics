@@ -19,7 +19,6 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     [field: SerializeField] public Transform targetFightingLocation { get; private set; }
     [field: SerializeField] public CinemachineVirtualCamera battleCam { get; private set; }
     //reference to director for stagger implementation
-    [field: SerializeField] public PlayableDirector _director { get; private set; }
     public EnemyBattlePawnData EnemyData => (EnemyBattlePawnData)Data;
     private Dictionary<Type, EnemyAction> _enemyActions = new Dictionary<Type, EnemyAction>();
     public static event Action OnEnemyStaggerEvent;
@@ -119,11 +118,8 @@ public class EnemyBattlePawn : BattlePawn, IAttackReceiver
     {
         if (esm.IsOnState<Dead>()) return;
         base.OnStagger();
-        //if (_director != null)
-        //{
-        //    _director.Stop();
-        //}
         // Staggered Animation (Paper Crumple)
+        psm.Transition<Center>();
         esm.Transition<Stagger>();
         OnEnemyStaggerEvent?.Invoke();
         foreach (EnemyAction action in _enemyActions.Values)
