@@ -9,4 +9,10 @@ public class SceneManagement : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(scene);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quit!");
+    }
 }
