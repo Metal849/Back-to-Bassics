@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameStateMachine;
 
 public class PauseMenuCode : MonoBehaviour
 {
@@ -8,41 +9,36 @@ public class PauseMenuCode : MonoBehaviour
 
     public GameObject pauseMenuPanel;
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape))
+    public void TogglePause()
+    {
+        if (GameManager.Instance.GSM.IsOnState<Pause>())
         {
-            if (GamePaused)
-            {
-                Resume();
-            } else
-            {
-                Pause();
-            }
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
-
-    public void Resume ()
-    {
-        pauseMenuPanel.SetActive(false);
-        Time.timeScale = 1f;
-        GamePaused = false;
-    }
-
-    void Pause ()
+    private void Pause ()
     {
         pauseMenuPanel.SetActive(true);
-        Time.timeScale = 0f;
-        GamePaused = true;   
+        GameManager.Instance.GSM.Transition<Pause>();
+    }
+    public void Resume()
+    {
+        pauseMenuPanel.SetActive(false);
+        GameManager.Instance.GSM.Transition<WorldTraversal>();
     }
 
-    public void LoadSettings()
+    public void LoadSettings ()
     {
         Debug.Log("Loading settings");
     }
 
-    public void ExitGame()
+    public void ExitGame ()
     {
-        Debug.Log("Exiting game");
+        Application.Quit();
         Time.timeScale = 1f;
     }
 }

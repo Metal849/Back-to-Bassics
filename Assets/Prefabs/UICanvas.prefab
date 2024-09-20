@@ -1427,6 +1427,7 @@ MonoBehaviour:
   _enemyHpBar: {fileID: 4243564878127532608}
   _comboMeterBar: {fileID: 3334305468991712330}
   ComboDisplay: {fileID: 212483233157784330}
+  <pauseMenu>k__BackingField: {fileID: 1496461000742071104}
 --- !u!223 &8334988425258695937
 Canvas:
   m_ObjectHideFlags: 0
