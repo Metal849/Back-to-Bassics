@@ -19,6 +19,8 @@ Bassics: The forest awaits you!
 title: Start
 tags:
 ---
-<<setView "DialogueBubble">>
-"Hello"
+<<setView "BassicsDialogueBubble">>
+Bassics: "Hello"
+<<setView "SmallFryDialogueBubble">>
+Small Fry: "Hi!"
 ===

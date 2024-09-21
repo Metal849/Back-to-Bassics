@@ -46,13 +46,17 @@ public class CustomDialogueRunner : MonoBehaviour
     public IEnumerator SetDialogueView(string viewType)
     {
         Debug.Log($"Switching to view: {viewType}");
-
+        activeDialogueView = null;
         // Loop through dialogue views and find the matching one
         foreach (var view in availableDialogueViews)
         {
             if (view.name.Equals(viewType, System.StringComparison.OrdinalIgnoreCase))
             {
+                // Sets the currently active view
                 activeDialogueView = view;
+
+                // Swaps the dialogue view 
+                customDialogueRunner.SetDialogueViews(new DialogueViewBase[] { view });
                 Debug.Log($"Dialogue View Set to: {viewType}");
                 break;
             }
