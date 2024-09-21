@@ -14,3 +14,11 @@ Bassics: Good!
 Bassics: You are ready.
 Bassics: The forest awaits you!
 ===
+
+
+title: Start
+tags:
+---
+<<setView "DialogueBubble">>
+"Hello"
+===
