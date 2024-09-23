@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
-public class CustomDialogueRunner : MonoBehaviour
+public class CustomDialogueRunner : Singleton<CustomDialogueRunner>
 {
     // Reference to the existing Dialogue Runner in the scene
     public DialogueRunner customDialogueRunner; // Renamed from dialogueRunner to avoid ambiguity
@@ -11,6 +11,16 @@ public class CustomDialogueRunner : MonoBehaviour
     private DialogueViewBase activeDialogueView; // Current active dialogue view
 
     public string startingNode = "Start";
+
+    private void Awake()
+    {
+        Debug.Log("1");
+        bool wasInitialized = InitializeSingleton(this);
+        if (!wasInitialized)
+        {
+            Debug.LogError("Failed");
+        }
+    }
 
     // Initialize event listeners and Yarn command handlers
     private void Start()
