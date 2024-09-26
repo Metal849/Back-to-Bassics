@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 
-public class CustomDialogueRunner : Singleton<CustomDialogueRunner>
+public class DialogueManager : Singleton<DialogueManager>
 {
     // Reference to the existing Dialogue Runner in the scene
     public DialogueRunner customDialogueRunner; // Renamed from dialogueRunner to avoid ambiguity
     public List<DialogueViewBase> availableDialogueViews; // Renamed from dialogueViews to avoid ambiguity
     private DialogueViewBase activeDialogueView; // Current active dialogue view
-
-    public string startingNode = "Start";
 
     private void Awake()
     {
@@ -40,16 +38,11 @@ public class CustomDialogueRunner : Singleton<CustomDialogueRunner>
 
         // Set up the view switching command handler
         customDialogueRunner.AddCommandHandler<string>("setView", SetDialogueView);
-
-        // Automatically start the dialogue when the game starts
-        StartGameDialogue();
-
     }
 
-    private void StartGameDialogue()
+    public void RunDialogueNode(string node)
     {
-        Debug.Log("Starting dialogue from the node: " + startingNode);
-        customDialogueRunner.StartDialogue(startingNode);
+        customDialogueRunner.StartDialogue(node);
     }
 
     // This method handles the Yarn command to switch dialogue views
