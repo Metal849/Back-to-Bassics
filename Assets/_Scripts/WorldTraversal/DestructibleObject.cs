@@ -14,6 +14,7 @@ public class DestructibleObject : MonoBehaviour
 
     public bool destructibleByCombo;
     static string comboString;
+    public string comboToBreak;
 
     public static void PlayerSlash(Vector2 slashDirection)
     {
@@ -45,34 +46,37 @@ public class DestructibleObject : MonoBehaviour
                 if (directionToBreak == Direction.None || directionToBreak == slashDirection)
                 {
                     //Debug.Log("i have been destro");
-                    gameObject.GetComponent<Collider>().enabled = false;
-                    if (droppedOnBreak != null)
-                    {
-                        Instantiate(droppedOnBreak, transform.position, transform.rotation);
-                    }
-                    Object.Destroy(gameObject);
+                    destroySelf();
                 }
             hit = true;
             }
         }
         else 
         {
+            
             if (other.gameObject.name == "slash_region" && playerSlashing && !hit)
             {
                 //Debug.Log(slashDirection);
-                if (comboString == "WEW")
+                if (comboString == comboToBreak)
                 {
                     //Debug.Log("i have been destro");
-                    gameObject.GetComponent<Collider>().enabled = false;
-                    if (droppedOnBreak != null)
-                    {
-                        Instantiate(droppedOnBreak, transform.position, transform.rotation);
-                    }
-                    Object.Destroy(gameObject);
+                    DestructibleObject.comboString = "";
+                    destroySelf();
                 }
             hit = true;
             }
+            
         }
         
     }
+
+    public void destroySelf()
+    {
+        gameObject.GetComponent<Collider>().enabled = false;
+        if (droppedOnBreak != null)
+        {
+            Instantiate(droppedOnBreak, transform.position, transform.rotation);
+        }
+        Object.Destroy(gameObject);
+    } 
 }
