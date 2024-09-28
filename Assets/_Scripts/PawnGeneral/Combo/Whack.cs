@@ -10,11 +10,11 @@ public class Whack : Combo
     public override void InBattle()
     {
         BattleManager.Instance.Enemy.Damage(damage);
-        Debug.Log("Whack (Combat)");
+        //Debug.Log("Whack (Combat)");
     }
     public override void InTraversal()
     {
-        Debug.Log("Whack (Traversal)");
+        //Debug.Log("Whack (Traversal)");
         DestructibleObject.PlayerCombo(StrId);
         DestructibleObject.PlayerSlashDone();
     }
