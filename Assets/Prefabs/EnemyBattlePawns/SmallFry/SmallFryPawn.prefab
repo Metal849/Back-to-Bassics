@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 5090294006250702672}
   - component: {fileID: 3651851448163138247}
   m_Layer: 0
-  m_Name: BassicsCam
+  m_Name: SmallFryCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
