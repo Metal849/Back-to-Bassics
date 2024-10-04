@@ -12,6 +12,7 @@ public partial class EnemyStateMachine
             base.Enter(i);
             if (Input.EnemySprite != null)
             {
+                Input.EnemySprite.Animator.SetFloat("speed", 1 / Conductor.Instance.spb);
                 Input.EnemySprite.Animator?.Play("idle_battle");
             }
         }

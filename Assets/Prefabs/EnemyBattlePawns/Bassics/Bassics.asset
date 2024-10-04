@@ -16,7 +16,4 @@ MonoBehaviour:
   _hp: 100
   staggerDuration: 4
   _lore: The bass himself!
-  _blockingReduction: 0.05
-  _confuseResistance: 0
-  _poisonResistance: 0
   _bpm: 120
