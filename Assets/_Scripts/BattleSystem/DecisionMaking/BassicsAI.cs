@@ -53,7 +53,8 @@ public class BassicsAI : Conductable
         { 
             if (_bassics.esm.IsOnState<Idle>() && _bassics.psm.IsOnState<Center>())
             {
-                _bassics.psm.Transition<Distant>();
+                //_bassics.psm.Transition<Distant>();
+                _bassics.esm.Transition<Block>();
             }
         };
     }
